@@ -1,0 +1,12 @@
+.header {
+  height: 60px;
+  line-height: 60px;
+  font-size: 18px;
+  padding: 0 10px;
+  background-color: #f0611f;
+  color: #FFFFFF;
+  transition: height 0.2s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

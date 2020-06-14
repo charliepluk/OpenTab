@@ -1,0 +1,33 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.content-panel {
+ display: flex;
+ flex-direction: column;
+ position: relative;
+ flex: 1 1 0px;
+}
+
+.content-container {
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  box-shadow: inset 0px 5px 6px -3px rgba(0, 0, 0, 0.4);
+}
