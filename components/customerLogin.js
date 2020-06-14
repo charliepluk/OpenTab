@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { View, Text, TextInput } from "react-native";
 import { Button } from "react-native-paper";
-import { styles } from "../stylesheet/styles";
+import { styles } from "../stylesheet/customerLogin-Signup";
 
-export default class App extends Component {
+export default class CustomerLogin extends Component {
   state = {
     email: "",
     password: "",
