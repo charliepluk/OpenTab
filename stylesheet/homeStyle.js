@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
 
   navBar: {
     height: 120,
-    backgroundColor: "blue",
   },
 
   welcomeContainer: {
@@ -19,7 +18,6 @@ const styles = StyleSheet.create({
 
   titleBox: {
     marginTop: 50,
-    flex: 1,
     alignSelf: "center",
   },
 
@@ -35,6 +33,8 @@ const styles = StyleSheet.create({
     fontWeight: "900",
     fontStyle: "italic",
     marginTop: 20,
+    paddingRight: 10,
+    paddingLeft: 10,
   },
 
   startContainer: {

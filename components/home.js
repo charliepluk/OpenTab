@@ -3,15 +3,16 @@ import { View, Text, SafeAreaView, TextInput } from "react-native";
 import { Button } from "react-native-paper";
 import { styles } from "../stylesheet/homeStyle";
 
+// Import Navbar Component
+import NavBar from "./navbar";
+
 export default class Home extends Component {
   state = {};
 
   render() {
     return (
       <View style={styles.container}>
-        <SafeAreaView style={styles.navBar}>
-          <Text>Hello</Text>
-        </SafeAreaView>
+        <NavBar></NavBar>
 
         <View style={styles.welcomeContainer}>
           <View style={styles.titleBox}>
@@ -23,7 +24,10 @@ export default class Home extends Component {
 
         <View style={styles.startContainer}>
           <Text style={styles.actionLabel}>Start your tab!</Text>
-          <Button style={styles.button}>
+          <Button
+            style={styles.button}
+            onPress={() => console.log("View Restaurant Button Clicked")}
+          >
             <Text style={{ color: "#FF9466" }}>View Restaurants</Text>
           </Button>
         </View>
