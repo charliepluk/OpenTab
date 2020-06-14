@@ -1,8 +1,9 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+
+// Import Pages
 import CustomerLogin from "./components/customerLogin";
-import { render } from "react-dom";
+import Home from "./components/home";
 
 export default function App() {
-  return <CustomerLogin></CustomerLogin>;
+  return <Home />;
 }
