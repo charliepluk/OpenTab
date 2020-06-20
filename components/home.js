@@ -12,7 +12,7 @@ export default class Home extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <NavBar></NavBar>
+        <NavBar onPage="Home"></NavBar>
 
         <View style={styles.welcomeContainer}>
           <View style={styles.titleBox}>
@@ -26,7 +26,7 @@ export default class Home extends Component {
           <Text style={styles.actionLabel}>Start your tab!</Text>
           <Button
             style={styles.button}
-            onPress={() => console.log("View Restaurant Button Clicked")}
+            onPress={() => this.props.navigation.navigate("Restaurants")}
           >
             <Text style={{ color: "#FF9466" }}>View Restaurants</Text>
           </Button>
