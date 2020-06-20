@@ -12,7 +12,6 @@ export default class Restaurants extends Component {
     return (
       <View style={styles.container}>
         <NavBar></NavBar>
-
         <View style={styles.listContainer}></View>
       </View>
     );
