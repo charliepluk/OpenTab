@@ -30,6 +30,10 @@ const styles = StyleSheet.create({
   restaurantTitle: {
     fontSize: 25,
   },
+
+  infoText: {
+    fontSize: 12,
+  },
 });
 
 export { styles };

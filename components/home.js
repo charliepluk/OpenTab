@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { View, Text, SafeAreaView, TextInput } from "react-native";
+import { View, Text, SafeAreaView } from "react-native";
 import { Button } from "react-native-paper";
-import { styles } from "../stylesheet/homeStyle";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
-// Import Navbar Component
-import NavBar from "./navbar";
+import { styles } from "../stylesheet/homeStyle";
+import { navStyles } from "../stylesheet/navbarStyle";
 
 export default class Home extends Component {
   state = {};
@@ -12,7 +12,14 @@ export default class Home extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <NavBar onPage="Home"></NavBar>
+        <SafeAreaView style={navStyles.homeNavBar}>
+          <TouchableOpacity
+            style={navStyles.navTab}
+            onPress={() => this.props.navigation.toggleDrawer()}
+          ></TouchableOpacity>
+
+          <TouchableOpacity style={navStyles.orderTab}></TouchableOpacity>
+        </SafeAreaView>
 
         <View style={styles.welcomeContainer}>
           <View style={styles.titleBox}>

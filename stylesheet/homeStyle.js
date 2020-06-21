@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
 
   title: {
     color: "#FF9466",
-    fontSize: 120,
+    fontSize: 110,
     fontWeight: "900",
     fontStyle: "italic",
     marginTop: 20,
