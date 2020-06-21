@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Text, SafeAreaView } from "react-native";
+import { Text, View, SafeAreaView } from "react-native";
 import { styles } from "../stylesheet/navbarStyle";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default class NavBar extends Component {
   state = {};
@@ -14,6 +15,11 @@ export default class NavBar extends Component {
   };
 
   render() {
-    return <SafeAreaView style={this.getStyle()}></SafeAreaView>;
+    return (
+      <SafeAreaView style={this.getStyle()}>
+        <TouchableOpacity style={styles.navTab}></TouchableOpacity>
+        <TouchableOpacity style={styles.orderTab}></TouchableOpacity>
+      </SafeAreaView>
+    );
   }
 }
