@@ -1,10 +1,15 @@
 import React, { Component } from "react";
-import { View, Text, SafeAreaView, TextInput } from "react-native";
+import { View, Text, SafeAreaView } from "react-native";
 import { Button } from "react-native-paper";
-import { styles } from "../stylesheet/homeStyle";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
-// Import Navbar Component
-import NavBar from "./navbar";
+// Import Stylesheets
+import { styles } from "../stylesheet/homeStyle";
+import { navStyles } from "../stylesheet/navbarStyle";
+
+// Import SVGs
+import MenuIcon from "../assets/svg/menu.svg";
+import OrderIcon from "../assets/svg/order.svg";
 
 export default class Home extends Component {
   state = {};
@@ -12,7 +17,18 @@ export default class Home extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <NavBar onPage="Home"></NavBar>
+        <SafeAreaView style={navStyles.homeNavBar}>
+          <TouchableOpacity
+            style={navStyles.navTab}
+            onPress={() => this.props.navigation.toggleDrawer()}
+          >
+            <MenuIcon width={35} height={35} />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={navStyles.orderTab}>
+            <OrderIcon width={35} height={35} />
+          </TouchableOpacity>
+        </SafeAreaView>
 
         <View style={styles.welcomeContainer}>
           <View style={styles.titleBox}>

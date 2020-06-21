@@ -1,9 +1,19 @@
 import React, { Component } from "react";
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
-import { styles } from "../stylesheet/restaurantsStyle";
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  SafeAreaView,
+} from "react-native";
 
-// Import Navbar Component
-import NavBar from "./navbar";
+// Import Styles
+import { styles } from "../stylesheet/restaurantsStyle";
+import { navStyles } from "../stylesheet/navbarStyle";
+
+// Import SVGs
+import ArrowBack from "../assets/svg/arrow-back.svg";
+import OrderIcon from "../assets/svg/order-alt.svg";
 
 const DATA = [
   {
@@ -29,8 +39,8 @@ function RestaurantItem({ title, address, hours }) {
       <View style={styles.restaurantImage}></View>
       <View style={styles.restaurantInfo}>
         <Text style={styles.restaurantTitle}>{title}</Text>
-        <Text>Hours: {hours}</Text>
-        <Text>{address}</Text>
+        <Text style={styles.infoText}>Hours: {hours}</Text>
+        <Text style={styles.infoText}>{address}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -42,7 +52,19 @@ export default class Restaurants extends Component {
   render() {
     return (
       <View>
-        <NavBar></NavBar>
+        <SafeAreaView style={navStyles.navBar}>
+          <TouchableOpacity
+            style={navStyles.navTab}
+            onPress={() => this.props.navigation.goBack()}
+          >
+            <ArrowBack width={35} height={35} />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={navStyles.orderTab}>
+            <OrderIcon width={35} height={35} />
+          </TouchableOpacity>
+        </SafeAreaView>
+
         <FlatList
           style={styles.listContainer}
           data={DATA}

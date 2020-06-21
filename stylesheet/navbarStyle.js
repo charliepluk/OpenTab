@@ -1,38 +1,38 @@
 import { StyleSheet } from "react-native";
 
-const styles = StyleSheet.create({
+const navStyles = StyleSheet.create({
   homeNavBar: {
-    height: 120,
+    height: 110,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
     width: "100%",
+    paddingTop: Platform.OS === "android" ? 25 : 0,
   },
 
   navBar: {
-    height: 120,
+    height: 110,
     backgroundColor: "#FF9466",
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
     width: "100%",
+    paddingTop: Platform.OS === "android" ? 25 : 0,
   },
 
   navTab: {
-    height: 40,
-    width: 40,
-    backgroundColor: "blue",
+    height: 35,
+    width: 35,
     marginTop: 10,
     marginLeft: 20,
   },
 
   orderTab: {
-    height: 40,
-    width: 40,
-    backgroundColor: "blue",
+    height: 35,
+    width: 35,
     marginTop: 10,
     marginRight: 20,
   },
 });
 
-export { styles };
+export { navStyles };
