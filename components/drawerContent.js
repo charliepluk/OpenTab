@@ -1,0 +1,99 @@
+import React from "react";
+import { View, Text, StyleSheet, SafeAreaView } from "react-native";
+import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
+import { Drawer } from "react-native-paper";
+
+// Import SVGs
+import LogOut from "../assets/svg/logout.svg";
+
+export default function DrawerContent(props) {
+  return (
+    <View style={styles.drawer}>
+      <SafeAreaView style={styles.nameSection}>
+        <Text style={styles.greeting}>Hi, Akshay!</Text>
+      </SafeAreaView>
+      <DrawerContentScrollView contentContainerStyle={styles.drawerContent}>
+        <View>
+          <DrawerItem
+            style={styles.drawerItem}
+            label={() => (
+              <Text style={{ color: "#FF9466", fontWeight: "bold" }}>Home</Text>
+            )}
+            onPress={() => {
+              props.navigation.navigate("Home");
+            }}
+          />
+          <DrawerItem
+            style={styles.drawerItem}
+            label={() => (
+              <Text style={{ color: "#FF9466", fontWeight: "bold" }}>
+                Order History
+              </Text>
+            )}
+          />
+          <DrawerItem
+            style={styles.drawerItem}
+            label={() => (
+              <Text style={{ color: "#FF9466", fontWeight: "bold" }}>
+                Settings
+              </Text>
+            )}
+          />
+        </View>
+      </DrawerContentScrollView>
+      <View style={styles.signOutSection}>
+        <DrawerItem
+          icon={() => <LogOut width={20} height={20} />}
+          label={() => (
+            <Text style={{ color: "#FF9466", fontWeight: "bold" }}>
+              Log Out
+            </Text>
+          )}
+        />
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  drawer: {
+    backgroundColor: "#F6F6F6",
+    flex: 1,
+  },
+
+  nameSection: {
+    justifyContent: "flex-end",
+    height: 130,
+    backgroundColor: "#FF9466",
+  },
+
+  greeting: {
+    color: "#FEFEFE",
+    fontSize: 20,
+    fontWeight: "bold",
+    paddingLeft: 10,
+    paddingBottom: 20,
+  },
+
+  drawerContent: {
+    flex: 1,
+    paddingTop: 0,
+    borderTopColor: "#F6F6F6",
+  },
+
+  drawerItem: {
+    marginBottom: 0,
+    marginTop: 0,
+    justifyContent: "center",
+    height: 80,
+    borderBottomWidth: 1,
+    borderBottomColor: "#E5E5E5",
+  },
+
+  signOutSection: {
+    paddingTop: 10,
+    marginBottom: 15,
+    borderTopWidth: 1,
+    borderTopColor: "#E5E5E5",
+  },
+});

@@ -9,11 +9,17 @@ import CustomerLogin from "./components/customerLogin";
 import Home from "./components/home";
 import Restaurants from "./components/restaurants";
 
+// Import Drawer Content
+import DrawerContent from "./components/drawerContent";
+
 // Disable Font Scaling on iOS
 Text.defaultProps = Text.defaultProps || {};
 Text.defaultProps.allowFontScaling = false;
 
+// Create Stack Navigators
 const HomeStack = createStackNavigator();
+
+// Implement Stack Navigators
 const HomeStackScreen = ({ navigation }) => (
   <HomeStack.Navigator initialRouteName="Home">
     <HomeStack.Screen name="Home" options={{ headerShown: false }}>
@@ -32,7 +38,10 @@ const Drawer = createDrawerNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Home">
+      <Drawer.Navigator
+        drawerContent={(props) => <DrawerContent {...props} />}
+        initialRouteName="Home"
+      >
         <Drawer.Screen name="Home" component={HomeStackScreen} />
       </Drawer.Navigator>
     </NavigationContainer>

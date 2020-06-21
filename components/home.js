@@ -12,8 +12,6 @@ import MenuIcon from "../assets/svg/menu.svg";
 import OrderIcon from "../assets/svg/order.svg";
 
 export default class Home extends Component {
-  state = {};
-
   render() {
     return (
       <View style={styles.container}>
