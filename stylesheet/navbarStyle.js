@@ -21,17 +21,15 @@ const navStyles = StyleSheet.create({
   },
 
   navTab: {
-    height: 40,
-    width: 40,
-    backgroundColor: "blue",
+    height: 35,
+    width: 35,
     marginTop: 10,
     marginLeft: 20,
   },
 
   orderTab: {
-    height: 40,
-    width: 40,
-    backgroundColor: "blue",
+    height: 35,
+    width: 35,
     marginTop: 10,
     marginRight: 20,
   },

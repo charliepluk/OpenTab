@@ -11,6 +11,10 @@ import {
 import { styles } from "../stylesheet/restaurantsStyle";
 import { navStyles } from "../stylesheet/navbarStyle";
 
+// Import SVGs
+import ArrowBack from "../assets/svg/arrow-back.svg";
+import OrderIcon from "../assets/svg/order-alt.svg";
+
 const DATA = [
   {
     id: "0",
@@ -52,9 +56,13 @@ export default class Restaurants extends Component {
           <TouchableOpacity
             style={navStyles.navTab}
             onPress={() => this.props.navigation.goBack()}
-          ></TouchableOpacity>
+          >
+            <ArrowBack width={35} height={35} />
+          </TouchableOpacity>
 
-          <TouchableOpacity style={navStyles.orderTab}></TouchableOpacity>
+          <TouchableOpacity style={navStyles.orderTab}>
+            <OrderIcon width={35} height={35} />
+          </TouchableOpacity>
         </SafeAreaView>
 
         <FlatList
