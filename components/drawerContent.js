@@ -5,6 +5,10 @@ import { Drawer } from "react-native-paper";
 
 // Import SVGs
 import LogOut from "../assets/svg/logout.svg";
+import HomeIcon from "../assets/svg/home.svg";
+import HistoryIcon from "../assets/svg/orderHistory.svg";
+import PaymentIcon from "../assets/svg/payment.svg";
+import SettingsIcon from "../assets/svg/settings.svg";
 
 export default function DrawerContent(props) {
   return (
@@ -15,6 +19,7 @@ export default function DrawerContent(props) {
       <DrawerContentScrollView contentContainerStyle={styles.drawerContent}>
         <View>
           <DrawerItem
+            icon={() => <HomeIcon width={20} height={20} />}
             style={styles.drawerItem}
             label={() => (
               <Text style={{ color: "#FF9466", fontWeight: "bold" }}>Home</Text>
@@ -24,6 +29,7 @@ export default function DrawerContent(props) {
             }}
           />
           <DrawerItem
+            icon={() => <HistoryIcon width={20} height={20} />}
             style={styles.drawerItem}
             label={() => (
               <Text style={{ color: "#FF9466", fontWeight: "bold" }}>
@@ -32,6 +38,16 @@ export default function DrawerContent(props) {
             )}
           />
           <DrawerItem
+            icon={() => <PaymentIcon width={20} height={20} />}
+            style={styles.drawerItem}
+            label={() => (
+              <Text style={{ color: "#FF9466", fontWeight: "bold" }}>
+                Payment Info
+              </Text>
+            )}
+          />
+          <DrawerItem
+            icon={() => <SettingsIcon width={20} height={20} />}
             style={styles.drawerItem}
             label={() => (
               <Text style={{ color: "#FF9466", fontWeight: "bold" }}>
