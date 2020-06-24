@@ -18,7 +18,7 @@ export default class restaurantView extends Component {
         <SafeAreaView style={navStyles.navBar}>
           <TouchableOpacity
             style={navStyles.navTab}
-            onPress={() => console.log("Back button pressed")}
+            onPress={() => this.props.navigation.goBack()}
           >
             <ArrowBack width={35} height={35} />
           </TouchableOpacity>

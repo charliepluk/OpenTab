@@ -30,10 +30,10 @@ const DATA = [
   },
 ];
 
-function RestaurantItem({ title, address, hours }) {
+function RestaurantItem({ props, title, address, hours }) {
   return (
     <TouchableOpacity
-      onPress={() => console.log("Restaurant Item Pressed")}
+      onPress={() => props.navigation.navigate("RestaurantView")}
       style={styles.item}
     >
       <View style={styles.restaurantImage}></View>
@@ -73,6 +73,7 @@ export default class Restaurants extends Component {
           data={DATA}
           renderItem={({ item }) => (
             <RestaurantItem
+              props={this.props}
               title={item.title}
               address={item.address}
               hours={item.hours}
