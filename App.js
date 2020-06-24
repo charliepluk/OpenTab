@@ -7,6 +7,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 // Import Pages
 import Home from "./components/home";
 import Restaurants from "./components/restaurants";
+import Order from "./components/order";
 
 import RootStackScreen from "./components/rootStackScreen";
 
@@ -38,13 +39,16 @@ const Drawer = createDrawerNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <RootStackScreen />
-      {/* <Drawer.Navigator
+      {/* <RootStackScreen /> */}
+      <Drawer.Navigator
         drawerContent={(props) => <DrawerContent {...props} />}
         initialRouteName="Home"
       >
         <Drawer.Screen name="Home" component={HomeStackScreen} />
-      </Drawer.Navigator> */}
+        <Drawer.Screen name="Order" options={{ headerShown: false }}>
+          {(props) => <Order {...props} />}
+        </Drawer.Screen>
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 }

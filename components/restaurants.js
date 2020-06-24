@@ -60,7 +60,10 @@ export default class Restaurants extends Component {
             <ArrowBack width={35} height={35} />
           </TouchableOpacity>
 
-          <TouchableOpacity style={navStyles.orderTab}>
+          <TouchableOpacity
+            style={navStyles.orderTab}
+            onPress={() => this.props.navigation.navigate("Order")}
+          >
             <OrderIcon width={35} height={35} />
           </TouchableOpacity>
         </SafeAreaView>
