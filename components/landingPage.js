@@ -18,7 +18,7 @@ export default class landingPage extends Component {
         <View style={styles.pageContainer}>
           <Button
             style={styles.loginButton}
-            onPress={() => console.log("Log in button is pressed")}
+            onPress={() => this.props.navigation.navigate("CustomerLogin")}
             mode="contained"
             compact="true"
             color="#FFFFFF"
@@ -28,7 +28,7 @@ export default class landingPage extends Component {
 
           <Button
             style={styles.signupButton}
-            onPress={() => console.log("Sign up button is pressed")}
+            onPress={() => this.props.navigation.navigate("CustomerSignup")}
             mode="contained"
             compact="true"
             color="#FFFFFF"

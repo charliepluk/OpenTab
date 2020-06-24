@@ -5,9 +5,10 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 
 // Import Pages
-import CustomerLogin from "./components/customerLogin";
 import Home from "./components/home";
 import Restaurants from "./components/restaurants";
+
+import RootStackScreen from "./components/rootStackScreen";
 
 // Import Drawer Content
 import DrawerContent from "./components/drawerContent";
@@ -25,7 +26,6 @@ const HomeStackScreen = ({ navigation }) => (
     <HomeStack.Screen name="Home" options={{ headerShown: false }}>
       {(props) => <Home {...props} />}
     </HomeStack.Screen>
-
     <HomeStack.Screen name="Restaurants" options={{ headerShown: false }}>
       {(props) => <Restaurants {...props} />}
     </HomeStack.Screen>
@@ -38,12 +38,13 @@ const Drawer = createDrawerNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator
+      <RootStackScreen />
+      {/* <Drawer.Navigator
         drawerContent={(props) => <DrawerContent {...props} />}
         initialRouteName="Home"
       >
         <Drawer.Screen name="Home" component={HomeStackScreen} />
-      </Drawer.Navigator>
+      </Drawer.Navigator> */}
     </NavigationContainer>
   );
 }
