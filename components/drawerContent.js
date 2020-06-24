@@ -65,6 +65,7 @@ export default function DrawerContent(props) {
               Log Out
             </Text>
           )}
+          onPress={() => props.navigation.navigate("LandingPage")}
         />
       </View>
     </View>

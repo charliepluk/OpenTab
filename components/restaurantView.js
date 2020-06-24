@@ -40,16 +40,12 @@ export default class restaurantView extends Component {
         <Text style={styles.restaurantDescription}>
           {description.description}
         </Text>
+
         <Button
           style={styles.connectButton}
           onPress={() => console.log("Connect button is pressed")}
-          mode="contained"
-          compact="true"
-          color="#FF9466"
         >
-          <Text style={{ color: "#FFFFFF", fontSize: 18, fontWeight: "bold" }}>
-            Connect
-          </Text>
+          <Text style={{ color: "#FFFFFF" }}>Connect</Text>
         </Button>
 
         <View style={styles.thinRectangle}></View>

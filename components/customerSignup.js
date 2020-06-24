@@ -51,7 +51,9 @@ export default class customerSignup extends Component {
           <Text style={styles.forgotpasswordHeader}>
             Already have an account?
           </Text>
-          <TouchableOpacity onPress={() => console.log("Sign in text clicked")}>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate("CustomerLogin")}
+          >
             <Text style={styles.signupHeader}>Sign in!</Text>
           </TouchableOpacity>
         </View>

@@ -65,7 +65,10 @@ export default class Order extends Component {
         />
 
         <View style={styles.buttonContainer}>
-          <Button style={styles.button}>
+          <Button
+            style={styles.button}
+            onPress={() => console.log("Order Button Pressed")}
+          >
             <Text style={{ color: "#F6F6F6" }}>Order</Text>
           </Button>
         </View>

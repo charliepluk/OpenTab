@@ -43,14 +43,16 @@ export default class CustomerLogin extends Component {
 
         <View style={{ flexDirection: "row" }}>
           <Text style={styles.forgotpasswordHeader}>New OpenTab?</Text>
-          <TouchableOpacity onPress={() => console.log("Sign up text clicked")}>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate("CustomerSignup")}
+          >
             <Text style={styles.signupHeader}>Sign up!</Text>
           </TouchableOpacity>
         </View>
 
         <Button
           style={styles.button}
-          onPress={() => console.log("Login button is pressed")}
+          onPress={() => this.props.navigation.navigate("Home")}
           mode="contained"
           compact="true"
           color="#FF9466"
