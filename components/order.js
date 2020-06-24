@@ -3,10 +3,10 @@ import { View, Text, SafeAreaView } from "react-native";
 import { Button } from "react-native-paper";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-export default class Home extends Component {
+export default class Order extends Component {
   render() {
     return (
-      <View style={styles.container}>
+      <View style={{ flex: 1, backgroundColor: "#FF9466" }}>
         <View></View>
       </View>
     );
