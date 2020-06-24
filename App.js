@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import { Text } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, DarkTheme } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 
 // Import Pages
+import LandingPage from "./components/landingPage";
+import CustomerSignup from "./components/customerSignup";
+import CustomerLogin from "./components/customerLogin";
 import Home from "./components/home";
 import Restaurants from "./components/restaurants";
 import RestaurantView from "./components/restaurantView";
@@ -46,8 +49,23 @@ export default function App() {
       {/* <RootStackScreen /> */}
       <Drawer.Navigator
         drawerContent={(props) => <DrawerContent {...props} />}
-        initialRouteName="Home"
+        initialRouteName="LandingPage"
       >
+        <Drawer.Screen
+          name="LandingPage"
+          component={LandingPage}
+          headerMode="none"
+        />
+        <Drawer.Screen
+          name="CustomerSignup"
+          component={CustomerSignup}
+          headerMode="none"
+        />
+        <Drawer.Screen
+          name="CustomerLogin"
+          component={CustomerLogin}
+          headerMode="none"
+        />
         <Drawer.Screen name="Home" component={HomeStackScreen} />
         <Drawer.Screen name="Order" options={{ headerShown: false }}>
           {(props) => <Order {...props} />}

@@ -44,7 +44,8 @@ const styles = StyleSheet.create({
     height: 46,
     width: 276,
     justifyContent: "center",
-    alignItems: "center",
+    borderRadius: 0,
+    backgroundColor: "#FF9466",
   },
 
   thinRectangle: {
