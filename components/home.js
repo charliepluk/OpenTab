@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, Text, SafeAreaView } from "react-native";
 import { Button } from "react-native-paper";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import * as Animatable from "react-native-animatable";
 
 // Import Stylesheets
 import { styles } from "../stylesheet/homeStyle";
@@ -23,7 +24,10 @@ export default class Home extends Component {
             <MenuIcon width={35} height={35} />
           </TouchableOpacity>
 
-          <TouchableOpacity style={navStyles.orderTab}>
+          <TouchableOpacity
+            style={navStyles.orderTab}
+            onPress={() => this.props.navigation.navigate("Order")}
+          >
             <OrderIcon width={35} height={35} />
           </TouchableOpacity>
         </SafeAreaView>
@@ -31,8 +35,20 @@ export default class Home extends Component {
         <View style={styles.welcomeContainer}>
           <View style={styles.titleBox}>
             <Text style={styles.label}>Welcome to</Text>
-            <Text style={styles.title}>OPEN</Text>
-            <Text style={styles.title}>TAB</Text>
+            <Animatable.Text
+              animation="fadeInLeftBig"
+              duraton="2500"
+              style={styles.title}
+            >
+              OPEN
+            </Animatable.Text>
+            <Animatable.Text
+              animation="fadeInLeft"
+              duraton="1600"
+              style={styles.title}
+            >
+              TAB
+            </Animatable.Text>
           </View>
         </View>
 
