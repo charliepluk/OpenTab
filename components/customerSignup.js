@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, Text, TextInput } from "react-native";
 import { Button } from "react-native-paper";
 import { styles } from "../stylesheet/customerLogin-Signup";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default class customerSignup extends Component {
   state = {
@@ -45,6 +46,15 @@ export default class customerSignup extends Component {
           selectionColor="#FF9466"
           underlineColor="#F1F1F1"
         />
+
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.forgotpasswordHeader}>
+            Already have an account?
+          </Text>
+          <TouchableOpacity onPress={() => console.log("Sign in text clicked")}>
+            <Text style={styles.signupHeader}>Sign in!</Text>
+          </TouchableOpacity>
+        </View>
 
         <Button
           style={styles.button}

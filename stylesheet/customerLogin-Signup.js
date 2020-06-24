@@ -60,6 +60,13 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
 
+  signupHeader: {
+    color: "#FF9466",
+    paddingTop: 10,
+    paddingLeft: 2,
+    fontSize: 12,
+  },
+
   button: {
     marginTop: 45,
     marginLeft: 140,
