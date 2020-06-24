@@ -33,8 +33,9 @@ const styles = StyleSheet.create({
 
   restaurantDescription: {
     fontSize: 16,
-    marginTop: 50,
+    marginTop: 30,
     marginLeft: 30,
+    padding: 1,
   },
 
   connectButton: {

@@ -21,19 +21,30 @@ const DATA = [
     title: "Cam's Tavern",
     hours: "10AM - 1AM",
     address: "550 Huntington Ave, Boston, MA 02115",
+    description:
+      "Cam's Tavern is the best local place to grab a drink! They have excellent service!",
   },
   {
     id: "1",
     title: "Patel's Best",
     hours: "10AM - 1AM",
     address: "550 Huntington Ave, Boston, MA 02115",
+    description:
+      "Best place in town to grab the best curry! The food is authentic!",
   },
 ];
 
-function RestaurantItem({ props, title, address, hours }) {
+function RestaurantItem({ props, title, address, hours, description }) {
   return (
     <TouchableOpacity
-      onPress={() => props.navigation.navigate("RestaurantView")}
+      onPress={() =>
+        props.navigation.navigate("RestaurantView", {
+          title: { title },
+          hours: { hours },
+          address: { address },
+          description: { description },
+        })
+      }
       style={styles.item}
     >
       <View style={styles.restaurantImage}></View>
@@ -77,6 +88,7 @@ export default class Restaurants extends Component {
               title={item.title}
               address={item.address}
               hours={item.hours}
+              description={item.description}
             />
           )}
           keyExtractor={(item) => item.id}

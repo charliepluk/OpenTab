@@ -13,6 +13,11 @@ import OrderIcon from "../assets/svg/order-alt.svg";
 export default class restaurantView extends Component {
   state = {};
   render() {
+    const { title } = this.props.route.params;
+    const { hours } = this.props.route.params;
+    const { address } = this.props.route.params;
+    const { description } = this.props.route.params;
+
     return (
       <View style={styles.container}>
         <SafeAreaView style={navStyles.navBar}>
@@ -29,10 +34,12 @@ export default class restaurantView extends Component {
         </SafeAreaView>
 
         <View style={styles.restaurantImage}></View>
-        <Text style={styles.restaurantName}>Cam's Tavern</Text>
-        <Text style={styles.restaurantHours}>Hours here</Text>
-        <Text style={styles.restaurantAddress}>Some address here</Text>
-        <Text style={styles.restaurantDescription}>Description here</Text>
+        <Text style={styles.restaurantName}>{title.title}</Text>
+        <Text style={styles.restaurantHours}>Hours: {hours.hours}</Text>
+        <Text style={styles.restaurantAddress}>{address.address}</Text>
+        <Text style={styles.restaurantDescription}>
+          {description.description}
+        </Text>
         <Button
           style={styles.connectButton}
           onPress={() => console.log("Connect button is pressed")}
