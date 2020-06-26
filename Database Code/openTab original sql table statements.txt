@@ -1,0 +1,67 @@
+=================
+RESTAURANTS TABLE
+=================
+INSERT INTO `restaurants`(`restName`, `restPhone`, `restEmail`, `restLocation`) VALUES ('Flanns','1-234-456-1234','flanns@test.com','555 huntington avenue')
+
+CREATE TABLE opentab.restaurants(
+    restID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    restName varchar(50) NOT NULL,
+    restPhone varchar(14) NOT NULL UNIQUE,
+    restEmail varchar(50) NOT NULL UNIQUE,
+    restLocation varchar(100) NOT NULL UNIQUE
+);
+
+
+=================
+CUSTOMERS TABLE
+=================
+INSERT INTO `customers`(`customerFirstName`, `customerLastName`, `customerEmail`, `customerPhone`) VALUES ('Cam','Liddell','cam@test.com','12344567890')
+
+CREATE TABLE opentab.customers(
+    customerID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    customerEmail varchar(50) NOT NULL UNIQUE,
+    customerPassword varchar(20) NOT NULL
+);
+
+=============
+ORDERS TABLE
+=============
+INSERT INTO `orders`(`restID`, `customerID`, `orderNotes`) VALUES (1,1,'testnote')
+
+CREATE TABLE opentab.orders(
+    orderID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    restID int,
+	FOREIGN KEY (restID) REFERENCES openTab.restaurants(restID) ON DELETE CASCADE,
+    customerID int,
+	FOREIGN KEY (customerID) REFERENCES openTab.customers(customerID) ON DELETE CASCADE,
+    orderNotes varchar(150),
+    orderDateTime datetime DEFAULT CURRENT_TIMESTAMP
+);
+
+===========
+ITEMS TABLE
+===========
+INSERT INTO `items`(`restID`, `itemName`, `itemPrice`) VALUES (2,'Moscow Mule',12.69)
+
+CREATE TABLE opentab.items(
+    itemID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    restID int,
+	FOREIGN KEY (restID) REFERENCES openTab.restaurants(restID) ON DELETE CASCADE,
+    itemName varchar(25) NOT NULL,
+    itemPrice decimal(6,2) NOT NULL
+);
+
+=================
+ORDERITEMS TABLE
+=================
+INSERT INTO `order_items`(`orderID`, `itemID`, `itemQuantity`, `totalPriceOfItems`) VALUES (4,1,2,25.38)
+
+CREATE TABLE opentab.order_items(
+    orderItemsID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    orderID int,
+	FOREIGN KEY (orderID) REFERENCES openTab.orders(orderID) ON DELETE CASCADE,
+    itemID int,
+	FOREIGN KEY (itemID) REFERENCES openTab.items(itemID) ON DELETE CASCADE,
+    itemQuantity int(2) NOT NULL,
+    totalPriceOfItems decimal(6,2) NOT NULL
+);
