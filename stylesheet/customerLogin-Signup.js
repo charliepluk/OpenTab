@@ -58,6 +58,14 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingLeft: 50,
     fontSize: 12,
+    textDecorationLine: "underline",
+  },
+
+  plainTextHeader: {
+    color: "#FF9466",
+    paddingTop: 10,
+    paddingLeft: 50,
+    fontSize: 12,
   },
 
   signupHeader: {
@@ -65,6 +73,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingLeft: 2,
     fontSize: 12,
+    textDecorationLine: "underline",
   },
 
   button: {

@@ -1,14 +1,70 @@
 import React, { Component } from "react";
-import { View, Text, TextInput } from "react-native";
+import { View, Text, TextInput, Alert } from "react-native";
 import { Button } from "react-native-paper";
 import { styles } from "../stylesheet/customerLogin-Signup";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import axios from "axios";
+import * as EmailValidator from "email-validator";
 
 export default class CustomerLogin extends Component {
   state = {
     email: "",
     password: "",
   };
+
+  verifyLogin = () => {
+    if (!EmailValidator.validate(this.state.email)) {
+      Alert.alert(
+        "Check email",
+        "The email you entered is not valid, please try again."
+      );
+    } else {
+      axios
+        .post("http://10.0.0.27:3000/requestRoutes/verifyLogin", {
+          email: this.state.email,
+          password: this.state.password,
+        })
+        .then((res) => {
+          //if: account doesn't exist
+          if (res.data === "accountDoesntExist") {
+            Alert.alert(
+              "Account doesn't exist",
+              "The email you input isn't registered with an OpenTab account."
+            );
+          }
+          //else if: the password for the email is incorrect
+          else if (res.data === "incorrectPassword") {
+            Alert.alert(
+              "Incorrect Password",
+              'The password you entered for:\n"' +
+                this.state.email +
+                '", is incorrect, please try again.'
+            );
+          }
+          //if: DB returned an error
+          else if (res.data == "err") {
+            Alert.alert(
+              "Error",
+              `An unexpected error occured, sorry about that!`
+            );
+          }
+          //else: successful login, returns customerID from DB and the email, password is omitted
+          else {
+            Alert.alert(
+              "Successful Login",
+              "You have successfully logged into OpenTab."
+            );
+            console.log(res.data[0]);
+          }
+        })
+        //catch any errors from the post call
+        .catch((err) => {
+          console.log("ERROR OCCURED: ");
+          console.log(err);
+        });
+    }
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -42,7 +98,7 @@ export default class CustomerLogin extends Component {
         </TouchableOpacity>
 
         <View style={{ flexDirection: "row" }}>
-          <Text style={styles.forgotpasswordHeader}>New OpenTab?</Text>
+          <Text style={styles.plainTextHeader}>New to OpenTab?</Text>
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate("CustomerSignup")}
           >
@@ -52,7 +108,8 @@ export default class CustomerLogin extends Component {
 
         <Button
           style={styles.button}
-          onPress={() => this.props.navigation.navigate("Home")}
+          //onPress={() => this.props.navigation.navigate("Home")}
+          onPress={this.verifyLogin}
           mode="contained"
           compact="true"
           color="#FF9466"
