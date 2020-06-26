@@ -7,6 +7,12 @@ import axios from "axios";
 import * as EmailValidator from "email-validator";
 
 export default class customerSignup extends Component {
+  state = {
+    email: "",
+    password: "",
+    confirmPassword: "",
+  };
+
   //Sends data entered by the user to server to create a new account
   createAccount = () => {
     //if passwords match and valid email is entered, create post request to server to create account
@@ -26,14 +32,16 @@ export default class customerSignup extends Component {
               "Account already exists",
               "The email you entered is already registered with an OpenTab account, please try another email."
             );
-            //else if err from db alert an error occured
-          } else if (res.data === "err") {
+          }
+          //else if err from db alert an error occured
+          else if (res.data === "err") {
             Alert.alert(
               "Error Occured",
               "An error occured while trying to create your account."
             );
-            //else the account was successfully created
-          } else {
+          }
+          //else the account was successfully created
+          else {
             Alert.alert(
               "Account created",
               "You have sucessfully created an OpenTab account!"
@@ -59,11 +67,7 @@ export default class customerSignup extends Component {
     }
   };
 
-  state = {
-    email: "",
-    password: "",
-    confirmPassword: "",
-  };
+  //Render method
 
   render() {
     return (
@@ -103,9 +107,7 @@ export default class customerSignup extends Component {
         />
 
         <View style={{ flexDirection: "row" }}>
-          <Text style={styles.forgotpasswordHeader}>
-            Already have an account?
-          </Text>
+          <Text style={styles.plainTextHeader}>Already have an account?</Text>
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate("CustomerLogin")}
           >

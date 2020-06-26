@@ -25,4 +25,42 @@ router.post("/createAccount", function (req, res, next) {
   );
 });
 
+//****************
+//* Verify Login *
+//****************
+router.post("/verifyLogin", function (req, res, next) {
+  var holdOBJ = req.body;
+  var email = holdOBJ.email;
+  var password = holdOBJ.password;
+  mysql.query(
+    `SELECT * FROM \`customers\` WHERE customerEmail = "${email}"`,
+    function (err, result, field) {
+      //if: DB error
+      if (err) {
+        console.log(err);
+        res.send("err");
+      } else {
+        //if: the returned object is empty, no account with supplied email was found
+        if (JSON.stringify(result) === JSON.stringify([])) {
+          console.log("accountDoesntExist");
+          res.send("accountDoesntExist");
+        }
+        //else if: the supplied password doesn't match the actual password of the email account (account exists)
+        else if (result[0].customerPassword !== password) {
+          //console.log(result[0].customerID);
+          console.log("incorrectPassword");
+          res.send("incorrectPassword");
+        }
+        //else login was succesful
+        else {
+          //remove customer password before sending back the rest of the object, for ex. -->  [{ customerID: 1, customerEmail: 'test@gmail.com' }]
+          delete result[0].customerPassword;
+          console.log("Successful login");
+          res.send(result);
+        }
+      }
+    }
+  );
+});
+
 module.exports = router;
