@@ -8,9 +8,11 @@ var bodyParser = require("body-parser");
 //******************
 router.post("/createAccount", function (req, res, next) {
   var holdOBJ = req.body;
+  var email = holdOBJ.email;
+  var password = holdOBJ.password;
 
   mysql.query(
-    `INSERT INTO customers(customerEmail,customerPassword) VALUES("${holdOBJ.email}","${holdOBJ.password}")`,
+    `INSERT INTO customers(customerEmail,customerPassword) VALUES("${email}","${password}")`,
     function (err, result, field) {
       if (err) {
         if (err.code === "ER_DUP_ENTRY") {
@@ -32,13 +34,14 @@ router.post("/verifyLogin", function (req, res, next) {
   var holdOBJ = req.body;
   var email = holdOBJ.email;
   var password = holdOBJ.password;
+
   mysql.query(
     `SELECT * FROM \`customers\` WHERE customerEmail = "${email}"`,
     function (err, result, field) {
       //if: DB error
       if (err) {
         console.log(err);
-        res.send("err");
+        res.send("DB error");
       } else {
         //if: the returned object is empty, no account with supplied email was found
         if (JSON.stringify(result) === JSON.stringify([])) {
@@ -47,7 +50,6 @@ router.post("/verifyLogin", function (req, res, next) {
         }
         //else if: the supplied password doesn't match the actual password of the email account (account exists)
         else if (result[0].customerPassword !== password) {
-          //console.log(result[0].customerID);
           console.log("incorrectPassword");
           res.send("incorrectPassword");
         }

@@ -8,7 +8,10 @@ CREATE TABLE opentab.restaurants(
     restName varchar(50) NOT NULL,
     restPhone varchar(14) NOT NULL UNIQUE,
     restEmail varchar(50) NOT NULL UNIQUE,
-    restLocation varchar(100) NOT NULL UNIQUE
+    restLocation varchar(100) NOT NULL UNIQUE,
+    restDescription varchar(200),
+    restOpenTime time(0),
+    restCloseTime time(0)
 );
 
 
