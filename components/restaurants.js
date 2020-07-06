@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from "react-native";
+import axios from "axios";
 
 // Import Styles
 import { styles } from "../stylesheet/restaurantsStyle";
@@ -14,25 +15,6 @@ import { navStyles } from "../stylesheet/navbarStyle";
 // Import SVGs
 import ArrowBack from "../assets/svg/arrow-back.svg";
 import OrderIcon from "../assets/svg/order-alt.svg";
-
-const DATA = [
-  {
-    id: "0",
-    title: "Cam's Tavern",
-    hours: "10AM - 1AM",
-    address: "550 Huntington Ave, Boston, MA 02115",
-    description:
-      "Cam's Tavern is the best local place to grab a drink! They have excellent service!",
-  },
-  {
-    id: "1",
-    title: "Patel's Best",
-    hours: "10AM - 1AM",
-    address: "550 Huntington Ave, Boston, MA 02115",
-    description:
-      "Best place in town to grab the best curry! The food is authentic!",
-  },
-];
 
 function RestaurantItem({ props, title, address, hours, description }) {
   return (
@@ -58,7 +40,25 @@ function RestaurantItem({ props, title, address, hours, description }) {
 }
 
 export default class Restaurants extends Component {
-  state = {};
+  state = {
+    DATA: [],
+  };
+
+  componentDidMount() {
+    axios
+      .get("http://192.168.1.20:3000/requestRoutes/getRestaurants")
+      .then((res) => {
+        console.log(res.data);
+        this.setState({
+          DATA: res.data,
+        });
+      })
+      //catch any errors from the post call
+      .catch((err) => {
+        console.log("ERROR OCCURED: ");
+        console.log(err);
+      });
+  }
 
   render() {
     return (
@@ -81,17 +81,21 @@ export default class Restaurants extends Component {
 
         <FlatList
           style={styles.listContainer}
-          data={DATA}
+          data={this.state.DATA}
+          keyExtractor={(item) => item.restID.toString()}
           renderItem={({ item }) => (
             <RestaurantItem
               props={this.props}
-              title={item.title}
-              address={item.address}
-              hours={item.hours}
-              description={item.description}
+              title={item.restName}
+              address={item.restLocation}
+              hours={
+                item.restOpenTime.toString() +
+                " - " +
+                item.restCloseTime.toString()
+              }
+              description={item.restDescription}
             />
           )}
-          keyExtractor={(item) => item.id}
         />
       </View>
     );

@@ -65,4 +65,23 @@ router.post("/verifyLogin", function (req, res, next) {
   );
 });
 
+//********************************
+//* Get info for all restaurants *
+//********************************
+router.get("/getRestaurants", function (req, res, next) {
+  mysql.query(`SELECT * FROM \`restaurants\` WHERE 1`, function (
+    err,
+    result,
+    field
+  ) {
+    //if: DB error
+    if (err) {
+      console.log(err);
+      res.send("DB error");
+    } else {
+      console.log("gotRestaurants");
+      res.send(JSON.stringify(result));
+    }
+  });
+});
 module.exports = router;

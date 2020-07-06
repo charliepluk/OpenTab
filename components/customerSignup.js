@@ -21,7 +21,7 @@ export default class customerSignup extends Component {
       EmailValidator.validate(this.state.email)
     ) {
       axios
-        .post("http://10.0.0.27:3000/requestRoutes/createAccount", {
+        .post("http://192.168.1.20:3000/requestRoutes/createAccount", {
           email: this.state.email,
           password: this.state.password,
         })
@@ -42,10 +42,8 @@ export default class customerSignup extends Component {
           }
           //else the account was successfully created
           else {
-            Alert.alert(
-              "Account created",
-              "You have sucessfully created an OpenTab account!"
-            );
+            this.props.navigation.navigate("Home");
+            console.log(res.data[0]);
           }
         })
         .catch((err) => {
