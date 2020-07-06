@@ -20,7 +20,7 @@ export default class CustomerLogin extends Component {
       );
     } else {
       axios
-        .post("http://10.0.0.27:3000/requestRoutes/verifyLogin", {
+        .post("http://192.168.1.20:3000/requestRoutes/verifyLogin", {
           email: this.state.email,
           password: this.state.password,
         })
@@ -50,11 +50,8 @@ export default class CustomerLogin extends Component {
           }
           //else: successful login, returns customerID from DB and the email, password is omitted
           else {
-            Alert.alert(
-              "Successful Login",
-              "You have successfully logged into OpenTab."
-            );
             console.log(res.data[0]);
+            this.props.navigation.navigate("Home");
           }
         })
         //catch any errors from the post call

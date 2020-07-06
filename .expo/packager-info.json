@@ -1,10 +1,10 @@
 {
-  "expoServerPort": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
-  "packagerPort": null,
-  "packagerPid": null,
+  "expoServerPort": 19000,
+  "expoServerNgrokUrl": "https://5m-mw4.anonymous.opentab.exp.direct",
+  "packagerNgrokUrl": "https://packager.5m-mw4.anonymous.opentab.exp.direct",
+  "ngrokPid": 11924,
+  "packagerPort": 19001,
+  "packagerPid": 8660,
   "webpackServerPort": null,
   "devToolsPort": 19002
 }

@@ -42,7 +42,6 @@ const HomeStackScreen = ({ navigation }) => (
 
 // Create React Navigation Drawer
 const Drawer = createDrawerNavigator();
-
 export default function App() {
   return (
     <NavigationContainer>
