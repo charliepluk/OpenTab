@@ -12,6 +12,9 @@ import { navStyles } from "../stylesheet/navbarStyle";
 import MenuIcon from "../assets/svg/menu.svg";
 import OrderIcon from "../assets/svg/order.svg";
 
+//Import Async-Storage functions
+import { getData, storeData } from "../AsyncFunctions.js";
+
 export default class Home extends Component {
   render() {
     return (
@@ -54,10 +57,7 @@ export default class Home extends Component {
 
         <View style={styles.startContainer}>
           <Text style={styles.actionLabel}>Start your tab!</Text>
-          <Button
-            style={styles.button}
-            onPress={() => this.props.navigation.navigate("Restaurants")}
-          >
+          <Button style={styles.button} onPress={() => console.log(getData())}>
             <Text style={{ color: "#FF9466" }}>View Restaurants</Text>
           </Button>
         </View>
@@ -65,3 +65,4 @@ export default class Home extends Component {
     );
   }
 }
+//onPress={() => this.props.navigation.navigate("Restaurants")}

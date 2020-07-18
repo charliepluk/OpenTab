@@ -5,11 +5,12 @@ import { styles } from "../stylesheet/customerLogin-Signup";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import axios from "axios";
 import * as EmailValidator from "email-validator";
+import { getData, storeData } from "../AsyncFunctions.js";
 
 export default class CustomerLogin extends Component {
   state = {
-    email: "",
-    password: "",
+    email: "cam@gmail.com",
+    password: "test",
   };
 
   verifyLogin = () => {
@@ -50,8 +51,10 @@ export default class CustomerLogin extends Component {
           }
           //else: successful login, returns customerID from DB and the email, password is omitted
           else {
-            console.log(res.data[0]);
             this.props.navigation.navigate("Home");
+            //storeData(res.data[0].customerID.toString());
+            storeData("2");
+            //console.log(getData());
           }
         })
         //catch any errors from the post call
