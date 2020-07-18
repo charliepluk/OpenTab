@@ -1,6 +1,13 @@
 import React, { Component } from "react";
-import { View, Text, TouchableOpacity, SafeAreaView } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  SafeAreaView,
+  FlatList,
+} from "react-native";
 import { Button } from "react-native-paper";
+import axios from "axios";
 
 // Import Styles
 import { styles } from "../stylesheet/restaurantViewStyle";
@@ -11,7 +18,30 @@ import ArrowBack from "../assets/svg/arrow-back.svg";
 import OrderIcon from "../assets/svg/order-alt.svg";
 
 export default class restaurantView extends Component {
-  state = {};
+  state = {
+    DATA: [],
+  };
+
+  //get data to populate restaurants menu
+  componentDidMount() {
+    const { restID } = this.props.route.params;
+    axios
+      .post("http://192.168.1.20:3000/requestRoutes/getRestaurantMenu", {
+        restID: restID.restID,
+      })
+      .then((res) => {
+        console.log(res.data);
+        this.setState({
+          DATA: res.data,
+        });
+      })
+      //catch any errors from the post call
+      .catch((err) => {
+        console.log("ERROR OCCURED: ");
+        console.log(err);
+      });
+  }
+
   render() {
     const { title } = this.props.route.params;
     const { hours } = this.props.route.params;
@@ -52,19 +82,20 @@ export default class restaurantView extends Component {
 
         <Text style={styles.drinksHeader}>Drinks</Text>
 
-        <TouchableOpacity
-          style={styles.drinksList}
-          onPress={() => console.log("Drink 1 clicked")}
-        >
-          <View style={styles.drinksIcon}></View>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.drinksList}
-          onPress={() => console.log("Drink 2 clicked")}
-        >
-          <View style={styles.drinksIcon}></View>
-        </TouchableOpacity>
+        <FlatList
+          data={this.state.DATA}
+          keyExtractor={(item) => item.itemID.toString()}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              style={styles.drinksList}
+              onPress={() => console.log(item.itemName)}
+            >
+              <View style={styles.drinksIcon}></View>
+              <Text>{item.itemName}</Text>
+              <Text>{item.itemPrice}</Text>
+            </TouchableOpacity>
+          )}
+        />
       </View>
     );
   }
