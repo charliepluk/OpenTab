@@ -84,4 +84,26 @@ router.get("/getRestaurants", function (req, res, next) {
     }
   });
 });
+
+//****************************************
+//* Get menu options specific restaurant *
+//****************************************
+router.post("/getRestaurantMenu", function (req, res, next) {
+  var holdOBJ = req.body;
+  var restID = holdOBJ.restID;
+  mysql.query(`SELECT * FROM \`items\` WHERE restID="${restID}"`, function (
+    err,
+    result,
+    field
+  ) {
+    //if: DB error
+    if (err) {
+      console.log(err);
+      res.send("DB error");
+    } else {
+      console.log("gotRestaurantMenu");
+      res.send(JSON.stringify(result));
+    }
+  });
+});
 module.exports = router;

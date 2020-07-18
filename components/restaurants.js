@@ -16,7 +16,7 @@ import { navStyles } from "../stylesheet/navbarStyle";
 import ArrowBack from "../assets/svg/arrow-back.svg";
 import OrderIcon from "../assets/svg/order-alt.svg";
 
-function RestaurantItem({ props, title, address, hours, description }) {
+function RestaurantItem({ props, title, address, hours, description, restID }) {
   return (
     <TouchableOpacity
       onPress={() =>
@@ -25,6 +25,7 @@ function RestaurantItem({ props, title, address, hours, description }) {
           hours: { hours },
           address: { address },
           description: { description },
+          restID: { restID },
         })
       }
       style={styles.item}
@@ -94,6 +95,7 @@ export default class Restaurants extends Component {
                 item.restCloseTime.toString()
               }
               description={item.restDescription}
+              restID={item.restID}
             />
           )}
         />
