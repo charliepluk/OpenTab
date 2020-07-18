@@ -10,66 +10,76 @@ import HistoryIcon from "../assets/svg/orderHistory.svg";
 import PaymentIcon from "../assets/svg/payment.svg";
 import SettingsIcon from "../assets/svg/settings.svg";
 
+//Import async-storage functions
+import { getData, storeData } from "../AsyncFunctions.js";
+
 export default function DrawerContent(props) {
-  return (
-    <View style={styles.drawer}>
-      <SafeAreaView style={styles.nameSection}>
-        <Text style={styles.greeting}>Hi, Akshay!</Text>
-      </SafeAreaView>
-      <DrawerContentScrollView contentContainerStyle={styles.drawerContent}>
-        <View>
+  //var userLogID = getData();
+  if (false) {
+    return <Text style={styles.greeting}>Hi, Akshay!</Text>;
+  } else {
+    return (
+      <View style={styles.drawer}>
+        <SafeAreaView style={styles.nameSection}>
+          <Text style={styles.greeting}>Hi, Akshay!</Text>
+        </SafeAreaView>
+        <DrawerContentScrollView contentContainerStyle={styles.drawerContent}>
+          <View>
+            <DrawerItem
+              icon={() => <HomeIcon width={20} height={20} />}
+              style={styles.drawerItem}
+              label={() => (
+                <Text style={{ color: "#FF9466", fontWeight: "bold" }}>
+                  Home
+                </Text>
+              )}
+              onPress={() => {
+                props.navigation.navigate("Home");
+              }}
+            />
+            <DrawerItem
+              icon={() => <HistoryIcon width={20} height={20} />}
+              style={styles.drawerItem}
+              label={() => (
+                <Text style={{ color: "#FF9466", fontWeight: "bold" }}>
+                  Order History
+                </Text>
+              )}
+            />
+            <DrawerItem
+              icon={() => <PaymentIcon width={20} height={20} />}
+              style={styles.drawerItem}
+              label={() => (
+                <Text style={{ color: "#FF9466", fontWeight: "bold" }}>
+                  Payment Info
+                </Text>
+              )}
+            />
+            <DrawerItem
+              icon={() => <SettingsIcon width={20} height={20} />}
+              style={styles.drawerItem}
+              label={() => (
+                <Text style={{ color: "#FF9466", fontWeight: "bold" }}>
+                  Settings
+                </Text>
+              )}
+            />
+          </View>
+        </DrawerContentScrollView>
+        <View style={styles.signOutSection}>
           <DrawerItem
-            icon={() => <HomeIcon width={20} height={20} />}
-            style={styles.drawerItem}
-            label={() => (
-              <Text style={{ color: "#FF9466", fontWeight: "bold" }}>Home</Text>
-            )}
-            onPress={() => {
-              props.navigation.navigate("Home");
-            }}
-          />
-          <DrawerItem
-            icon={() => <HistoryIcon width={20} height={20} />}
-            style={styles.drawerItem}
+            icon={() => <LogOut width={20} height={20} />}
             label={() => (
               <Text style={{ color: "#FF9466", fontWeight: "bold" }}>
-                Order History
+                Log Out
               </Text>
             )}
-          />
-          <DrawerItem
-            icon={() => <PaymentIcon width={20} height={20} />}
-            style={styles.drawerItem}
-            label={() => (
-              <Text style={{ color: "#FF9466", fontWeight: "bold" }}>
-                Payment Info
-              </Text>
-            )}
-          />
-          <DrawerItem
-            icon={() => <SettingsIcon width={20} height={20} />}
-            style={styles.drawerItem}
-            label={() => (
-              <Text style={{ color: "#FF9466", fontWeight: "bold" }}>
-                Settings
-              </Text>
-            )}
+            onPress={() => props.navigation.navigate("LandingPage")}
           />
         </View>
-      </DrawerContentScrollView>
-      <View style={styles.signOutSection}>
-        <DrawerItem
-          icon={() => <LogOut width={20} height={20} />}
-          label={() => (
-            <Text style={{ color: "#FF9466", fontWeight: "bold" }}>
-              Log Out
-            </Text>
-          )}
-          onPress={() => props.navigation.navigate("LandingPage")}
-        />
       </View>
-    </View>
-  );
+    );
+  }
 }
 
 const styles = StyleSheet.create({
