@@ -5,11 +5,12 @@ import { styles } from "../stylesheet/customerLogin-Signup";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import axios from "axios";
 import * as EmailValidator from "email-validator";
-import { getData, storeData } from "../AsyncFunctions.js";
+import SyncStorage from "sync-storage";
+import App from "../App";
 
 export default class CustomerLogin extends Component {
   state = {
-    email: "cam@gmail.com",
+    email: "camm@gmail.com",
     password: "test",
   };
 
@@ -21,7 +22,7 @@ export default class CustomerLogin extends Component {
       );
     } else {
       axios
-        .post("http://192.168.1.20:3000/requestRoutes/verifyLogin", {
+        .post("http://10.0.0.27:3000/requestRoutes/verifyLogin", {
           email: this.state.email,
           password: this.state.password,
         })
@@ -51,10 +52,9 @@ export default class CustomerLogin extends Component {
           }
           //else: successful login, returns customerID from DB and the email, password is omitted
           else {
+            //store the value of userID from the DB into async-storage variable called userID
+            SyncStorage.set("userID", res.data[0].customerID.toString());
             this.props.navigation.navigate("Home");
-            //storeData(res.data[0].customerID.toString());
-            storeData("2");
-            //console.log(getData());
           }
         })
         //catch any errors from the post call

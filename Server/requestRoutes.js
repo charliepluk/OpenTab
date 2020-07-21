@@ -85,9 +85,9 @@ router.get("/getRestaurants", function (req, res, next) {
   });
 });
 
-//****************************************
-//* Get menu options specific restaurant *
-//****************************************
+//*************************************
+//* Get menu for a specific restaurant*
+//*************************************
 router.post("/getRestaurantMenu", function (req, res, next) {
   var holdOBJ = req.body;
   var restID = holdOBJ.restID;

@@ -12,76 +12,74 @@ import SettingsIcon from "../assets/svg/settings.svg";
 
 //Import async-storage functions
 import { getData, storeData } from "../AsyncFunctions.js";
+import SyncStorage from "sync-storage";
 
 export default function DrawerContent(props) {
-  //var userLogID = getData();
-  if (false) {
-    return <Text style={styles.greeting}>Hi, Akshay!</Text>;
-  } else {
-    return (
-      <View style={styles.drawer}>
-        <SafeAreaView style={styles.nameSection}>
-          <Text style={styles.greeting}>Hi, Akshay!</Text>
-        </SafeAreaView>
-        <DrawerContentScrollView contentContainerStyle={styles.drawerContent}>
-          <View>
-            <DrawerItem
-              icon={() => <HomeIcon width={20} height={20} />}
-              style={styles.drawerItem}
-              label={() => (
-                <Text style={{ color: "#FF9466", fontWeight: "bold" }}>
-                  Home
-                </Text>
-              )}
-              onPress={() => {
-                props.navigation.navigate("Home");
-              }}
-            />
-            <DrawerItem
-              icon={() => <HistoryIcon width={20} height={20} />}
-              style={styles.drawerItem}
-              label={() => (
-                <Text style={{ color: "#FF9466", fontWeight: "bold" }}>
-                  Order History
-                </Text>
-              )}
-            />
-            <DrawerItem
-              icon={() => <PaymentIcon width={20} height={20} />}
-              style={styles.drawerItem}
-              label={() => (
-                <Text style={{ color: "#FF9466", fontWeight: "bold" }}>
-                  Payment Info
-                </Text>
-              )}
-            />
-            <DrawerItem
-              icon={() => <SettingsIcon width={20} height={20} />}
-              style={styles.drawerItem}
-              label={() => (
-                <Text style={{ color: "#FF9466", fontWeight: "bold" }}>
-                  Settings
-                </Text>
-              )}
-            />
-          </View>
-        </DrawerContentScrollView>
-        <View style={styles.signOutSection}>
+  return (
+    <View style={styles.drawer}>
+      <SafeAreaView style={styles.nameSection}>
+        <Text style={styles.greeting}>Hi, Akshay!</Text>
+      </SafeAreaView>
+      <DrawerContentScrollView contentContainerStyle={styles.drawerContent}>
+        <View>
           <DrawerItem
-            icon={() => <LogOut width={20} height={20} />}
+            icon={() => <HomeIcon width={20} height={20} />}
+            style={styles.drawerItem}
+            label={() => (
+              <Text style={{ color: "#FF9466", fontWeight: "bold" }}>Home</Text>
+            )}
+            onPress={() => {
+              props.navigation.navigate("Home");
+            }}
+          />
+          <DrawerItem
+            icon={() => <HistoryIcon width={20} height={20} />}
+            style={styles.drawerItem}
             label={() => (
               <Text style={{ color: "#FF9466", fontWeight: "bold" }}>
-                Log Out
+                Order History
               </Text>
             )}
-            onPress={() => props.navigation.navigate("LandingPage")}
+          />
+          <DrawerItem
+            icon={() => <PaymentIcon width={20} height={20} />}
+            style={styles.drawerItem}
+            label={() => (
+              <Text style={{ color: "#FF9466", fontWeight: "bold" }}>
+                Payment Info
+              </Text>
+            )}
+          />
+          <DrawerItem
+            icon={() => <SettingsIcon width={20} height={20} />}
+            style={styles.drawerItem}
+            label={() => (
+              <Text style={{ color: "#FF9466", fontWeight: "bold" }}>
+                Settings
+              </Text>
+            )}
           />
         </View>
+      </DrawerContentScrollView>
+      <View style={styles.signOutSection}>
+        <DrawerItem
+          icon={() => <LogOut width={20} height={20} />}
+          label={() => (
+            <Text style={{ color: "#FF9466", fontWeight: "bold" }}>
+              Log Out
+            </Text>
+          )}
+          onPress={() => {
+            SyncStorage.set("userID", "noUser");
+            props.navigation.navigate("LandingPage");
+          }}
+        />
       </View>
-    );
-  }
+    </View>
+  );
 }
 
+//props.navigation.navigate("LandingPage")
 const styles = StyleSheet.create({
   drawer: {
     backgroundColor: "#F6F6F6",

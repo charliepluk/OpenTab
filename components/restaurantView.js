@@ -26,7 +26,7 @@ export default class restaurantView extends Component {
   componentDidMount() {
     const { restID } = this.props.route.params;
     axios
-      .post("http://192.168.1.20:3000/requestRoutes/getRestaurantMenu", {
+      .post("http://10.0.0.27:3000/requestRoutes/getRestaurantMenu", {
         restID: restID.restID,
       })
       .then((res) => {
