@@ -9,8 +9,8 @@ import SyncStorage from "sync-storage";
 
 export default class CustomerLogin extends Component {
   state = {
-    email: "cam@gmail.com",
-    password: "test",
+    email: "",
+    password: "",
   };
 
   verifyLogin = () => {
@@ -51,10 +51,9 @@ export default class CustomerLogin extends Component {
           }
           //else: successful login, returns customerID from DB and the email, password is omitted
           else {
-            //store the value of userID from the DB into async-storage variable called userID
-            //console.log(res.data[0]);
+            //store the returned user information in Sync-storage
             SyncStorage.set("userID", res.data[0].customerID.toString());
-            //SyncStorage.set("userID", res.data[0].customerID.toString());
+            SyncStorage.set("userEmail", res.data[0].customerEmail.toString());
             this.props.navigation.navigate("Home");
           }
         })

@@ -11,6 +11,7 @@ router.post("/createAccount", function (req, res, next) {
   var email = holdOBJ.email;
   var password = holdOBJ.password;
 
+  //insert data for the new account
   mysql.query(
     `INSERT INTO customers(customerEmail,customerPassword) VALUES("${email}","${password}")`,
     function (err, result, field) {
@@ -21,7 +22,25 @@ router.post("/createAccount", function (req, res, next) {
           res.send("err");
         }
       } else {
-        res.send("createSuccess");
+        console.log("createSuccess");
+      }
+    }
+  );
+
+  //select the newly created account and return its information
+  mysql.query(
+    `SELECT * FROM \`customers\` WHERE customerEmail = "${email}"`,
+    function (err, result, field) {
+      if (err) {
+        if (err.code === "ER_DUP_ENTRY") {
+          res.send("dupEmail");
+        } else {
+          res.send("err");
+        }
+      } else {
+        console.log("selectSuccess");
+        delete result[0].customerPassword;
+        res.send(result);
       }
     }
   );

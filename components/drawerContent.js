@@ -15,10 +15,13 @@ import { getData, storeData } from "../AsyncFunctions.js";
 import SyncStorage from "sync-storage";
 
 export default function DrawerContent(props) {
+  state = {
+    email: SyncStorage.get("userEmail"),
+  };
   return (
     <View style={styles.drawer}>
       <SafeAreaView style={styles.nameSection}>
-        <Text style={styles.greeting}>Hi, Akshay!</Text>
+        <Text style={styles.greeting}>Hi, {this.state.email}!</Text>
       </SafeAreaView>
       <DrawerContentScrollView contentContainerStyle={styles.drawerContent}>
         <View>

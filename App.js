@@ -19,8 +19,6 @@ import RootStackScreen from "./components/rootStackScreen";
 import DrawerContent from "./components/drawerContent";
 
 //Import Async-Storage functions
-// import { getData, storeData } from "./AsyncFunctions.js";
-// import AsyncStorage from "@react-native-community/async-storage";
 import SyncStorage from "sync-storage";
 
 // Disable Font Scaling on iOS
