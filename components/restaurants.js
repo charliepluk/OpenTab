@@ -16,6 +16,8 @@ import { navStyles } from "../stylesheet/navbarStyle";
 import ArrowBack from "../assets/svg/arrow-back.svg";
 import OrderIcon from "../assets/svg/order-alt.svg";
 
+import SyncStorage from "sync-storage";
+
 function RestaurantItem({ props, title, address, hours, description, restID }) {
   return (
     <TouchableOpacity
@@ -41,9 +43,7 @@ function RestaurantItem({ props, title, address, hours, description, restID }) {
 }
 
 export default class Restaurants extends Component {
-  state = {
-    DATA: [],
-  };
+  state = {};
 
   componentDidMount() {
     axios

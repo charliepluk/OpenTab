@@ -6,11 +6,10 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import axios from "axios";
 import * as EmailValidator from "email-validator";
 import SyncStorage from "sync-storage";
-import App from "../App";
 
 export default class CustomerLogin extends Component {
   state = {
-    email: "camm@gmail.com",
+    email: "cam@gmail.com",
     password: "test",
   };
 
@@ -53,7 +52,9 @@ export default class CustomerLogin extends Component {
           //else: successful login, returns customerID from DB and the email, password is omitted
           else {
             //store the value of userID from the DB into async-storage variable called userID
+            //console.log(res.data[0]);
             SyncStorage.set("userID", res.data[0].customerID.toString());
+            //SyncStorage.set("userID", res.data[0].customerID.toString());
             this.props.navigation.navigate("Home");
           }
         })
@@ -108,7 +109,6 @@ export default class CustomerLogin extends Component {
 
         <Button
           style={styles.button}
-          //onPress={() => this.props.navigation.navigate("Home")}
           onPress={this.verifyLogin}
           mode="contained"
           compact="true"

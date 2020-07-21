@@ -2,9 +2,9 @@
   "expoServerPort": 19000,
   "expoServerNgrokUrl": "https://5m-mw4.anonymous.opentab.exp.direct",
   "packagerNgrokUrl": "https://packager.5m-mw4.anonymous.opentab.exp.direct",
-  "ngrokPid": 2376,
+  "ngrokPid": 9540,
   "packagerPort": 19001,
-  "packagerPid": 2520,
+  "packagerPid": 2244,
   "webpackServerPort": null,
   "devToolsPort": 19002
 }

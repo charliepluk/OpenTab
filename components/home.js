@@ -12,10 +12,6 @@ import { navStyles } from "../stylesheet/navbarStyle";
 import MenuIcon from "../assets/svg/menu.svg";
 import OrderIcon from "../assets/svg/order.svg";
 
-//Import Async-Storage functions
-import { getData, storeData } from "../AsyncFunctions.js";
-import SyncStorage from "sync-storage";
-
 export default class Home extends Component {
   render() {
     return (
@@ -60,7 +56,7 @@ export default class Home extends Component {
           <Text style={styles.actionLabel}>Start your tab!</Text>
           <Button
             style={styles.button}
-            onPress={() => console.log(SyncStorage.get("userID"))}
+            onPress={() => this.props.navigation.navigate("Restaurants")}
           >
             <Text style={{ color: "#FF9466" }}>View Restaurants</Text>
           </Button>
@@ -69,4 +65,3 @@ export default class Home extends Component {
     );
   }
 }
-//onPress={() => this.props.navigation.navigate("Restaurants")}

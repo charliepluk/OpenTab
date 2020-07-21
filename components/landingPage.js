@@ -2,11 +2,6 @@ import React, { Component } from "react";
 import { View, Text } from "react-native";
 import { Button } from "react-native-paper";
 import { styles } from "../stylesheet/landingPageStyle";
-import { getData, storeData } from "../AsyncFunctions.js";
-
-navigationOptions: {
-  drawerLockMode: "locked-closed";
-}
 
 export default class landingPage extends Component {
   render() {

@@ -19,8 +19,8 @@ import RootStackScreen from "./components/rootStackScreen";
 import DrawerContent from "./components/drawerContent";
 
 //Import Async-Storage functions
-import { getData, storeData } from "./AsyncFunctions.js";
-import AsyncStorage from "@react-native-community/async-storage";
+// import { getData, storeData } from "./AsyncFunctions.js";
+// import AsyncStorage from "@react-native-community/async-storage";
 import SyncStorage from "sync-storage";
 
 // Disable Font Scaling on iOS
@@ -51,37 +51,43 @@ const Drawer = createDrawerNavigator();
 export default function App() {
   var test = SyncStorage.get("userID");
   console.log(test);
-  if (test == "noUser" || test == undefined) {
-    return <NavigationContainer>{<RootStackScreen />}</NavigationContainer>;
-  } else {
-    return (
-      <NavigationContainer>
-        {/* <RootStackScreen /> */}
-        <Drawer.Navigator
-          drawerContent={(props) => <DrawerContent {...props} />}
-          initialRouteName="Home"
-        >
-          <Drawer.Screen
-            name="LandingPage"
-            component={LandingPage}
-            headerMode="none"
-          />
-          <Drawer.Screen
-            name="CustomerSignup"
-            component={CustomerSignup}
-            headerMode="none"
-          />
-          <Drawer.Screen
-            name="CustomerLogin"
-            component={CustomerLogin}
-            headerMode="none"
-          />
-          <Drawer.Screen name="Home" component={HomeStackScreen} />
-          <Drawer.Screen name="Order" options={{ headerShown: false }}>
-            {(props) => <Order {...props} />}
-          </Drawer.Screen>
-        </Drawer.Navigator>
-      </NavigationContainer>
-    );
-  }
+  return (
+    <NavigationContainer>
+      {/* <RootStackScreen /> */}
+      <Drawer.Navigator
+        drawerContent={(props) => <DrawerContent {...props} />}
+        initialRouteName="LandingPage"
+      >
+        <Drawer.Screen
+          name="LandingPage"
+          component={LandingPage}
+          headerMode="none"
+          options={{
+            gestureEnabled: false,
+          }}
+        />
+        <Drawer.Screen
+          screenOptions={{ gestureEnabled: false }}
+          name="CustomerSignup"
+          component={CustomerSignup}
+          headerMode="none"
+          options={{
+            gestureEnabled: false,
+          }}
+        />
+        <Drawer.Screen
+          name="CustomerLogin"
+          component={CustomerLogin}
+          headerMode="none"
+          options={{
+            gestureEnabled: false,
+          }}
+        />
+        <Drawer.Screen name="Home" component={HomeStackScreen} />
+        <Drawer.Screen name="Order" options={{ headerShown: false }}>
+          {(props) => <Order {...props} />}
+        </Drawer.Screen>
+      </Drawer.Navigator>
+    </NavigationContainer>
+  );
 }
