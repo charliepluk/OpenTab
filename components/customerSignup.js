@@ -5,6 +5,7 @@ import { styles } from "../stylesheet/customerLogin-Signup";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import axios from "axios";
 import * as EmailValidator from "email-validator";
+import SyncStorage from "sync-storage";
 
 export default class customerSignup extends Component {
   state = {
@@ -21,7 +22,7 @@ export default class customerSignup extends Component {
       EmailValidator.validate(this.state.email)
     ) {
       axios
-        .post("http://192.168.1.20:3000/requestRoutes/createAccount", {
+        .post("http://10.0.0.27:3000/requestRoutes/createAccount", {
           email: this.state.email,
           password: this.state.password,
         })
@@ -42,8 +43,10 @@ export default class customerSignup extends Component {
           }
           //else the account was successfully created
           else {
+            //store the returned user information in Sync-storage
+            SyncStorage.set("userID", res.data[0].customerID.toString());
+            SyncStorage.set("userEmail", res.data[0].customerEmail.toString());
             this.props.navigation.navigate("Home");
-            console.log(res.data[0]);
           }
         })
         .catch((err) => {

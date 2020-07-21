@@ -18,6 +18,9 @@ import RootStackScreen from "./components/rootStackScreen";
 // Import Drawer Content
 import DrawerContent from "./components/drawerContent";
 
+//Import Async-Storage functions
+import SyncStorage from "sync-storage";
+
 // Disable Font Scaling on iOS
 Text.defaultProps = Text.defaultProps || {};
 Text.defaultProps.allowFontScaling = false;
@@ -41,8 +44,11 @@ const HomeStackScreen = ({ navigation }) => (
 );
 
 // Create React Navigation Drawer
+
 const Drawer = createDrawerNavigator();
 export default function App() {
+  var test = SyncStorage.get("userID");
+  console.log(test);
   return (
     <NavigationContainer>
       {/* <RootStackScreen /> */}
@@ -54,16 +60,26 @@ export default function App() {
           name="LandingPage"
           component={LandingPage}
           headerMode="none"
+          options={{
+            gestureEnabled: false,
+          }}
         />
         <Drawer.Screen
+          screenOptions={{ gestureEnabled: false }}
           name="CustomerSignup"
           component={CustomerSignup}
           headerMode="none"
+          options={{
+            gestureEnabled: false,
+          }}
         />
         <Drawer.Screen
           name="CustomerLogin"
           component={CustomerLogin}
           headerMode="none"
+          options={{
+            gestureEnabled: false,
+          }}
         />
         <Drawer.Screen name="Home" component={HomeStackScreen} />
         <Drawer.Screen name="Order" options={{ headerShown: false }}>

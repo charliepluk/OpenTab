@@ -17,16 +17,16 @@ import { navStyles } from "../stylesheet/navbarStyle";
 import ArrowBack from "../assets/svg/arrow-back.svg";
 import OrderIcon from "../assets/svg/order-alt.svg";
 
+import SyncStorage from "sync-storage";
+
 export default class restaurantView extends Component {
-  state = {
-    DATA: [],
-  };
+  state = {};
 
   //get data to populate restaurants menu
   componentDidMount() {
     const { restID } = this.props.route.params;
     axios
-      .post("http://192.168.1.20:3000/requestRoutes/getRestaurantMenu", {
+      .post("http://10.0.0.27:3000/requestRoutes/getRestaurantMenu", {
         restID: restID.restID,
       })
       .then((res) => {
@@ -58,7 +58,10 @@ export default class restaurantView extends Component {
             <ArrowBack width={35} height={35} />
           </TouchableOpacity>
 
-          <TouchableOpacity style={navStyles.orderTab}>
+          <TouchableOpacity
+            style={navStyles.orderTab}
+            onPress={() => this.props.navigation.navigate("Order")}
+          >
             <OrderIcon width={35} height={35} />
           </TouchableOpacity>
         </SafeAreaView>
