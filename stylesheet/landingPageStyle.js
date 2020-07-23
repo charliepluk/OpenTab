@@ -38,19 +38,21 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 20,
     marginTop: 3,
-    paddingTop: 3,
+    paddingTop: 1,
     paddingLeft: 50,
     color: "#FFFFFF",
   },
 
   pageContainer: {
+    flex: 1,
     backgroundColor: "#F7F7F7",
     height: 210,
     width: 500,
-    marginTop: 100,
+    marginTop: 30,
   },
 
   loginButton: {
+    flex: 0,
     marginTop: 35,
     marginLeft: 69,
     height: 55,
@@ -62,6 +64,7 @@ const styles = StyleSheet.create({
   },
 
   signupButton: {
+    flex: 0,
     marginTop: 35,
     marginLeft: 69,
     height: 55,
