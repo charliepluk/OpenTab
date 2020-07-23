@@ -23,7 +23,8 @@ INSERT INTO `customers`(`customerFirstName`, `customerLastName`, `customerEmail`
 CREATE TABLE opentab.customers(
     customerID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     customerEmail varchar(50) NOT NULL UNIQUE,
-    customerPassword varchar(20) NOT NULL
+    customerPassword varchar(20) NOT NULL,
+    ADD CUSTOMER FIRST NAME
 );
 
 =============
@@ -38,7 +39,8 @@ CREATE TABLE opentab.orders(
     customerID int,
 	FOREIGN KEY (customerID) REFERENCES openTab.customers(customerID) ON DELETE CASCADE,
     orderNotes varchar(150),
-    orderDateTime datetime DEFAULT CURRENT_TIMESTAMP
+    orderDateTime smalldatetime DEFAULT CURRENT_TIMESTAMP
+    ADD ORDER STATUS (completed, pending, completed)
 );
 
 ===========
@@ -51,7 +53,9 @@ CREATE TABLE opentab.items(
     restID int,
 	FOREIGN KEY (restID) REFERENCES openTab.restaurants(restID) ON DELETE CASCADE,
     itemName varchar(25) NOT NULL,
-    itemPrice decimal(6,2) NOT NULL
+    itemPrice decimal(6,2) NOT NULL,
+    itemDescription varchar(150),
+    itemType varchar(5) NOT NULL,
 );
 
 =================

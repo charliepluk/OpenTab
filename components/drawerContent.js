@@ -11,7 +11,6 @@ import PaymentIcon from "../assets/svg/payment.svg";
 import SettingsIcon from "../assets/svg/settings.svg";
 
 //Import async-storage functions
-import { getData, storeData } from "../AsyncFunctions.js";
 import SyncStorage from "sync-storage";
 
 export default function DrawerContent(props) {
@@ -43,6 +42,9 @@ export default function DrawerContent(props) {
                 Order History
               </Text>
             )}
+            onPress={() => {
+              props.navigation.navigate("OrderHistory");
+            }}
           />
           <DrawerItem
             icon={() => <PaymentIcon width={20} height={20} />}

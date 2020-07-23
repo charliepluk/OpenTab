@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   listContainer: {
     backgroundColor: "#F6F6F6",
-    height: "100%",
+    height: "80%",
   },
 
   item: {
@@ -33,6 +33,14 @@ const styles = StyleSheet.create({
 
   infoText: {
     fontSize: 12,
+  },
+
+  title: {
+    alignSelf: "center",
+    color: "#FEFEFE",
+    fontSize: 20,
+    fontWeight: "bold",
+    height: 57,
   },
 });
 

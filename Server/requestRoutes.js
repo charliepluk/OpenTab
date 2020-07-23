@@ -93,7 +93,6 @@ router.get("/getRestaurants", function (req, res, next) {
     result,
     field
   ) {
-    //if: DB error
     if (err) {
       console.log(err);
       res.send("DB error");
@@ -110,6 +109,8 @@ router.get("/getRestaurants", function (req, res, next) {
 router.post("/getRestaurantMenu", function (req, res, next) {
   var holdOBJ = req.body;
   var restID = holdOBJ.restID;
+
+  //select all from items where restID equals the supplied restID
   mysql.query(`SELECT * FROM \`items\` WHERE restID="${restID}"`, function (
     err,
     result,
@@ -125,4 +126,75 @@ router.post("/getRestaurantMenu", function (req, res, next) {
     }
   });
 });
+
+//******************************
+//* Get customer order history *
+//******************************
+router.post("/getCustomerOrderHistory", function (req, res, next) {
+  var userID = req.body.userID;
+
+  mysql.query(
+    `SELECT orders.orderID, restaurants.restID, orders.orderDateTime, restaurants.restName, restaurants.restLocation FROM orders
+    INNER JOIN restaurants ON orders.restID=restaurants.restID
+    WHERE customerID="${userID}"
+    ORDER BY orderDateTime DESC`,
+    function (err, result, field) {
+      if (err) {
+        console.log(err);
+        res.send("DB error");
+      } else {
+        var holdFormattedTime = "";
+        var resultSize = Object.keys(result).length;
+
+        //properly format all date times
+        for (i = 0; i < resultSize; i++) {
+          //split date time into individual strings for manipulation
+          holdFormattedTime = result[i]["orderDateTime"]
+            .toString()
+            .split(" ", 5);
+
+          result[i]["orderDateTime"] =
+            holdFormattedTime[1] +
+            " " +
+            holdFormattedTime[2] +
+            ", " +
+            holdFormattedTime[3] +
+            " - " +
+            holdFormattedTime[4];
+        }
+        console.log(result);
+        console.log("gotCustomerOrderHistory");
+        res.send(result);
+      }
+    }
+  );
+});
+
+//****************************************
+//* Get order items for specific orderID *
+//****************************************
+router.post("/getOrderItems", function (req, res, next) {
+  var orderID = req.body.orderID;
+
+  //gets all orderItems for a given orderID. Returns the itemQuantity, totalPriceOfItems, itemName and itemID
+  mysql.query(
+    `SELECT order_items.itemQuantity, order_items.totalPriceOfItems, items.itemName, items.itemID FROM order_items
+  INNER JOIN items ON order_items.itemID=items.itemID
+  WHERE orderID="${orderID}"`,
+    function (err, result, field) {
+      //if: DB error
+      if (err) {
+        console.log(err);
+        res.send("DB error");
+      } else {
+        console.log(result[0]);
+        console.log("gotOrderItems");
+        res.send(result);
+      }
+    }
+  );
+});
+
+//The line below returns orderID after inserting
+//`INSERT INTO orders(restID, customerID, orderNotes) VALUES (1,1,'')  RETURNING orderID as orderID`
 module.exports = router;
