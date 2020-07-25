@@ -19,6 +19,7 @@ import ArrowBack from "../assets/svg/arrow-back.svg";
 import OrderIcon from "../assets/svg/order-alt.svg";
 
 import SyncStorage from "sync-storage";
+import { ScrollView } from "react-native-gesture-handler";
 
 export default class restaurantView extends Component {
   state = {};
@@ -136,47 +137,48 @@ export default class restaurantView extends Component {
             <OrderIcon width={35} height={35} />
           </TouchableOpacity>
         </SafeAreaView>
+        <ScrollView>
+          <View style={styles.restaurantImage}></View>
+          <Text style={styles.restaurantName}>{title.title}</Text>
+          <Text style={styles.restaurantHours}>Hours: {hours.hours}</Text>
+          <Text style={styles.restaurantAddress}>{address.address}</Text>
+          <Text style={styles.restaurantDescription}>
+            {description.description}
+          </Text>
 
-        <View style={styles.restaurantImage}></View>
-        <Text style={styles.restaurantName}>{title.title}</Text>
-        <Text style={styles.restaurantHours}>Hours: {hours.hours}</Text>
-        <Text style={styles.restaurantAddress}>{address.address}</Text>
-        <Text style={styles.restaurantDescription}>
-          {description.description}
-        </Text>
+          <Button
+            style={styles.connectButton}
+            onPress={() => this.connectToRestaurant(restID.restID, title.title)}
+          >
+            <Text style={{ color: "#FFFFFF" }}>Connect</Text>
+          </Button>
 
-        <Button
-          style={styles.connectButton}
-          onPress={() => this.connectToRestaurant(restID.restID, title.title)}
-        >
-          <Text style={{ color: "#FFFFFF" }}>Connect</Text>
-        </Button>
+          <View style={styles.thinRectangle}></View>
 
-        <View style={styles.thinRectangle}></View>
+          <Text style={styles.drinksHeader}>Drinks</Text>
 
-        <Text style={styles.drinksHeader}>Drinks</Text>
-
-        <FlatList
-          data={this.state.DATA}
-          keyExtractor={(item) => item.itemID.toString()}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={styles.drinksList}
-              onPress={() =>
-                this.addPressedItemToOrder(
-                  item.itemID,
-                  item.itemName,
-                  item.itemPrice,
-                  restID.restID
-                )
-              }
-            >
-              <View style={styles.drinksIcon}></View>
-              <Text>{item.itemName}</Text>
-              <Text>{item.itemPrice}</Text>
-            </TouchableOpacity>
-          )}
-        />
+          <FlatList
+            data={this.state.DATA}
+            keyExtractor={(item) => item.itemID.toString()}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                style={styles.drinksList}
+                onPress={() =>
+                  this.addPressedItemToOrder(
+                    item.itemID,
+                    item.itemName,
+                    item.itemPrice,
+                    restID.restID
+                  )
+                }
+              >
+                <View style={styles.drinksIcon}></View>
+                <Text>{item.itemName}</Text>
+                <Text>{item.itemPrice}</Text>
+              </TouchableOpacity>
+            )}
+          />
+        </ScrollView>
       </View>
     );
   }
