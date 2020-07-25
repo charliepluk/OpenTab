@@ -5,6 +5,8 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 import CloseIcon from "../assets/svg/close.svg";
 import SyncStorage from "sync-storage";
+import axios from "axios";
+import { syncStringToArray } from "../jsonStringFunctions";
 
 function OrderItem({ name, price, quantity, totalPrice }) {
   return (
@@ -29,57 +31,45 @@ export default class Order extends Component {
   state = {};
 
   componentDidMount() {
-    //gets json obj as string from sync strage and turns it into array of json obj
+    //gets json string from sync storage
     var customerOrderString = SyncStorage.get("currentCustomerOrder");
-    var char = ",\n";
-    var i = 0;
-    var j = 0;
-    var customerOrderArray = [];
-    var count = 0;
 
-    //takes each line from the customerOrderString, parses it into a JSON obj and pushes it into the array
-    while ((j = customerOrderString.indexOf(char, i)) !== -1) {
-      customerOrderArray.push(JSON.parse(customerOrderString.substring(i, j)));
-      count++;
-      i = j + 1;
-    }
+    //send json string to function that will use string to create a reduced jsonOBJ
+    var reducedArray = syncStringToArray(customerOrderString);
 
-    //condenses the customerOrderArray into an array where the same items merge into a single object with the proper quantity
-    var arrLength = customerOrderArray.length;
-    var uniqueValues = [];
-    var reducedArray = [];
-    var completedIDs = [];
-    var currentID = 0;
-    var checkedAgainstID = 0;
-    var countItem = 0;
-    for (i = 0; i < arrLength; i++) {
-      checkedAgainstID = customerOrderArray[i].itemID;
-      if (!completedIDs.includes(checkedAgainstID)) {
-        completedIDs.push(checkedAgainstID);
-        for (j = 0; j < arrLength; j++) {
-          currentID = customerOrderArray[j].itemID;
-          if (checkedAgainstID == currentID) {
-            countItem++;
-          }
-        }
-        //create object with proper quantity for item (checkedAgainstID)
-        var condensedItem = {
-          itemID: checkedAgainstID,
-          itemName: customerOrderArray[i].itemName,
-          quantity: countItem,
-          itemPrice: customerOrderArray[i].itemPrice,
-          totalPrice: countItem * customerOrderArray[i].itemPrice,
-        };
-        reducedArray.push(condensedItem);
-        countItem = 0;
-      }
+    //takes the reduced array to create a json string and stores it back in sync storage
+    var reducedArrLength = reducedArray.length;
+    var reducedCustomerOrderString = "";
+    for (var i = 0; i < reducedArrLength; i++) {
+      reducedCustomerOrderString += JSON.stringify(reducedArray[i]) + ",\n";
     }
-    console.log(reducedArray);
+    SyncStorage.set("currentCustomerOrder", reducedCustomerOrderString);
 
     this.setState({
       orderData: reducedArray,
     });
   }
+
+  //submit users order to the DB
+  submitOrder = () => {
+    var userID = SyncStorage.get("userID");
+    var connectedRestID = SyncStorage.get("connectedRestID");
+    console.log(userID);
+    axios
+      .post("http://10.0.0.27:3000/requestRoutes/submitOrder", {
+        restID: connectedRestID,
+        userID: userID,
+        orderItems: this.state.orderData,
+      })
+      .then((res) => {
+        console.log("submit success");
+      })
+      //catch any errors from the post call
+      .catch((err) => {
+        console.log("ERROR OCCURED: ");
+        console.log(err);
+      });
+  };
 
   render() {
     return (
@@ -91,7 +81,6 @@ export default class Order extends Component {
           >
             <CloseIcon width={135} height={75} viewBox="0 0 24 15" />
           </TouchableOpacity>
-
           <Text style={styles.title}>Your Order</Text>
         </SafeAreaView>
 
@@ -112,12 +101,7 @@ export default class Order extends Component {
         />
 
         <View style={styles.buttonContainer}>
-          <Button
-            style={styles.button}
-            onPress={() =>
-              console.log("From order page: " + currentCustomerOrder)
-            }
-          >
+          <Button style={styles.button} onPress={() => this.submitOrder()}>
             <Text style={{ color: "#F6F6F6" }}>Order</Text>
           </Button>
         </View>
