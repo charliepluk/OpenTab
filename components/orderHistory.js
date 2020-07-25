@@ -14,40 +14,47 @@ import { navStyles } from "../stylesheet/navbarStyle";
 
 // Import SVGs
 import ArrowBack from "../assets/svg/arrow-back.svg";
-import OrderIcon from "../assets/svg/order-alt.svg";
 
 import SyncStorage from "sync-storage";
 
-function RestaurantItem({ props, title, address, hours, description, restID }) {
+function OrderHistoryItem({
+  props,
+  orderID,
+  restID,
+  orderDateTime,
+  restName,
+  restLocation,
+}) {
   return (
     <TouchableOpacity
       onPress={() =>
-        props.navigation.navigate("RestaurantView", {
-          title: { title },
-          hours: { hours },
-          address: { address },
-          description: { description },
+        props.navigation.navigate("OrderHistoryView", {
+          orderID: { orderID },
           restID: { restID },
+          orderDateTime: { orderDateTime },
+          restName: { restName },
+          restLocation: { restLocation },
         })
       }
       style={styles.item}
     >
-      <View style={styles.restaurantImage}></View>
       <View style={styles.restaurantInfo}>
-        <Text style={styles.restaurantTitle}>{title}</Text>
-        <Text style={styles.infoText}>Hours: {hours}</Text>
-        <Text style={styles.infoText}>{address}</Text>
+        <Text style={styles.restaurantTitle}>{restName}</Text>
+        <Text style={styles.infoText}>{restLocation}</Text>
+        <Text style={styles.infoText}>{orderDateTime}</Text>
       </View>
     </TouchableOpacity>
   );
 }
 
-export default class Restaurants extends Component {
+export default class OrderHistory extends Component {
   state = {};
 
   componentDidMount() {
     axios
-      .get("http://10.0.0.27:3000/requestRoutes/getRestaurants")
+      .post("http://10.0.0.27:3000/requestRoutes/getCustomerOrderHistory", {
+        userID: SyncStorage.get("userID"),
+      })
       .then((res) => {
         console.log(res.data);
         this.setState({
@@ -71,33 +78,20 @@ export default class Restaurants extends Component {
           >
             <ArrowBack width={35} height={35} />
           </TouchableOpacity>
-
-          <Text style={styles.title}>Restaurants</Text>
-
-          <TouchableOpacity
-            style={navStyles.orderTab}
-            onPress={() => this.props.navigation.navigate("Order")}
-          >
-            <OrderIcon width={35} height={35} />
-          </TouchableOpacity>
         </SafeAreaView>
 
         <FlatList
           style={styles.listContainer}
           data={this.state.DATA}
-          keyExtractor={(item) => item.restID.toString()}
+          keyExtractor={(item) => item.orderID.toString()}
           renderItem={({ item }) => (
-            <RestaurantItem
+            <OrderHistoryItem
               props={this.props}
-              title={item.restName}
-              address={item.restLocation}
-              hours={
-                item.restOpenTime.toString() +
-                " - " +
-                item.restCloseTime.toString()
-              }
-              description={item.restDescription}
+              orderID={item.orderID}
               restID={item.restID}
+              orderDateTime={item.orderDateTime}
+              restName={item.restName}
+              restLocation={item.restLocation}
             />
           )}
         />

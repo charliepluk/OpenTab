@@ -12,6 +12,8 @@ import Home from "./components/home";
 import Restaurants from "./components/restaurants";
 import RestaurantView from "./components/restaurantView";
 import Order from "./components/order";
+import OrderHistory from "./components/orderHistory";
+import OrderHistoryView from "./components/orderHistoryView";
 
 import RootStackScreen from "./components/rootStackScreen";
 
@@ -40,15 +42,20 @@ const HomeStackScreen = ({ navigation }) => (
     <HomeStack.Screen name="RestaurantView" options={{ headerShown: false }}>
       {(props) => <RestaurantView {...props} />}
     </HomeStack.Screen>
+    <HomeStack.Screen name="OrderHistory" options={{ headerShown: false }}>
+      {(props) => <OrderHistory {...props} />}
+    </HomeStack.Screen>
+    <HomeStack.Screen name="OrderHistoryView" options={{ headerShown: false }}>
+      {(props) => <OrderHistoryView {...props} />}
+    </HomeStack.Screen>
   </HomeStack.Navigator>
 );
 
 // Create React Navigation Drawer
-
 const Drawer = createDrawerNavigator();
 export default function App() {
   var test = SyncStorage.get("userID");
-  console.log(test);
+  console.log("Sync-storage userID var = " + test);
   return (
     <NavigationContainer>
       {/* <RootStackScreen /> */}
@@ -65,7 +72,6 @@ export default function App() {
           }}
         />
         <Drawer.Screen
-          screenOptions={{ gestureEnabled: false }}
           name="CustomerSignup"
           component={CustomerSignup}
           headerMode="none"

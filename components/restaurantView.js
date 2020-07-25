@@ -91,7 +91,7 @@ export default class restaurantView extends Component {
           renderItem={({ item }) => (
             <TouchableOpacity
               style={styles.drinksList}
-              onPress={() => console.log(item.itemName)}
+              onPress={() => console.log(item.itemID)}
             >
               <View style={styles.drinksIcon}></View>
               <Text>{item.itemName}</Text>
