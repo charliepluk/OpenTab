@@ -9,8 +9,8 @@ import SyncStorage from "sync-storage";
 
 export default class CustomerLogin extends Component {
   state = {
-    email: "",
-    password: "",
+    email: "cam@gmail.com",
+    password: "test",
   };
 
   verifyLogin = () => {
@@ -54,6 +54,7 @@ export default class CustomerLogin extends Component {
             //store the returned user information in Sync-storage
             SyncStorage.set("userID", res.data[0].customerID.toString());
             SyncStorage.set("userEmail", res.data[0].customerEmail.toString());
+            SyncStorage.set("currentCustomerOrder", "");
             this.props.navigation.navigate("Home");
           }
         })

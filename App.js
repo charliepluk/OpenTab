@@ -48,6 +48,9 @@ const HomeStackScreen = ({ navigation }) => (
     <HomeStack.Screen name="OrderHistoryView" options={{ headerShown: false }}>
       {(props) => <OrderHistoryView {...props} />}
     </HomeStack.Screen>
+    <HomeStack.Screen name="Order" options={{ headerShown: false }}>
+      {(props) => <Order {...props} />}
+    </HomeStack.Screen>
   </HomeStack.Navigator>
 );
 
@@ -88,9 +91,9 @@ export default function App() {
           }}
         />
         <Drawer.Screen name="Home" component={HomeStackScreen} />
-        <Drawer.Screen name="Order" options={{ headerShown: false }}>
+        {/* <Drawer.Screen name="Order" options={{ headerShown: false }}>
           {(props) => <Order {...props} />}
-        </Drawer.Screen>
+        </Drawer.Screen> */}
       </Drawer.Navigator>
     </NavigationContainer>
   );

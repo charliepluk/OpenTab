@@ -4,23 +4,23 @@ import { Button } from "react-native-paper";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import CloseIcon from "../assets/svg/close.svg";
+import SyncStorage from "sync-storage";
 
-const DATA = [
-  {
-    id: "0",
-    name: "Budweiser",
-    quantity: "3",
-    price: "6.50",
-  },
-  {
-    id: "1",
-    name: "Budlight",
-    quantity: "2",
-    price: "3",
-  },
-];
+function ProfileScreen({ navigation }) {
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      console.log("focused");
+    });
 
-function OrderItem({ name, quantity, price }) {
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
+  }, [navigation]);
+
+  return <View />;
+}
+
+function OrderItem({ name, price }) {
+  console.log("name: " + name);
   return (
     <TouchableOpacity
       onPress={() => console.log("Order Item Pressed")}
@@ -29,7 +29,6 @@ function OrderItem({ name, quantity, price }) {
       <View style={styles.itemImage}></View>
       <View style={styles.itemInfo}>
         <Text style={styles.itemName}>{name}</Text>
-        <Text style={styles.quantityText}>QTY: {quantity}</Text>
         <Text style={styles.priceText}>{price}</Text>
       </View>
     </TouchableOpacity>
@@ -37,6 +36,28 @@ function OrderItem({ name, quantity, price }) {
 }
 
 export default class Order extends Component {
+  state = {};
+
+  componentDidMount() {
+    //gets json obj as string from sync strage and turns it into array of json obj
+    var test = SyncStorage.get("currentCustomerOrder");
+    console.log(test);
+    var char = ",\n";
+    var i = 0;
+    var j = 0;
+    var testArray = [];
+    var count = 0;
+    while ((j = test.indexOf(char, i)) !== -1) {
+      testArray.push(JSON.parse(test.substring(i, j)));
+      count++;
+      i = j + 1;
+    }
+    //console.log(JSON.stringify(testArray));
+    this.setState({
+      orderData: testArray,
+    });
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -52,22 +73,26 @@ export default class Order extends Component {
         </SafeAreaView>
 
         <FlatList
+          // due to an error with paddingBottom for ScrollView (which FlatList extends) this is how paddingBottom needs to be set
+          contentContainerStyle={{ paddingBottom: 15 }}
           style={styles.orderList}
-          data={DATA}
+          data={this.state.orderData}
+          keyExtractor={(item) => item.itemID.toString()}
           renderItem={({ item }) => (
             <OrderItem
-              name={item.name}
-              quantity={item.quantity}
-              price={item.price}
+              name={item.itemName}
+              // quantity={item.quantity}
+              price={item.itemPrice}
             />
           )}
-          keyExtractor={(item) => item.id}
         />
 
         <View style={styles.buttonContainer}>
           <Button
             style={styles.button}
-            onPress={() => console.log("Order Button Pressed")}
+            onPress={() =>
+              console.log("From order page: " + currentCustomerOrder)
+            }
           >
             <Text style={{ color: "#F6F6F6" }}>Order</Text>
           </Button>
@@ -86,16 +111,17 @@ const styles = StyleSheet.create({
 
   header: {
     justifyContent: "center",
-    height: 140,
+    height: 100,
     width: "100%",
     backgroundColor: "#FF9466",
   },
 
   title: {
     alignSelf: "center",
-    color: "#FEFEFE",
+    color: "#F6F6F6",
     fontSize: 20,
     fontWeight: "bold",
+    height: "50%",
   },
 
   close: {
@@ -105,12 +131,12 @@ const styles = StyleSheet.create({
   },
 
   orderList: {
-    backgroundColor: "#FF9466",
+    backgroundColor: "#F6F6F6",
     width: "100%",
   },
 
   item: {
-    backgroundColor: "#ECECEC",
+    backgroundColor: "#e0e0e0",
     marginTop: 15,
     marginLeft: 15,
     marginRight: 15,
@@ -143,20 +169,21 @@ const styles = StyleSheet.create({
   },
 
   buttonContainer: {
-    backgroundColor: "#F6F6F6",
+    backgroundColor: "#FF9466",
     width: "100%",
-    height: 220,
+    height: 80,
     justifyContent: "center",
     alignItems: "center",
   },
 
   button: {
     backgroundColor: "#FF9466",
+    borderWidth: 2,
+    borderColor: "black",
     color: "#FF9466",
     width: 276,
     height: 46,
     justifyContent: "center",
-    borderRadius: 0,
     alignSelf: "center",
   },
 });

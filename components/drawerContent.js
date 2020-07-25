@@ -76,6 +76,8 @@ export default function DrawerContent(props) {
           )}
           onPress={() => {
             SyncStorage.set("userID", "noUser");
+            SyncStorage.set("connectedRestID", "noRestConnected");
+            SyncStorage.set("currentCustomerOrder", "");
             props.navigation.navigate("LandingPage");
           }}
         />
