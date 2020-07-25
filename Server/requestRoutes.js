@@ -195,6 +195,29 @@ router.post("/getOrderItems", function (req, res, next) {
   );
 });
 
+//**************************
+//* submit customers order *
+//**************************
+router.post("/submitOrder", function (req, res, next) {
+  var restID = req.body.restID;
+  var userID = req.body.userID;
+  var orderItems = JSON.stringify(req.body.orderItems);
+
+  mysql.query(
+    `INSERT INTO testorders(restID,customerID,orderItems) VALUES ("${restID}","${userID}",'${orderItems}')`,
+    function (err, result, field) {
+      //if: DB error
+      if (err) {
+        console.log(err);
+        res.send("DB error");
+      } else {
+        console.log("submittedOrder");
+        res.send(result);
+      }
+    }
+  );
+});
+
 //The line below returns orderID after inserting
 //`INSERT INTO orders(restID, customerID, orderNotes) VALUES (1,1,'')  RETURNING orderID as orderID`
 module.exports = router;
