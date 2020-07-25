@@ -17,6 +17,7 @@ import ArrowBack from "../assets/svg/arrow-back.svg";
 import OrderIcon from "../assets/svg/order-alt.svg";
 
 import SyncStorage from "sync-storage";
+import { ScrollView } from "react-native-gesture-handler";
 
 function RestaurantItem({ props, title, address, hours, description, restID }) {
   return (
@@ -49,7 +50,7 @@ export default class Restaurants extends Component {
     axios
       .get("http://10.0.0.27:3000/requestRoutes/getRestaurants")
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         this.setState({
           DATA: res.data,
         });

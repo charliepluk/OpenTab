@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   FlatList,
+  Alert,
 } from "react-native";
 import { Button } from "react-native-paper";
 import axios from "axios";
@@ -30,7 +31,7 @@ export default class restaurantView extends Component {
         restID: restID.restID,
       })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         this.setState({
           DATA: res.data,
         });
@@ -42,11 +43,81 @@ export default class restaurantView extends Component {
       });
   }
 
+  addPressedItemToOrder = (itemID, itemName, itemPrice, restID) => {
+    //add a for loop here that will check if they already have the item in their order via the itemID
+    //if the item exists just update the quantity
+    var connectedRestID = SyncStorage.get("connectedRestID");
+    if (restID != connectedRestID) {
+      Alert.alert("Please connect to this restaurant to add to your order.");
+      return;
+    } else {
+      var jsonData = {
+        itemID: itemID,
+        itemName: itemName,
+        //quantity
+        itemPrice: itemPrice,
+      };
+
+      //adds json object to sync storage as string
+      console.log(
+        "CURRENT ORDER STRING: " + SyncStorage.get("currentCustomerOrder")
+      );
+      var test = SyncStorage.get("currentCustomerOrder");
+      SyncStorage.set(
+        "currentCustomerOrder",
+        test + JSON.stringify(jsonData) + ",\n"
+      );
+    }
+  };
+
+  //connects to a restaurant by updating SyncStorage variable
+  connectToRestaurant = (restID, restName) => {
+    var connectedRestID = SyncStorage.get("connectedRestID");
+    //the user is connected to no restaurant
+    if (connectedRestID == undefined || connectedRestID == "noRestConnected") {
+      SyncStorage.set("connectedRestID", restID.toString());
+      Alert.alert(
+        "Connected Successfully",
+        "You are now connected to " + restName + "."
+      );
+    }
+
+    //the user is already connected to this restaurant
+    else if (connectedRestID == restID) {
+      Alert.alert(
+        "Already Connected",
+        "You are already connected to " + restName + "."
+      );
+    }
+
+    //the user is trying to connect to a new restaurant
+    else {
+      const title = "Notice";
+      const message =
+        "Connecting to a new restaurant will clear your current order, are you sure you want to connect to " +
+        restName +
+        "?";
+      const buttons = [
+        { text: "Cancel", type: "cancel" },
+        {
+          text: "Yes",
+          onPress: () => SyncStorage.set("connectedRestID", restID.toString()),
+        },
+        {
+          text: "No",
+        },
+      ];
+      Alert.alert(title, message, buttons);
+      currentCustomerOrder = [];
+    }
+  };
+
   render() {
     const { title } = this.props.route.params;
     const { hours } = this.props.route.params;
     const { address } = this.props.route.params;
     const { description } = this.props.route.params;
+    const { restID } = this.props.route.params;
 
     return (
       <View style={styles.container}>
@@ -76,7 +147,7 @@ export default class restaurantView extends Component {
 
         <Button
           style={styles.connectButton}
-          onPress={() => console.log("Connect button is pressed")}
+          onPress={() => this.connectToRestaurant(restID.restID, title.title)}
         >
           <Text style={{ color: "#FFFFFF" }}>Connect</Text>
         </Button>
@@ -91,7 +162,14 @@ export default class restaurantView extends Component {
           renderItem={({ item }) => (
             <TouchableOpacity
               style={styles.drinksList}
-              onPress={() => console.log(item.itemID)}
+              onPress={() =>
+                this.addPressedItemToOrder(
+                  item.itemID,
+                  item.itemName,
+                  item.itemPrice,
+                  restID.restID
+                )
+              }
             >
               <View style={styles.drinksIcon}></View>
               <Text>{item.itemName}</Text>
