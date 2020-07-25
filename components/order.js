@@ -6,21 +6,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import CloseIcon from "../assets/svg/close.svg";
 import SyncStorage from "sync-storage";
 
-function ProfileScreen({ navigation }) {
-  React.useEffect(() => {
-    const unsubscribe = navigation.addListener("focus", () => {
-      console.log("focused");
-    });
-
-    // Return the function to unsubscribe from the event so it gets removed on unmount
-    return unsubscribe;
-  }, [navigation]);
-
-  return <View />;
-}
-
-function OrderItem({ name, price }) {
-  console.log("name: " + name);
+function OrderItem({ name, price, quantity, totalPrice }) {
   return (
     <TouchableOpacity
       onPress={() => console.log("Order Item Pressed")}
@@ -29,7 +15,11 @@ function OrderItem({ name, price }) {
       <View style={styles.itemImage}></View>
       <View style={styles.itemInfo}>
         <Text style={styles.itemName}>{name}</Text>
-        <Text style={styles.priceText}>{price}</Text>
+        <Text style={styles.priceText}>${price}</Text>
+        <Text style={styles.quantityText}>x{quantity}</Text>
+      </View>
+      <View style={styles.itemInfo}>
+        <Text style={styles.totalPriceText}>${totalPrice}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -40,21 +30,54 @@ export default class Order extends Component {
 
   componentDidMount() {
     //gets json obj as string from sync strage and turns it into array of json obj
-    var test = SyncStorage.get("currentCustomerOrder");
-    console.log(test);
+    var customerOrderString = SyncStorage.get("currentCustomerOrder");
     var char = ",\n";
     var i = 0;
     var j = 0;
-    var testArray = [];
+    var customerOrderArray = [];
     var count = 0;
-    while ((j = test.indexOf(char, i)) !== -1) {
-      testArray.push(JSON.parse(test.substring(i, j)));
+
+    //takes each line from the customerOrderString, parses it into a JSON obj and pushes it into the array
+    while ((j = customerOrderString.indexOf(char, i)) !== -1) {
+      customerOrderArray.push(JSON.parse(customerOrderString.substring(i, j)));
       count++;
       i = j + 1;
     }
-    //console.log(JSON.stringify(testArray));
+
+    //condenses the customerOrderArray into an array where the same items merge into a single object with the proper quantity
+    var arrLength = customerOrderArray.length;
+    var uniqueValues = [];
+    var reducedArray = [];
+    var completedIDs = [];
+    var currentID = 0;
+    var checkedAgainstID = 0;
+    var countItem = 0;
+    for (i = 0; i < arrLength; i++) {
+      checkedAgainstID = customerOrderArray[i].itemID;
+      if (!completedIDs.includes(checkedAgainstID)) {
+        completedIDs.push(checkedAgainstID);
+        for (j = 0; j < arrLength; j++) {
+          currentID = customerOrderArray[j].itemID;
+          if (checkedAgainstID == currentID) {
+            countItem++;
+          }
+        }
+        //create object with proper quantity for item (checkedAgainstID)
+        var condensedItem = {
+          itemID: checkedAgainstID,
+          itemName: customerOrderArray[i].itemName,
+          quantity: countItem,
+          itemPrice: customerOrderArray[i].itemPrice,
+          totalPrice: countItem * customerOrderArray[i].itemPrice,
+        };
+        reducedArray.push(condensedItem);
+        countItem = 0;
+      }
+    }
+    console.log(reducedArray);
+
     this.setState({
-      orderData: testArray,
+      orderData: reducedArray,
     });
   }
 
@@ -66,7 +89,7 @@ export default class Order extends Component {
             style={styles.close}
             onPress={() => this.props.navigation.goBack()}
           >
-            <CloseIcon width={35} height={35} />
+            <CloseIcon width={135} height={75} viewBox="0 0 24 15" />
           </TouchableOpacity>
 
           <Text style={styles.title}>Your Order</Text>
@@ -81,8 +104,9 @@ export default class Order extends Component {
           renderItem={({ item }) => (
             <OrderItem
               name={item.itemName}
-              // quantity={item.quantity}
+              quantity={item.quantity}
               price={item.itemPrice}
+              totalPrice={item.totalPrice}
             />
           )}
         />
@@ -161,6 +185,10 @@ const styles = StyleSheet.create({
   },
 
   quantityText: {
+    fontSize: 12,
+  },
+
+  totalPriceText: {
     fontSize: 12,
   },
 

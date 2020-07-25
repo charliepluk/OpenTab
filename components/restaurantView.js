@@ -55,14 +55,11 @@ export default class restaurantView extends Component {
       var jsonData = {
         itemID: itemID,
         itemName: itemName,
-        //quantity
+        quantity: 1,
         itemPrice: itemPrice,
       };
 
       //adds json object to sync storage as string
-      console.log(
-        "CURRENT ORDER STRING: " + SyncStorage.get("currentCustomerOrder")
-      );
       var test = SyncStorage.get("currentCustomerOrder");
       SyncStorage.set(
         "currentCustomerOrder",
