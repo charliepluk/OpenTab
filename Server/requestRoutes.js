@@ -134,7 +134,7 @@ router.post("/getCustomerOrderHistory", function (req, res, next) {
   var userID = req.body.userID;
 
   mysql.query(
-    `SELECT orders.orderID, restaurants.restID, orders.orderDateTime, restaurants.restName, restaurants.restLocation FROM orders
+    `SELECT orders.orderID, orders.orderDateTime, orders.orderItems, restaurants.restName, restaurants.address FROM orders
     INNER JOIN restaurants ON orders.restID=restaurants.restID
     WHERE customerID="${userID}"
     ORDER BY orderDateTime DESC`,
@@ -173,27 +173,27 @@ router.post("/getCustomerOrderHistory", function (req, res, next) {
 //****************************************
 //* Get order items for specific orderID *
 //****************************************
-router.post("/getOrderItems", function (req, res, next) {
-  var orderID = req.body.orderID;
+// router.post("/getOrderItems", function (req, res, next) {
+//   var orderID = req.body.orderID;
 
-  //gets all orderItems for a given orderID. Returns the itemQuantity, totalPriceOfItems, itemName and itemID
-  mysql.query(
-    `SELECT order_items.itemQuantity, order_items.totalPriceOfItems, items.itemName, items.itemID FROM order_items
-  INNER JOIN items ON order_items.itemID=items.itemID
-  WHERE orderID="${orderID}"`,
-    function (err, result, field) {
-      //if: DB error
-      if (err) {
-        console.log(err);
-        res.send("DB error");
-      } else {
-        console.log(result[0]);
-        console.log("gotOrderItems");
-        res.send(result);
-      }
-    }
-  );
-});
+//   //gets all orderItems for a given orderID. Returns the itemQuantity, totalPriceOfItems, itemName and itemID
+//   mysql.query(
+//     `SELECT order_items.itemQuantity, order_items.totalPriceOfItems, items.itemName, items.itemID FROM order_items
+//   INNER JOIN items ON order_items.itemID=items.itemID
+//   WHERE orderID="${orderID}"`,
+//     function (err, result, field) {
+//       //if: DB error
+//       if (err) {
+//         console.log(err);
+//         res.send("DB error");
+//       } else {
+//         console.log(result[0]);
+//         console.log("gotOrderItems");
+//         res.send(result);
+//       }
+//     }
+//   );
+// });
 
 //**************************
 //* submit customers order *
@@ -204,7 +204,7 @@ router.post("/submitOrder", function (req, res, next) {
   var orderItems = JSON.stringify(req.body.orderItems);
 
   mysql.query(
-    `INSERT INTO testorders(restID,customerID,orderItems) VALUES ("${restID}","${userID}",'${orderItems}')`,
+    `INSERT INTO orders(restID,customerID,orderItems) VALUES ("${restID}","${userID}",'${orderItems}')`,
     function (err, result, field) {
       //if: DB error
       if (err) {

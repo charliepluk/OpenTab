@@ -43,6 +43,7 @@ export default class Order extends Component {
     for (var i = 0; i < reducedArrLength; i++) {
       reducedCustomerOrderString += JSON.stringify(reducedArray[i]) + ",\n";
     }
+
     SyncStorage.set("currentCustomerOrder", reducedCustomerOrderString);
 
     this.setState({
@@ -63,6 +64,8 @@ export default class Order extends Component {
       })
       .then((res) => {
         console.log("submit success");
+        SyncStorage.set("currentCustomerOrder", "");
+        this.props.navigation.goBack();
       })
       //catch any errors from the post call
       .catch((err) => {

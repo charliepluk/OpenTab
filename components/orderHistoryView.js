@@ -21,26 +21,14 @@ export default class orderHistoryView extends Component {
 
   //get data to populate restaurants menu
   componentDidMount() {
-    const { orderID } = this.props.route.params;
-    axios
-      .post("http://10.0.0.27:3000/requestRoutes/getOrderItems", {
-        orderID: orderID.orderID,
-      })
-      .then((res) => {
-        console.log(res.data);
-        this.setState({
-          DATA: res.data,
-        });
-      })
-      //catch any errors from the post call
-      .catch((err) => {
-        console.log("ERROR OCCURED: ");
-        console.log(err);
-      });
+    const { orderItems } = this.props.route.params;
+    const customerOrder = JSON.parse(orderItems.orderItems);
+    this.setState({
+      DATA: customerOrder,
+    });
   }
 
   render() {
-    const { restID } = this.props.route.params;
     const { orderDateTime } = this.props.route.params;
     const { restName } = this.props.route.params;
     const { restLocation } = this.props.route.params;
@@ -61,7 +49,7 @@ export default class orderHistoryView extends Component {
           keyExtractor={(item) => item.itemID.toString()}
           renderItem={({ item }) => (
             <Text>
-              {item.itemQuantity} - {item.itemName} = {item.totalPriceOfItems}
+              x{item.quantity} - {item.itemName} = ${item.totalPrice}
             </Text>
           )}
         />
