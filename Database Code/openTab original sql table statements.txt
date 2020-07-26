@@ -1,17 +1,20 @@
 =================
 RESTAURANTS TABLE
 =================
-INSERT INTO `restaurants`(`restName`, `restPhone`, `restEmail`, `restLocation`,`restOpenTime`,`restCloseTime`) VALUES ('Flanns','1-234-456-1234','flanns@test.com','555 huntington avenue',10000, 11000)
 
 CREATE TABLE opentab.restaurants(
     restID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     restName varchar(50) NOT NULL,
-    restPhone varchar(14) NOT NULL UNIQUE,
-    restEmail varchar(50) NOT NULL UNIQUE,
-    restLocation varchar(100) NOT NULL UNIQUE,
-    restDescription varchar(200),
-    restOpenTime time(0),
-    restCloseTime time(0)
+    firstName varchar(30) NOT NULL,
+    lastName varchar(30) NOT NULL,
+    phone varchar(14) NOT NULL UNIQUE,
+    email varchar(50) NOT NULL UNIQUE,
+    address varchar(100) NOT NULL UNIQUE,
+    zipcode int(5) NOT NULL,
+    description varchar(200),
+    openTime time(0) NOT NULL,
+    closeTime time(0) NOT NULL,
+    password varchar(250) NOT NULL,
 );
 
 
@@ -24,7 +27,7 @@ CREATE TABLE opentab.customers(
     customerID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     customerEmail varchar(50) NOT NULL UNIQUE,
     customerPassword varchar(20) NOT NULL,
-    ADD CUSTOMER FIRST NAME
+    firstName varchar(30) NOT NULL,
 );
 
 =============
@@ -39,8 +42,10 @@ CREATE TABLE opentab.orders(
     customerID int,
 	FOREIGN KEY (customerID) REFERENCES openTab.customers(customerID) ON DELETE CASCADE,
     orderNotes varchar(150),
-    orderDateTime datetime DEFAULT CURRENT_TIMESTAMP
-    ADD ORDER STATUS (completed, pending, completed)
+    orderDateTime datetime DEFAULT CURRENT_TIMESTAMP,
+    orderStatus varchar(9) NOT NULL,
+    orderItems JSON 
+    CHECK (JSON_VALID(orderItems))
 );
 
 ===========
@@ -58,35 +63,3 @@ CREATE TABLE opentab.items(
     itemType varchar(5) NOT NULL,
 );
 
-=================
-ORDERITEMS TABLE
-=================
-INSERT INTO `order_items`(`orderID`, `itemID`, `itemQuantity`, `totalPriceOfItems`) VALUES (4,1,2,25.38)
-
-CREATE TABLE opentab.order_items(
-    orderItemsID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    orderID int,
-	FOREIGN KEY (orderID) REFERENCES openTab.orders(orderID) ON DELETE CASCADE,
-    itemID int,
-	FOREIGN KEY (itemID) REFERENCES openTab.items(itemID) ON DELETE CASCADE,
-    itemQuantity int(2) NOT NULL,
-    totalPriceOfItems decimal(6,2) NOT NULL
-);
-
--------------------------------------------------------------------------------------
-INSERT INTO t2 VALUES (1,'{"id": 1, "name": "Monty"}');
-INSERT INTO `testorders`(`restID`, `customerID`, `orderItems`) VALUES (1,1,)
-
-CREATE TABLE opentab.testOrders(
-    orderID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    restID int,
-	FOREIGN KEY (restID) REFERENCES openTab.restaurants(restID) ON DELETE CASCADE,
-    customerID int,
-	FOREIGN KEY (customerID) REFERENCES openTab.customers(customerID) ON DELETE CASCADE,
-    orderNotes varchar(150),
-    orderDateTime datetime DEFAULT CURRENT_TIMESTAMP,
-      orderItems JSON 
-  CHECK (JSON_VALID(orderItems))
-    
-);
--------------------------------------------------------------------------------------

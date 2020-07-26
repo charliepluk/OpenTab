@@ -91,13 +91,11 @@ export default class Restaurants extends Component {
             <RestaurantItem
               props={this.props}
               title={item.restName}
-              address={item.restLocation}
+              address={item.address}
               hours={
-                item.restOpenTime.toString() +
-                " - " +
-                item.restCloseTime.toString()
+                item.openTime.toString() + " - " + item.closeTime.toString()
               }
-              description={item.restDescription}
+              description={item.description}
               restID={item.restID}
             />
           )}

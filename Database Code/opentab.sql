@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 25, 2020 at 11:39 AM
+-- Generation Time: Jul 26, 2020 at 07:57 AM
 -- Server version: 10.5.4-MariaDB
 -- PHP Version: 7.4.8
 
@@ -81,7 +81,9 @@ INSERT INTO `items` (`itemID`, `restID`, `itemName`, `itemPrice`, `itemDescripti
 (2, 1, 'Moscow Mule', '11.00', NULL, 'drink'),
 (3, 1, 'Twisted Tea', '6.00', NULL, 'drink'),
 (4, 1, 'Martini', '8.00', NULL, 'drink'),
-(5, 1, 'Blue Moon', '7.00', NULL, 'drink');
+(5, 1, 'Blue Moon', '7.00', NULL, 'drink'),
+(6, 1, 'Appletini', '9.00', NULL, 'drink'),
+(7, 1, 'Vodka Soda', '9.00', NULL, 'drink');
 
 -- --------------------------------------------------------
 
@@ -94,74 +96,25 @@ CREATE TABLE `orders` (
   `restID` int(11) DEFAULT NULL,
   `customerID` int(11) DEFAULT NULL,
   `orderNotes` varchar(150) DEFAULT NULL,
-  `orderDateTime` datetime DEFAULT current_timestamp()
+  `orderDateTime` datetime DEFAULT current_timestamp(),
+  `orderItems` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`orderItems`))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`orderID`, `restID`, `customerID`, `orderNotes`, `orderDateTime`) VALUES
-(1, 1, 1, 'test', '2020-07-22 13:55:21'),
-(2, 2, 2, 'test', '2020-07-22 13:55:29'),
-(3, 1, 3, 'test', '2020-07-22 13:55:43'),
-(5, 2, 3, 'test', '2020-07-22 13:58:02'),
-(6, 2, 3, 'test', '2020-07-22 14:33:47'),
-(7, 2, 3, 'test', '2020-07-22 14:33:50'),
-(8, 2, 3, 'test', '2020-07-22 14:33:53'),
-(9, 2, 3, 'test', '2020-07-22 14:33:55'),
-(10, 2, 3, 'test', '2020-07-22 14:33:57'),
-(11, 2, 3, 'test', '2020-07-22 14:33:59'),
-(12, 2, 3, 'test', '2020-07-22 14:34:02'),
-(13, 2, 3, 'test', '2020-07-22 14:34:04'),
-(14, 2, 3, 'test', '2020-07-22 14:34:06'),
-(15, 2, 3, 'test', '2020-07-22 14:34:08'),
-(16, 1, 3, 'test', '2020-07-22 14:34:46'),
-(17, 2, 3, 'test', '2020-07-22 14:34:58'),
-(18, 2, 3, 'test', '2020-07-22 14:35:00'),
-(19, 2, 3, 'test', '2020-07-22 14:35:02'),
-(20, 2, 3, 'test', '2020-07-22 14:35:04'),
-(21, 2, 3, 'test', '2020-07-22 14:35:06'),
-(22, 2, 3, 'test', '2020-07-22 14:35:08'),
-(23, 2, 3, 'test', '2020-07-22 14:35:11'),
-(24, 2, 3, 'test', '2020-07-22 14:35:33'),
-(25, 2, 3, 'test', '2020-07-22 14:35:39'),
-(26, 2, 3, 'test', '2020-07-22 14:35:41'),
-(27, 2, 3, 'test', '2020-07-22 14:35:42'),
-(28, 2, 3, 'test', '2020-07-22 14:35:44'),
-(29, 2, 3, 'test', '2020-07-22 14:35:46'),
-(30, 2, 3, 'test', '2020-07-22 14:35:48'),
-(31, 2, 3, 'test', '2020-07-22 14:35:50'),
-(59, 1, 1, NULL, '2020-07-22 20:19:42'),
-(60, 2, 1, NULL, '2020-07-22 20:19:47'),
-(61, 1, 1, NULL, '2020-07-22 20:19:51'),
-(62, 2, 1, NULL, '2020-07-22 20:19:55'),
-(63, 1, 1, NULL, '2020-07-22 20:20:08'),
-(64, 1, 1, NULL, '2020-07-22 20:20:11'),
-(65, 1, 1, NULL, '2020-07-22 20:20:13'),
-(66, 1, 1, NULL, '2020-07-22 20:20:15');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `order_items`
---
-
-CREATE TABLE `order_items` (
-  `orderItemsID` int(10) NOT NULL,
-  `orderID` int(11) DEFAULT NULL,
-  `itemID` int(11) DEFAULT NULL,
-  `itemQuantity` int(2) NOT NULL,
-  `totalPriceOfItems` decimal(6,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `order_items`
---
-
-INSERT INTO `order_items` (`orderItemsID`, `orderID`, `itemID`, `itemQuantity`, `totalPriceOfItems`) VALUES
-(1, 1, 1, 2, '10.00'),
-(2, 1, 2, 2, '22.00');
+INSERT INTO `orders` (`orderID`, `restID`, `customerID`, `orderNotes`, `orderDateTime`, `orderItems`) VALUES
+(4, 1, 1, NULL, '2020-07-25 04:17:45', '[{\"itemID\":1,\"itemName\":\"Beer\",\"quantity\":6,\"itemPrice\":5,\"totalPrice\":30},{\"itemID\":2,\"itemName\":\"Moscow Mule\",\"quantity\":2,\"itemPrice\":11,\"totalPrice\":22},{\"itemID\":3,\"itemName\":\"Twisted Tea\",\"quantity\":2,\"itemPrice\":6,\"totalPrice\":12}]'),
+(5, 1, 1, NULL, '2020-07-25 05:34:05', '[{\"itemID\":1,\"itemName\":\"Beer\",\"quantity\":13,\"itemPrice\":5,\"totalPrice\":65},{\"itemID\":2,\"itemName\":\"Moscow Mule\",\"quantity\":12,\"itemPrice\":11,\"totalPrice\":132},{\"itemID\":3,\"itemName\":\"Twisted Tea\",\"quantity\":11,\"itemPrice\":6,\"totalPrice\":66}]'),
+(6, 1, 1, NULL, '2020-07-25 05:34:13', '[{\"itemID\":1,\"itemName\":\"Beer\",\"quantity\":13,\"itemPrice\":5,\"totalPrice\":65},{\"itemID\":2,\"itemName\":\"Moscow Mule\",\"quantity\":12,\"itemPrice\":11,\"totalPrice\":132},{\"itemID\":3,\"itemName\":\"Twisted Tea\",\"quantity\":11,\"itemPrice\":6,\"totalPrice\":66}]'),
+(7, 1, 1, NULL, '2020-07-25 05:34:14', '[{\"itemID\":1,\"itemName\":\"Beer\",\"quantity\":13,\"itemPrice\":5,\"totalPrice\":65},{\"itemID\":2,\"itemName\":\"Moscow Mule\",\"quantity\":12,\"itemPrice\":11,\"totalPrice\":132},{\"itemID\":3,\"itemName\":\"Twisted Tea\",\"quantity\":11,\"itemPrice\":6,\"totalPrice\":66}]'),
+(8, 1, 1, NULL, '2020-07-25 05:34:14', '[{\"itemID\":1,\"itemName\":\"Beer\",\"quantity\":13,\"itemPrice\":5,\"totalPrice\":65},{\"itemID\":2,\"itemName\":\"Moscow Mule\",\"quantity\":12,\"itemPrice\":11,\"totalPrice\":132},{\"itemID\":3,\"itemName\":\"Twisted Tea\",\"quantity\":11,\"itemPrice\":6,\"totalPrice\":66}]'),
+(9, 1, 1, NULL, '2020-07-25 05:34:15', '[{\"itemID\":1,\"itemName\":\"Beer\",\"quantity\":13,\"itemPrice\":5,\"totalPrice\":65},{\"itemID\":2,\"itemName\":\"Moscow Mule\",\"quantity\":12,\"itemPrice\":11,\"totalPrice\":132},{\"itemID\":3,\"itemName\":\"Twisted Tea\",\"quantity\":11,\"itemPrice\":6,\"totalPrice\":66}]'),
+(10, 1, 1, NULL, '2020-07-26 00:55:19', '[{\"itemID\":1,\"itemName\":\"Beer\",\"quantity\":4,\"itemPrice\":5,\"totalPrice\":20},{\"itemID\":2,\"itemName\":\"Moscow Mule\",\"quantity\":4,\"itemPrice\":11,\"totalPrice\":44},{\"itemID\":3,\"itemName\":\"Twisted Tea\",\"quantity\":2,\"itemPrice\":6,\"totalPrice\":12},{\"itemID\":5,\"itemName\":\"Blue Moon\",\"quantity\":1,\"itemPrice\":7,\"totalPrice\":7},{\"itemID\":4,\"itemName\":\"Martini\",\"quantity\":1,\"itemPrice\":8,\"totalPrice\":8},{\"itemID\":7,\"itemName\":\"Vodka Soda\",\"quantity\":1,\"itemPrice\":9,\"totalPrice\":9},{\"itemID\":6,\"itemName\":\"Appletini\",\"quantity\":1,\"itemPrice\":9,\"totalPrice\":9}]'),
+(11, 1, 1, NULL, '2020-07-26 00:55:37', '[{\"itemID\":2,\"itemName\":\"Moscow Mule\",\"quantity\":2,\"itemPrice\":11,\"totalPrice\":22},{\"itemID\":3,\"itemName\":\"Twisted Tea\",\"quantity\":1,\"itemPrice\":6,\"totalPrice\":6},{\"itemID\":4,\"itemName\":\"Martini\",\"quantity\":2,\"itemPrice\":8,\"totalPrice\":16},{\"itemID\":6,\"itemName\":\"Appletini\",\"quantity\":2,\"itemPrice\":9,\"totalPrice\":18},{\"itemID\":7,\"itemName\":\"Vodka Soda\",\"quantity\":1,\"itemPrice\":9,\"totalPrice\":9},{\"itemID\":5,\"itemName\":\"Blue Moon\",\"quantity\":1,\"itemPrice\":7,\"totalPrice\":7}]'),
+(12, 1, 1, NULL, '2020-07-26 01:28:50', '[{\"itemID\":1,\"itemName\":\"Beer\",\"quantity\":2,\"itemPrice\":5,\"totalPrice\":10},{\"itemID\":2,\"itemName\":\"Moscow Mule\",\"quantity\":2,\"itemPrice\":11,\"totalPrice\":22},{\"itemID\":3,\"itemName\":\"Twisted Tea\",\"quantity\":2,\"itemPrice\":6,\"totalPrice\":12}]'),
+(13, 1, 1, NULL, '2020-07-26 01:52:14', '[{\"itemID\":1,\"itemName\":\"Beer\",\"quantity\":3,\"itemPrice\":5,\"totalPrice\":15},{\"itemID\":2,\"itemName\":\"Moscow Mule\",\"quantity\":2,\"itemPrice\":11,\"totalPrice\":22},{\"itemID\":3,\"itemName\":\"Twisted Tea\",\"quantity\":1,\"itemPrice\":6,\"totalPrice\":6},{\"itemID\":4,\"itemName\":\"Martini\",\"quantity\":1,\"itemPrice\":8,\"totalPrice\":8},{\"itemID\":5,\"itemName\":\"Blue Moon\",\"quantity\":1,\"itemPrice\":7,\"totalPrice\":7}]');
 
 -- --------------------------------------------------------
 
@@ -172,50 +125,25 @@ INSERT INTO `order_items` (`orderItemsID`, `orderID`, `itemID`, `itemQuantity`, 
 CREATE TABLE `restaurants` (
   `restID` int(10) NOT NULL,
   `restName` varchar(50) NOT NULL,
-  `restPhone` varchar(14) NOT NULL,
-  `restEmail` varchar(50) NOT NULL,
-  `restLocation` varchar(100) NOT NULL,
-  `restDescription` varchar(200) DEFAULT NULL,
-  `restOpenTime` time DEFAULT NULL,
-  `restCloseTime` time DEFAULT NULL
+  `firstName` varchar(30) NOT NULL,
+  `lastName` varchar(30) NOT NULL,
+  `phone` varchar(14) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `address` varchar(100) NOT NULL,
+  `zipcode` int(5) NOT NULL,
+  `description` varchar(200) DEFAULT NULL,
+  `openTime` time NOT NULL,
+  `closeTime` time NOT NULL,
+  `restPassword` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `restaurants`
 --
 
-INSERT INTO `restaurants` (`restID`, `restName`, `restPhone`, `restEmail`, `restLocation`, `restDescription`, `restOpenTime`, `restCloseTime`) VALUES
-(1, 'Flanns', '1-234-456-1234', 'flanns@test.com', '555 huntington avenue', NULL, '01:00:00', '01:10:00'),
-(2, 'West End Johns', '1-234-466-1234', 'johns@test.com', '123 huntington avenue', NULL, '10:00:00', '11:00:00');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `testorders`
---
-
-CREATE TABLE `testorders` (
-  `orderID` int(10) NOT NULL,
-  `restID` int(11) DEFAULT NULL,
-  `customerID` int(11) DEFAULT NULL,
-  `orderNotes` varchar(150) DEFAULT NULL,
-  `orderDateTime` datetime DEFAULT current_timestamp(),
-  `orderItems` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`orderItems`))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `testorders`
---
-
-INSERT INTO `testorders` (`orderID`, `restID`, `customerID`, `orderNotes`, `orderDateTime`, `orderItems`) VALUES
-(1, 1, 1, NULL, '2020-07-25 03:50:09', '{\"id\": 1, \"name\": \"Monty\"}'),
-(2, 1, 1, NULL, '2020-07-25 03:51:15', '[{\"id\": 1, \"name\": \"Monty\"},{\"id\": 2, \"name\": \"Montyy\"}]'),
-(4, 1, 1, NULL, '2020-07-25 04:17:45', '[{\"itemID\":1,\"itemName\":\"Beer\",\"quantity\":6,\"itemPrice\":5,\"totalPrice\":30},{\"itemID\":2,\"itemName\":\"Moscow Mule\",\"quantity\":2,\"itemPrice\":11,\"totalPrice\":22},{\"itemID\":3,\"itemName\":\"Twisted Tea\",\"quantity\":2,\"itemPrice\":6,\"totalPrice\":12}]'),
-(5, 1, 1, NULL, '2020-07-25 05:34:05', '[{\"itemID\":1,\"itemName\":\"Beer\",\"quantity\":13,\"itemPrice\":5,\"totalPrice\":65},{\"itemID\":2,\"itemName\":\"Moscow Mule\",\"quantity\":12,\"itemPrice\":11,\"totalPrice\":132},{\"itemID\":3,\"itemName\":\"Twisted Tea\",\"quantity\":11,\"itemPrice\":6,\"totalPrice\":66}]'),
-(6, 1, 1, NULL, '2020-07-25 05:34:13', '[{\"itemID\":1,\"itemName\":\"Beer\",\"quantity\":13,\"itemPrice\":5,\"totalPrice\":65},{\"itemID\":2,\"itemName\":\"Moscow Mule\",\"quantity\":12,\"itemPrice\":11,\"totalPrice\":132},{\"itemID\":3,\"itemName\":\"Twisted Tea\",\"quantity\":11,\"itemPrice\":6,\"totalPrice\":66}]'),
-(7, 1, 1, NULL, '2020-07-25 05:34:14', '[{\"itemID\":1,\"itemName\":\"Beer\",\"quantity\":13,\"itemPrice\":5,\"totalPrice\":65},{\"itemID\":2,\"itemName\":\"Moscow Mule\",\"quantity\":12,\"itemPrice\":11,\"totalPrice\":132},{\"itemID\":3,\"itemName\":\"Twisted Tea\",\"quantity\":11,\"itemPrice\":6,\"totalPrice\":66}]'),
-(8, 1, 1, NULL, '2020-07-25 05:34:14', '[{\"itemID\":1,\"itemName\":\"Beer\",\"quantity\":13,\"itemPrice\":5,\"totalPrice\":65},{\"itemID\":2,\"itemName\":\"Moscow Mule\",\"quantity\":12,\"itemPrice\":11,\"totalPrice\":132},{\"itemID\":3,\"itemName\":\"Twisted Tea\",\"quantity\":11,\"itemPrice\":6,\"totalPrice\":66}]'),
-(9, 1, 1, NULL, '2020-07-25 05:34:15', '[{\"itemID\":1,\"itemName\":\"Beer\",\"quantity\":13,\"itemPrice\":5,\"totalPrice\":65},{\"itemID\":2,\"itemName\":\"Moscow Mule\",\"quantity\":12,\"itemPrice\":11,\"totalPrice\":132},{\"itemID\":3,\"itemName\":\"Twisted Tea\",\"quantity\":11,\"itemPrice\":6,\"totalPrice\":66}]');
+INSERT INTO `restaurants` (`restID`, `restName`, `firstName`, `lastName`, `phone`, `email`, `address`, `zipcode`, `description`, `openTime`, `closeTime`, `restPassword`) VALUES
+(1, 'Flanns', 'Cameron', 'Liddell', '6034403643', 'cam@gmail.com', '90 Scott Drive', 3054, 'Best drinks in town', '01:00:00', '01:10:00', 'test'),
+(2, 'Jimmy Two\'s', 'Chuckie', 'Boi', '8974435821', 'camLittle@gmail.com', '93 Winger Drive', 3057, 'Worst Drinks in town', '00:00:00', '00:10:00', 'test');
 
 --
 -- Indexes for dumped tables
@@ -244,29 +172,13 @@ ALTER TABLE `orders`
   ADD KEY `customerID` (`customerID`);
 
 --
--- Indexes for table `order_items`
---
-ALTER TABLE `order_items`
-  ADD PRIMARY KEY (`orderItemsID`),
-  ADD KEY `orderID` (`orderID`),
-  ADD KEY `itemID` (`itemID`);
-
---
 -- Indexes for table `restaurants`
 --
 ALTER TABLE `restaurants`
   ADD PRIMARY KEY (`restID`),
-  ADD UNIQUE KEY `restPhone` (`restPhone`),
-  ADD UNIQUE KEY `restEmail` (`restEmail`),
-  ADD UNIQUE KEY `restLocation` (`restLocation`);
-
---
--- Indexes for table `testorders`
---
-ALTER TABLE `testorders`
-  ADD PRIMARY KEY (`orderID`),
-  ADD KEY `restID` (`restID`),
-  ADD KEY `customerID` (`customerID`);
+  ADD UNIQUE KEY `phone` (`phone`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `address` (`address`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -282,31 +194,19 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `itemID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `itemID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `orderID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
-
---
--- AUTO_INCREMENT for table `order_items`
---
-ALTER TABLE `order_items`
-  MODIFY `orderItemsID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `orderID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `restaurants`
 --
 ALTER TABLE `restaurants`
   MODIFY `restID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `testorders`
---
-ALTER TABLE `testorders`
-  MODIFY `orderID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables
@@ -324,20 +224,6 @@ ALTER TABLE `items`
 ALTER TABLE `orders`
   ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`restID`) REFERENCES `restaurants` (`restID`) ON DELETE CASCADE,
   ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`customerID`) REFERENCES `customers` (`customerID`) ON DELETE CASCADE;
-
---
--- Constraints for table `order_items`
---
-ALTER TABLE `order_items`
-  ADD CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`orderID`) REFERENCES `orders` (`orderID`) ON DELETE CASCADE,
-  ADD CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`itemID`) REFERENCES `items` (`itemID`) ON DELETE CASCADE;
-
---
--- Constraints for table `testorders`
---
-ALTER TABLE `testorders`
-  ADD CONSTRAINT `testorders_ibfk_1` FOREIGN KEY (`restID`) REFERENCES `restaurants` (`restID`) ON DELETE CASCADE,
-  ADD CONSTRAINT `testorders_ibfk_2` FOREIGN KEY (`customerID`) REFERENCES `customers` (`customerID`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -20,27 +20,27 @@ import SyncStorage from "sync-storage";
 function OrderHistoryItem({
   props,
   orderID,
-  restID,
   orderDateTime,
   restName,
-  restLocation,
+  address,
+  orderItems,
 }) {
   return (
     <TouchableOpacity
       onPress={() =>
         props.navigation.navigate("OrderHistoryView", {
           orderID: { orderID },
-          restID: { restID },
           orderDateTime: { orderDateTime },
           restName: { restName },
-          restLocation: { restLocation },
+          address: { address },
+          orderItems: { orderItems },
         })
       }
       style={styles.item}
     >
       <View style={styles.restaurantInfo}>
         <Text style={styles.restaurantTitle}>{restName}</Text>
-        <Text style={styles.infoText}>{restLocation}</Text>
+        <Text style={styles.infoText}>{address}</Text>
         <Text style={styles.infoText}>{orderDateTime}</Text>
       </View>
     </TouchableOpacity>
@@ -56,7 +56,6 @@ export default class OrderHistory extends Component {
         userID: SyncStorage.get("userID"),
       })
       .then((res) => {
-        console.log(res.data);
         this.setState({
           DATA: res.data,
         });
@@ -91,7 +90,8 @@ export default class OrderHistory extends Component {
               restID={item.restID}
               orderDateTime={item.orderDateTime}
               restName={item.restName}
-              restLocation={item.restLocation}
+              address={item.address}
+              orderItems={item.orderItems}
             />
           )}
         />
