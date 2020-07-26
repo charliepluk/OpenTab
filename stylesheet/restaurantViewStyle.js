@@ -86,6 +86,42 @@ const styles = StyleSheet.create({
     width: 80,
     borderRadius: 10,
   },
+
+  //MODAL
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    width: "75%",
+    height: "45%",
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 10,
+    padding: 35,
+    alignItems: "stretch",
+    elevation: 50,
+  },
+  modalButton: {
+    backgroundColor: "#FF9466",
+    borderRadius: 20,
+    padding: 10,
+    margin: 5,
+    elevation: 2,
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+    fontSize: 18,
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
+    fontSize: 18,
+  },
 });
 
 export { styles };
