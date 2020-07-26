@@ -14,6 +14,7 @@ import RestaurantView from "./components/restaurantView";
 import Order from "./components/order";
 import OrderHistory from "./components/orderHistory";
 import OrderHistoryView from "./components/orderHistoryView";
+import Settings from "./components/settings";
 
 import RootStackScreen from "./components/rootStackScreen";
 
@@ -22,6 +23,7 @@ import DrawerContent from "./components/drawerContent";
 
 //Import Async-Storage functions
 import SyncStorage from "sync-storage";
+import settings from "./components/settings";
 
 // Disable Font Scaling on iOS
 Text.defaultProps = Text.defaultProps || {};
@@ -47,6 +49,9 @@ const HomeStackScreen = ({ navigation }) => (
     </HomeStack.Screen>
     <HomeStack.Screen name="OrderHistoryView" options={{ headerShown: false }}>
       {(props) => <OrderHistoryView {...props} />}
+    </HomeStack.Screen>
+    <HomeStack.Screen name="Settings" options={{ headerShown: false }}>
+      {(props) => <Settings {...props} />}
     </HomeStack.Screen>
     <HomeStack.Screen name="Order" options={{ headerShown: false }}>
       {(props) => <Order {...props} />}

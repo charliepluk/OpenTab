@@ -63,6 +63,9 @@ export default function DrawerContent(props) {
                 Settings
               </Text>
             )}
+            onPress={() => {
+              props.navigation.navigate("Settings");
+            }}
           />
         </View>
       </DrawerContentScrollView>
