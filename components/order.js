@@ -1,8 +1,15 @@
 import React, { Component } from "react";
-import { View, Text, SafeAreaView, StyleSheet, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  FlatList,
+  Alert,
+} from "react-native";
 import { Button } from "react-native-paper";
 import { TouchableOpacity } from "react-native-gesture-handler";
-
+import { navStyles } from "../stylesheet/navbarStyle";
 import CloseIcon from "../assets/svg/close.svg";
 import SyncStorage from "sync-storage";
 import axios from "axios";
@@ -55,36 +62,44 @@ export default class Order extends Component {
   submitOrder = () => {
     var userID = SyncStorage.get("userID");
     var connectedRestID = SyncStorage.get("connectedRestID");
-    console.log(userID);
-    axios
-      .post("http://10.0.0.27:3000/requestRoutes/submitOrder", {
-        restID: connectedRestID,
-        userID: userID,
-        orderItems: this.state.orderData,
-      })
-      .then((res) => {
-        console.log("submit success");
-        SyncStorage.set("currentCustomerOrder", "");
-        this.props.navigation.goBack();
-      })
-      //catch any errors from the post call
-      .catch((err) => {
-        console.log("ERROR OCCURED: ");
-        console.log(err);
-      });
+    //if user is not connected to a restaurant - this should really never happen
+    if (this.state.orderData == "") {
+      Alert.alert(
+        "Empty order",
+        "There are not items in your order, please add items to submit an order."
+      );
+    } else {
+      axios
+        .post("http://10.0.0.27:3000/requestRoutes/submitOrder", {
+          restID: connectedRestID,
+          userID: userID,
+          orderItems: this.state.orderData,
+        })
+        .then((res) => {
+          console.log("submit success");
+          SyncStorage.set("currentCustomerOrder", "");
+          this.props.navigation.goBack();
+        })
+        //catch any errors from the post call
+        .catch((err) => {
+          console.log("ERROR OCCURED: ");
+          console.log(err);
+        });
+    }
   };
 
   render() {
     return (
       <View style={styles.container}>
-        <SafeAreaView style={styles.header}>
+        <SafeAreaView style={navStyles.navBar}>
+          <View style={navStyles.navTab} />
+          <Text style={styles.title}>Your Order</Text>
           <TouchableOpacity
-            style={styles.close}
+            style={navStyles.orderTab}
             onPress={() => this.props.navigation.goBack()}
           >
-            <CloseIcon width={135} height={75} viewBox="0 0 24 15" />
+            <CloseIcon width={35} height={35} />
           </TouchableOpacity>
-          <Text style={styles.title}>Your Order</Text>
         </SafeAreaView>
 
         <FlatList
@@ -105,7 +120,7 @@ export default class Order extends Component {
 
         <View style={styles.buttonContainer}>
           <Button style={styles.button} onPress={() => this.submitOrder()}>
-            <Text style={{ color: "#F6F6F6" }}>Order</Text>
+            <Text style={{ color: "#FF9466" }}>Order</Text>
           </Button>
         </View>
       </View>
@@ -120,19 +135,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  header: {
-    justifyContent: "center",
-    height: 100,
-    width: "100%",
-    backgroundColor: "#FF9466",
-  },
-
   title: {
     alignSelf: "center",
-    color: "#F6F6F6",
+    color: "#FEFEFE",
     fontSize: 20,
     fontWeight: "bold",
-    height: "50%",
+    height: 57,
   },
 
   close: {
@@ -186,19 +194,18 @@ const styles = StyleSheet.create({
   buttonContainer: {
     backgroundColor: "#FF9466",
     width: "100%",
-    height: 80,
+    height: 100,
     justifyContent: "center",
     alignItems: "center",
   },
 
   button: {
-    backgroundColor: "#FF9466",
-    borderWidth: 2,
-    borderColor: "black",
+    backgroundColor: "#F6F6F6",
     color: "#FF9466",
     width: 276,
     height: 46,
     justifyContent: "center",
+    borderRadius: 0,
     alignSelf: "center",
   },
 });
