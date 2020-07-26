@@ -70,7 +70,7 @@ export default class Order extends Component {
       );
     } else {
       axios
-        .post("http://10.0.1.62:3000/requestRoutes/submitOrder", {
+        .post("http://10.0.0.27:3000/requestRoutes/submitOrder", {
           restID: connectedRestID,
           userID: userID,
           orderItems: this.state.orderData,

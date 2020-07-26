@@ -22,17 +22,26 @@ import SyncStorage from "sync-storage";
 import { ScrollView } from "react-native-gesture-handler";
 
 export default class restaurantView extends Component {
-  state = {};
+  state = {
+    connectText: "CONNECT",
+  };
 
-  //get data to populate restaurants menu
   componentDidMount() {
     const { restID } = this.props.route.params;
+    //change text if user is connected to this restaurant
+    var connectedRestID = SyncStorage.get("connectedRestID");
+    if (connectedRestID == restID.restID) {
+      this.setState({
+        connectText: "DISCONNECT",
+      });
+    }
+
+    //get restaurant menu
     axios
-      .post("http://10.0.1.62:3000/requestRoutes/getRestaurantMenu", {
+      .post("http://10.0.0.27:3000/requestRoutes/getRestaurantMenu", {
         restID: restID.restID,
       })
       .then((res) => {
-        //console.log(res.data);
         this.setState({
           DATA: res.data,
         });
@@ -44,13 +53,33 @@ export default class restaurantView extends Component {
       });
   }
 
-  addPressedItemToOrder = (itemID, itemName, itemPrice, restID) => {
-    //add a for loop here that will check if they already have the item in their order via the itemID
-    //if the item exists just update the quantity
+  addPressedItemToOrder = (itemID, itemName, itemPrice, restID, restName) => {
     var connectedRestID = SyncStorage.get("connectedRestID");
+    //the user isn't connected to the restaurant they are currently viewing
     if (restID != connectedRestID) {
-      Alert.alert("Please connect to this restaurant to add to your order.");
-      return;
+      const title = "Notice";
+      const message =
+        "You must connect to this restaurant to add items to your order, would you like to connect to " +
+        restName +
+        " now?\n\nConnecting will clear any existing order.";
+      const buttons = [
+        { text: "Cancel", type: "cancel" },
+        {
+          text: "Yes",
+          onPress: () => {
+            //update connectedRestID variable, clear customer order and update connectText
+            SyncStorage.set("connectedRestID", restID.toString());
+            SyncStorage.set("currentCustomerOrder", "");
+            this.setState({
+              connectText: "DISCONNECT",
+            });
+          },
+        },
+        {
+          text: "No",
+        },
+      ];
+      Alert.alert(title, message, buttons);
     } else {
       var jsonData = {
         itemID: itemID,
@@ -71,42 +100,77 @@ export default class restaurantView extends Component {
   //connects to a restaurant by updating SyncStorage variable
   connectToRestaurant = (restID, restName) => {
     var connectedRestID = SyncStorage.get("connectedRestID");
-    //the user is connected to no restaurant
-    if (connectedRestID == undefined || connectedRestID == "noRestConnected") {
-      SyncStorage.set("connectedRestID", restID.toString());
-      Alert.alert(
-        "Connected Successfully",
-        "You are now connected to " + restName + "."
-      );
-    }
 
-    //the user is already connected to this restaurant
-    else if (connectedRestID == restID) {
-      Alert.alert(
-        "Already Connected",
-        "You are already connected to " + restName + "."
-      );
-    }
-
-    //the user is trying to connect to a new restaurant
-    else {
+    //the user is connected to the restaurant they are currently viewing
+    if (this.state.connectText == "DISCONNECT") {
       const title = "Notice";
       const message =
-        "Connecting to a new restaurant will clear your current order, are you sure you want to connect to " +
+        "Disconnecting from a restaurant will clear any existing order, are you sure you want to disconnect from " +
         restName +
         "?";
       const buttons = [
         { text: "Cancel", type: "cancel" },
         {
           text: "Yes",
-          onPress: () => SyncStorage.set("connectedRestID", restID.toString()),
+          onPress: () => {
+            //update connectedRestID variable, clear customer order and update connectText
+            SyncStorage.set("connectedRestID", "noRestConnected");
+            SyncStorage.set("currentCustomerOrder", "");
+            this.setState({
+              connectText: "CONNECT",
+            });
+          },
         },
         {
           text: "No",
         },
       ];
       Alert.alert(title, message, buttons);
-      currentCustomerOrder = [];
+    }
+
+    //the user isn't connected to the restaurant they are currently viewing
+    else {
+      //the user is not connected to any restaurant
+      if (
+        connectedRestID == undefined ||
+        connectedRestID == "noRestConnected"
+      ) {
+        SyncStorage.set("connectedRestID", restID.toString());
+        this.setState({
+          connectText: "DISCONNECT",
+        });
+        Alert.alert(
+          "Connected Successfully",
+          "You are now connected to " + restName + "."
+        );
+      }
+
+      //the user is trying to connect to a new restaurant
+      else {
+        const title = "Notice";
+        const message =
+          "Connecting to a new restaurant will clear any existing order, are you sure you want to connect to " +
+          restName +
+          "?";
+        const buttons = [
+          { text: "Cancel", type: "cancel" },
+          {
+            text: "Yes",
+            onPress: () => {
+              //update connectedRestID variable, clear customer order and update connectText
+              SyncStorage.set("connectedRestID", restID.toString());
+              SyncStorage.set("currentCustomerOrder", "");
+              this.setState({
+                connectText: "DISCONNECT",
+              });
+            },
+          },
+          {
+            text: "No",
+          },
+        ];
+        Alert.alert(title, message, buttons);
+      }
     }
   };
 
@@ -152,7 +216,9 @@ export default class restaurantView extends Component {
                   this.connectToRestaurant(restID.restID, title.title)
                 }
               >
-                <Text style={{ color: "#FFFFFF" }}>Connect</Text>
+                <Text style={{ color: "#FFFFFF" }}>
+                  {this.state.connectText}
+                </Text>
               </Button>
 
               <View style={styles.thinRectangle}></View>
@@ -170,7 +236,8 @@ export default class restaurantView extends Component {
                   item.itemID,
                   item.itemName,
                   item.itemPrice,
-                  restID.restID
+                  restID.restID,
+                  title.title
                 )
               }
             >
