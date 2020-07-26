@@ -48,7 +48,7 @@ export default class Restaurants extends Component {
 
   componentDidMount() {
     axios
-      .get("http://10.0.0.27:3000/requestRoutes/getRestaurants")
+      .get("http://10.0.1.62:3000/requestRoutes/getRestaurants")
       .then((res) => {
         //console.log(res.data);
         this.setState({

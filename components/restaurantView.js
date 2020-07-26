@@ -28,7 +28,7 @@ export default class restaurantView extends Component {
   componentDidMount() {
     const { restID } = this.props.route.params;
     axios
-      .post("http://10.0.0.27:3000/requestRoutes/getRestaurantMenu", {
+      .post("http://10.0.1.62:3000/requestRoutes/getRestaurantMenu", {
         restID: restID.restID,
       })
       .then((res) => {
@@ -134,48 +134,52 @@ export default class restaurantView extends Component {
             <OrderIcon width={35} height={35} />
           </TouchableOpacity>
         </SafeAreaView>
-        <ScrollView>
-          <View style={styles.restaurantImage}></View>
-          <Text style={styles.restaurantName}>{title.title}</Text>
-          <Text style={styles.restaurantHours}>Hours: {hours.hours}</Text>
-          <Text style={styles.restaurantAddress}>{address.address}</Text>
-          <Text style={styles.restaurantDescription}>
-            {description.description}
-          </Text>
+        <FlatList
+          style={styles.restaurantList}
+          ListHeaderComponent={
+            <>
+              <View style={styles.restaurantImage}></View>
+              <Text style={styles.restaurantName}>{title.title}</Text>
+              <Text style={styles.restaurantHours}>Hours: {hours.hours}</Text>
+              <Text style={styles.restaurantAddress}>{address.address}</Text>
+              <Text style={styles.restaurantDescription}>
+                {description.description}
+              </Text>
 
-          <Button
-            style={styles.connectButton}
-            onPress={() => this.connectToRestaurant(restID.restID, title.title)}
-          >
-            <Text style={{ color: "#FFFFFF" }}>Connect</Text>
-          </Button>
-
-          <View style={styles.thinRectangle}></View>
-
-          <Text style={styles.drinksHeader}>Drinks</Text>
-
-          <FlatList
-            data={this.state.DATA}
-            keyExtractor={(item) => item.itemID.toString()}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                style={styles.drinksList}
+              <Button
+                style={styles.connectButton}
                 onPress={() =>
-                  this.addPressedItemToOrder(
-                    item.itemID,
-                    item.itemName,
-                    item.itemPrice,
-                    restID.restID
-                  )
+                  this.connectToRestaurant(restID.restID, title.title)
                 }
               >
-                <View style={styles.drinksIcon}></View>
-                <Text>{item.itemName}</Text>
-                <Text>{item.itemPrice}</Text>
-              </TouchableOpacity>
-            )}
-          />
-        </ScrollView>
+                <Text style={{ color: "#FFFFFF" }}>Connect</Text>
+              </Button>
+
+              <View style={styles.thinRectangle}></View>
+
+              <Text style={styles.drinksHeader}>Drinks</Text>
+            </>
+          }
+          data={this.state.DATA}
+          keyExtractor={(item) => item.itemID.toString()}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              style={styles.drinksList}
+              onPress={() =>
+                this.addPressedItemToOrder(
+                  item.itemID,
+                  item.itemName,
+                  item.itemPrice,
+                  restID.restID
+                )
+              }
+            >
+              <View style={styles.drinksIcon}></View>
+              <Text>{item.itemName}</Text>
+              <Text>{item.itemPrice}</Text>
+            </TouchableOpacity>
+          )}
+        />
       </View>
     );
   }
