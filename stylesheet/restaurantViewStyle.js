@@ -6,6 +6,10 @@ const styles = StyleSheet.create({
     height: "100%",
   },
 
+  restaurantList: {
+    marginBottom: 20,
+  },
+
   restaurantImage: {
     marginTop: 40,
     marginLeft: 30,
