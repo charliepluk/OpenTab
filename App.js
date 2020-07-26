@@ -23,7 +23,6 @@ import DrawerContent from "./components/drawerContent";
 
 //Import Async-Storage functions
 import SyncStorage from "sync-storage";
-import settings from "./components/settings";
 
 // Disable Font Scaling on iOS
 Text.defaultProps = Text.defaultProps || {};
