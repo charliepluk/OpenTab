@@ -130,6 +130,7 @@ CREATE TABLE `restaurants` (
   `phone` varchar(14) NOT NULL,
   `email` varchar(50) NOT NULL,
   `address` varchar(100) NOT NULL,
+  `state` varchar(2) NOT NULL,
   `zipcode` int(5) NOT NULL,
   `description` varchar(200) DEFAULT NULL,
   `openTime` time NOT NULL,
@@ -141,9 +142,9 @@ CREATE TABLE `restaurants` (
 -- Dumping data for table `restaurants`
 --
 
-INSERT INTO `restaurants` (`restID`, `restName`, `firstName`, `lastName`, `phone`, `email`, `address`, `zipcode`, `description`, `openTime`, `closeTime`, `restPassword`) VALUES
-(1, 'Flanns', 'Cameron', 'Liddell', '6034403643', 'cam@gmail.com', '90 Scott Drive', 3054, 'Best drinks in town', '01:00:00', '01:10:00', 'test'),
-(2, 'Jimmy Two\'s', 'Chuckie', 'Boi', '8974435821', 'camLittle@gmail.com', '93 Winger Drive', 3057, 'Worst Drinks in town', '00:00:00', '00:10:00', 'test');
+INSERT INTO `restaurants` (`restID`, `restName`, `firstName`, `lastName`, `phone`, `email`, `address`, `state`, `zipcode`, `description`, `openTime`, `closeTime`, `restPassword`) VALUES
+(1, 'Flanns', 'Cameron', 'Liddell', '6034403643', 'cam@gmail.com', '90 Scott Drive', 'MA', 3054, 'Best drinks in town', '01:00:00', '01:10:00', 'test'),
+(2, 'Jimmy Two\'s', 'Chuckie', 'Boi', '8974435821', 'camLittle@gmail.com', '93 Winger Drive', 'MA', 3057, 'Worst Drinks in town', '00:00:00', '00:10:00', 'test');
 
 --
 -- Indexes for dumped tables
