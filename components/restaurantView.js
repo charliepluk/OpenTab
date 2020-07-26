@@ -6,6 +6,8 @@ import {
   SafeAreaView,
   FlatList,
   Alert,
+  Modal,
+  TouchableHighlight,
 } from "react-native";
 import { Button } from "react-native-paper";
 import axios from "axios";
@@ -24,6 +26,11 @@ import { ScrollView } from "react-native-gesture-handler";
 export default class restaurantView extends Component {
   state = {
     connectText: "CONNECT",
+    modalVisible: false,
+    itemQuantity: 1,
+    itemID: "",
+    itemName: "",
+    itemPrice: "",
   };
 
   componentDidMount() {
@@ -53,7 +60,7 @@ export default class restaurantView extends Component {
       });
   }
 
-  addPressedItemToOrder = (itemID, itemName, itemPrice, restID, restName) => {
+  menuItemPressed = (itemID, itemName, itemPrice, restID, restName) => {
     var connectedRestID = SyncStorage.get("connectedRestID");
     //the user isn't connected to the restaurant they are currently viewing
     if (restID != connectedRestID) {
@@ -80,21 +87,47 @@ export default class restaurantView extends Component {
         },
       ];
       Alert.alert(title, message, buttons);
-    } else {
-      var jsonData = {
+    }
+
+    //the user is connected to the restaurant, prompt them with quantity modal
+    else {
+      this.setModalVisible(true);
+      //set state variables for use in modal
+      this.setState({
         itemID: itemID,
         itemName: itemName,
-        quantity: 1,
         itemPrice: itemPrice,
-      };
-
-      //adds json object to sync storage as string
-      var test = SyncStorage.get("currentCustomerOrder");
-      SyncStorage.set(
-        "currentCustomerOrder",
-        test + JSON.stringify(jsonData) + ",\n"
-      );
+      });
     }
+  };
+
+  //called from modal, adds item to the order after user defines quantity
+  addItemsToOrder = () => {
+    //create json object to add item to customer order
+    var jsonData = {
+      itemID: this.state.itemID,
+      itemName: this.state.itemName,
+      quantity: this.state.itemQuantity,
+      itemPrice: this.state.itemPrice,
+    };
+
+    //reset the state variables
+    this.setState({
+      itemID: "",
+      itemName: "",
+      itemQuantity: 1,
+      itemPrice: "",
+    });
+
+    //adds json object to sync storage as string
+    var test = SyncStorage.get("currentCustomerOrder");
+    SyncStorage.set(
+      "currentCustomerOrder",
+      test + JSON.stringify(jsonData) + ",\n"
+    );
+
+    //rehide the modal
+    this.setModalVisible(false);
   };
 
   //connects to a restaurant by updating SyncStorage variable
@@ -174,7 +207,21 @@ export default class restaurantView extends Component {
     }
   };
 
+  setModalVisible = (visible) => {
+    this.setState({ modalVisible: visible });
+  };
+
+  incrementQuantity = () => {
+    this.setState({ itemQuantity: this.state.itemQuantity + 1 });
+  };
+  decrementQuantity = () => {
+    if (this.state.itemQuantity > 1) {
+      this.setState({ itemQuantity: this.state.itemQuantity - 1 });
+    }
+  };
+
   render() {
+    const { modalVisible } = this.state;
     const { title } = this.props.route.params;
     const { hours } = this.props.route.params;
     const { address } = this.props.route.params;
@@ -183,6 +230,69 @@ export default class restaurantView extends Component {
 
     return (
       <View style={styles.container}>
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>
+                Quantity: {this.state.itemQuantity}
+              </Text>
+
+              <TouchableHighlight
+                style={{ ...styles.modalButton }}
+                underlayColor="#f28d61"
+                onPress={() => {
+                  this.incrementQuantity();
+                }}
+              >
+                <Text style={styles.textStyle}>+</Text>
+              </TouchableHighlight>
+
+              <TouchableHighlight
+                style={{ ...styles.modalButton }}
+                underlayColor="#f28d61"
+                onPress={() => {
+                  this.decrementQuantity();
+                }}
+              >
+                <Text style={styles.textStyle}>-</Text>
+              </TouchableHighlight>
+
+              <TouchableHighlight
+                style={{ ...styles.modalButton }}
+                underlayColor="#f28d61"
+                onPress={() => {
+                  this.addItemsToOrder();
+                }}
+              >
+                <Text style={styles.textStyle}>Add to order</Text>
+              </TouchableHighlight>
+
+              <TouchableHighlight
+                style={{ ...styles.modalButton }}
+                underlayColor="#f28d61"
+                onPress={() => {
+                  this.setModalVisible(!modalVisible);
+                  this.setState({
+                    itemID: "",
+                    itemName: "",
+                    itemQuantity: 1,
+                    itemPrice: "",
+                  });
+                }}
+              >
+                <Text style={styles.textStyle}>Cancel</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
+
         <SafeAreaView style={navStyles.navBar}>
           <TouchableOpacity
             style={navStyles.navTab}
@@ -232,7 +342,7 @@ export default class restaurantView extends Component {
             <TouchableOpacity
               style={styles.drinksList}
               onPress={() =>
-                this.addPressedItemToOrder(
+                this.menuItemPressed(
                   item.itemID,
                   item.itemName,
                   item.itemPrice,

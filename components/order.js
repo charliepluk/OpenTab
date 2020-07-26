@@ -66,7 +66,7 @@ export default class Order extends Component {
     if (this.state.orderData == "") {
       Alert.alert(
         "Empty order",
-        "There are not items in your order, please add items to submit an order."
+        "There are no items in your order, please add items to submit an order."
       );
     } else {
       axios
@@ -96,7 +96,7 @@ export default class Order extends Component {
           <Text style={styles.title}>Your Order</Text>
           <TouchableOpacity
             style={navStyles.orderTab}
-            onPress={() => this.props.navigation.goBack()}
+            onPress={() => this.props.navigation.navigate("Home")}
           >
             <CloseIcon width={35} height={35} />
           </TouchableOpacity>
