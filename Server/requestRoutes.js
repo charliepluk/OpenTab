@@ -204,7 +204,7 @@ router.post("/submitOrder", function (req, res, next) {
   var orderItems = JSON.stringify(req.body.orderItems);
 
   mysql.query(
-    `INSERT INTO orders(restID,customerID,orderItems) VALUES ("${restID}","${userID}",'${orderItems}')`,
+    `INSERT INTO orders(restID,customerID,orderItems,orderStatus) VALUES ("${restID}","${userID}",'${orderItems}',\"pending\")`,
     function (err, result, field) {
       //if: DB error
       if (err) {
