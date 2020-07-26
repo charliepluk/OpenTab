@@ -77,13 +77,13 @@ CREATE TABLE `items` (
 --
 
 INSERT INTO `items` (`itemID`, `restID`, `itemName`, `itemPrice`, `itemDescription`, `itemType`) VALUES
-(1, 1, 'Beer', '5.00', '', 'drink'),
-(2, 1, 'Moscow Mule', '11.00', NULL, 'drink'),
-(3, 1, 'Twisted Tea', '6.00', NULL, 'drink'),
-(4, 1, 'Martini', '8.00', NULL, 'drink'),
-(5, 1, 'Blue Moon', '7.00', NULL, 'drink'),
-(6, 1, 'Appletini', '9.00', NULL, 'drink'),
-(7, 1, 'Vodka Soda', '9.00', NULL, 'drink');
+(1, 1, 'Beer', '5.00', '', 'Drink'),
+(2, 1, 'Moscow Mule', '11.00', NULL, 'Drink'),
+(3, 1, 'Twisted Tea', '6.00', NULL, 'Drink'),
+(4, 1, 'Martini', '8.00', NULL, 'Drink'),
+(5, 1, 'Blue Moon', '7.00', NULL, 'Drink'),
+(6, 1, 'Appletini', '9.00', NULL, 'Drink'),
+(7, 1, 'Vodka Soda', '9.00', NULL, 'Drink');
 
 -- --------------------------------------------------------
 
