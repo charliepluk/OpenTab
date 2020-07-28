@@ -46,3 +46,14 @@ export function syncStringToArray(syncString) {
 
   return reducedArray;
 }
+
+export function arrayToSyncString(reducedArray) {
+  //takes the reduced array to create a json string and stores it back in sync storage
+  var reducedArrLength = reducedArray.length;
+  var reducedCustomerOrderString = "";
+  for (var i = 0; i < reducedArrLength; i++) {
+    reducedCustomerOrderString += JSON.stringify(reducedArray[i]) + ",\n";
+  }
+
+  return reducedCustomerOrderString;
+}
