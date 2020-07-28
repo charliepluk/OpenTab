@@ -24,6 +24,7 @@ export default class customerSignup extends Component {
     ) {
       axios
         .post("http://10.0.0.27:3000/requestRoutes/createAccount", {
+          firstname: this.state.firstName,
           email: this.state.email,
           password: this.state.password,
         })
@@ -44,10 +45,14 @@ export default class customerSignup extends Component {
           }
           //else the account was successfully created
           else {
+            console.log(res.data);
             //store the returned user information in Sync-storage
             SyncStorage.set("userID", res.data[0].customerID.toString());
             SyncStorage.set("userEmail", res.data[0].customerEmail.toString());
-            SyncStorage.set("userFirstname", this.state.firstName);
+            SyncStorage.set(
+              "userFirstname",
+              res.data[0].customerFirstname.toString()
+            );
             SyncStorage.set("currentCustomerOrder", "");
             this.props.navigation.navigate("Home");
           }
