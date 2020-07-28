@@ -19,7 +19,15 @@ import OrderIcon from "../assets/svg/order-alt.svg";
 import SyncStorage from "sync-storage";
 import { ScrollView } from "react-native-gesture-handler";
 
-function RestaurantItem({ props, title, address, hours, description, restID }) {
+function RestaurantItem({
+  props,
+  title,
+  address,
+  city,
+  hours,
+  description,
+  restID,
+}) {
   return (
     <TouchableOpacity
       onPress={() =>
@@ -27,6 +35,7 @@ function RestaurantItem({ props, title, address, hours, description, restID }) {
           title: { title },
           hours: { hours },
           address: { address },
+          city: { city },
           description: { description },
           restID: { restID },
         })
@@ -37,7 +46,9 @@ function RestaurantItem({ props, title, address, hours, description, restID }) {
       <View style={styles.restaurantInfo}>
         <Text style={styles.restaurantTitle}>{title}</Text>
         <Text style={styles.infoText}>Hours: {hours}</Text>
-        <Text style={styles.infoText}>{address}</Text>
+        <Text style={styles.infoText}>
+          {address}, {city}
+        </Text>
       </View>
     </TouchableOpacity>
   );
@@ -92,6 +103,7 @@ export default class Restaurants extends Component {
               props={this.props}
               title={item.restName}
               address={item.address}
+              city={item.city}
               hours={
                 item.openTime.toString() + " - " + item.closeTime.toString()
               }

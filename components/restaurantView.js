@@ -89,11 +89,10 @@ export default class restaurantView extends Component {
       Alert.alert(title, message, buttons);
     }
 
-    //the user is connected to the restaurant, prompt them with quantity modal
+    //the user is connected to the restaurant, prompt them with quantity modal and set state variables for use in modal
     else {
-      this.setModalVisible(true);
-      //set state variables for use in modal
       this.setState({
+        modalVisible: true,
         itemID: itemID,
         itemName: itemName,
         itemPrice: itemPrice,
@@ -127,7 +126,7 @@ export default class restaurantView extends Component {
     );
 
     //rehide the modal
-    this.setModalVisible(false);
+    this.setState({ modalVisible: false });
   };
 
   //connects to a restaurant by updating SyncStorage variable
@@ -207,10 +206,6 @@ export default class restaurantView extends Component {
     }
   };
 
-  setModalVisible = (visible) => {
-    this.setState({ modalVisible: visible });
-  };
-
   incrementQuantity = () => {
     this.setState({ itemQuantity: this.state.itemQuantity + 1 });
   };
@@ -225,6 +220,7 @@ export default class restaurantView extends Component {
     const { title } = this.props.route.params;
     const { hours } = this.props.route.params;
     const { address } = this.props.route.params;
+    const { city } = this.props.route.params;
     const { description } = this.props.route.params;
     const { restID } = this.props.route.params;
 
@@ -240,7 +236,8 @@ export default class restaurantView extends Component {
         >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalText}>
+              <Text style={styles.modalItemName}>{this.state.itemName}</Text>
+              <Text style={styles.modalQuantityText}>
                 Quantity: {this.state.itemQuantity}
               </Text>
 
@@ -278,12 +275,12 @@ export default class restaurantView extends Component {
                 style={{ ...styles.modalButton }}
                 underlayColor="#f28d61"
                 onPress={() => {
-                  this.setModalVisible(!modalVisible);
                   this.setState({
                     itemID: "",
                     itemName: "",
                     itemQuantity: 1,
                     itemPrice: "",
+                    modalVisible: false,
                   });
                 }}
               >
@@ -312,10 +309,15 @@ export default class restaurantView extends Component {
           style={styles.restaurantList}
           ListHeaderComponent={
             <>
-              <View style={styles.restaurantImage}></View>
-              <Text style={styles.restaurantName}>{title.title}</Text>
-              <Text style={styles.restaurantHours}>Hours: {hours.hours}</Text>
-              <Text style={styles.restaurantAddress}>{address.address}</Text>
+              <View style={styles.restaurantViewItem}>
+                <View style={styles.restaurantImage}></View>
+                <Text style={styles.restaurantName}>{title.title}</Text>
+                <Text style={styles.restaurantHours}>Hours: {hours.hours}</Text>
+                <Text style={styles.restaurantAddress}>
+                  {address.address}, {city.city}
+                </Text>
+              </View>
+
               <Text style={styles.restaurantDescription}>
                 {description.description}
               </Text>
