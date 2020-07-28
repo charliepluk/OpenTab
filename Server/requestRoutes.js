@@ -8,12 +8,13 @@ var bodyParser = require("body-parser");
 //******************
 router.post("/createAccount", function (req, res, next) {
   var holdOBJ = req.body;
+  var firstname = holdOBJ.firstname;
   var email = holdOBJ.email;
   var password = holdOBJ.password;
 
   //insert data for the new account
   mysql.query(
-    `INSERT INTO customers(customerEmail,customerPassword) VALUES("${email}","${password}")`,
+    `INSERT INTO customers(customerEmail,customerPassword, customerFirstname) VALUES("${email}","${password}", "${firstname}")`,
     function (err, result, field) {
       //if error
       if (err) {

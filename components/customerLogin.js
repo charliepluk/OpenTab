@@ -54,6 +54,10 @@ export default class CustomerLogin extends Component {
             //store the returned user information in Sync-storage
             SyncStorage.set("userID", res.data[0].customerID.toString());
             SyncStorage.set("userEmail", res.data[0].customerEmail.toString());
+            SyncStorage.set(
+              "userFirstname",
+              res.data[0].customerFirstname.toString()
+            );
             SyncStorage.set("currentCustomerOrder", "");
             this.props.navigation.navigate("Home");
           }

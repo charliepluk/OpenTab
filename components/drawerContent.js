@@ -8,7 +8,7 @@ import LogOut from "../assets/svg/logout.svg";
 import HomeIcon from "../assets/svg/home.svg";
 import HistoryIcon from "../assets/svg/orderHistory.svg";
 import PaymentIcon from "../assets/svg/payment.svg";
-import SettingsIcon from "../assets/svg/settings.svg";
+import AccountIcon from "../assets/svg/account.svg";
 
 //Import async-storage functions
 import SyncStorage from "sync-storage";
@@ -56,11 +56,11 @@ export default function DrawerContent(props) {
             )}
           />
           <DrawerItem
-            icon={() => <SettingsIcon width={20} height={20} />}
+            icon={() => <AccountIcon width={20} height={20} />}
             style={styles.drawerItem}
             label={() => (
               <Text style={{ color: "#FF9466", fontWeight: "bold" }}>
-                Settings
+                Account Info
               </Text>
             )}
             onPress={() => {
@@ -81,6 +81,7 @@ export default function DrawerContent(props) {
             SyncStorage.set("userID", "noUser");
             SyncStorage.set("connectedRestID", "noRestConnected");
             SyncStorage.set("currentCustomerOrder", "");
+            SyncStorage.set("userFirstname", "");
             props.navigation.navigate("LandingPage");
           }}
         />
