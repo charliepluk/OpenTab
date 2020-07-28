@@ -15,10 +15,29 @@ const styles = StyleSheet.create({
     paddingLeft: 50,
   },
 
-  emailHeader: {
+  firstnameHeader: {
     fontWeight: "bold",
     paddingLeft: 50,
     marginTop: 70,
+    fontSize: 12,
+  },
+
+  firstnameInput: {
+    width: 300,
+    height: 50,
+    paddingLeft: 5,
+    marginLeft: 50,
+    justifyContent: "center",
+    backgroundColor: "#F1F1F1",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.4,
+  },
+
+  emailHeader: {
+    fontWeight: "bold",
+    paddingLeft: 50,
+    marginTop: 25,
     fontSize: 12,
   },
 
