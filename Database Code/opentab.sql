@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 26, 2020 at 07:57 AM
--- Server version: 10.5.4-MariaDB
+-- Generation Time: Jul 28, 2020 at 11:47 PM
+-- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -77,13 +77,17 @@ CREATE TABLE `items` (
 --
 
 INSERT INTO `items` (`itemID`, `restID`, `itemName`, `itemPrice`, `itemDescription`, `itemType`) VALUES
-(1, 1, 'Beer', '5.00', '', 'drink'),
-(2, 1, 'Moscow Mule', '11.00', NULL, 'drink'),
-(3, 1, 'Twisted Tea', '6.00', NULL, 'drink'),
-(4, 1, 'Martini', '8.00', NULL, 'drink'),
-(5, 1, 'Blue Moon', '7.00', NULL, 'drink'),
-(6, 1, 'Appletini', '9.00', NULL, 'drink'),
-(7, 1, 'Vodka Soda', '9.00', NULL, 'drink');
+(8, 1, 'Coors', '5.50', NULL, 'Drink'),
+(9, 1, 'Budlight', '5.00', NULL, 'Drink'),
+(10, 1, 'Appletini', '9.00', NULL, 'Drink'),
+(11, 1, 'Vodka Soda', '10.00', NULL, 'Drink'),
+(13, 3, 'Twisted Tea', '6.00', NULL, 'Drink'),
+(14, 3, 'White Claw', '6.50', NULL, 'Drink'),
+(15, 3, 'Bud Lime', '6.00', NULL, 'Drink'),
+(16, 2, 'Cider', '7.50', NULL, 'Drink'),
+(17, 2, 'Scotch', '11.00', NULL, 'Drink'),
+(18, 2, 'Natty Light', '5.00', NULL, 'Drink'),
+(19, 2, 'Vodka', '10.00', NULL, 'Drink');
 
 -- --------------------------------------------------------
 
@@ -97,6 +101,7 @@ CREATE TABLE `orders` (
   `customerID` int(11) DEFAULT NULL,
   `orderNotes` varchar(150) DEFAULT NULL,
   `orderDateTime` datetime DEFAULT current_timestamp(),
+  `orderStatus` varchar(9) NOT NULL,
   `orderItems` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`orderItems`))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -104,17 +109,10 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`orderID`, `restID`, `customerID`, `orderNotes`, `orderDateTime`, `orderItems`) VALUES
-(4, 1, 1, NULL, '2020-07-25 04:17:45', '[{\"itemID\":1,\"itemName\":\"Beer\",\"quantity\":6,\"itemPrice\":5,\"totalPrice\":30},{\"itemID\":2,\"itemName\":\"Moscow Mule\",\"quantity\":2,\"itemPrice\":11,\"totalPrice\":22},{\"itemID\":3,\"itemName\":\"Twisted Tea\",\"quantity\":2,\"itemPrice\":6,\"totalPrice\":12}]'),
-(5, 1, 1, NULL, '2020-07-25 05:34:05', '[{\"itemID\":1,\"itemName\":\"Beer\",\"quantity\":13,\"itemPrice\":5,\"totalPrice\":65},{\"itemID\":2,\"itemName\":\"Moscow Mule\",\"quantity\":12,\"itemPrice\":11,\"totalPrice\":132},{\"itemID\":3,\"itemName\":\"Twisted Tea\",\"quantity\":11,\"itemPrice\":6,\"totalPrice\":66}]'),
-(6, 1, 1, NULL, '2020-07-25 05:34:13', '[{\"itemID\":1,\"itemName\":\"Beer\",\"quantity\":13,\"itemPrice\":5,\"totalPrice\":65},{\"itemID\":2,\"itemName\":\"Moscow Mule\",\"quantity\":12,\"itemPrice\":11,\"totalPrice\":132},{\"itemID\":3,\"itemName\":\"Twisted Tea\",\"quantity\":11,\"itemPrice\":6,\"totalPrice\":66}]'),
-(7, 1, 1, NULL, '2020-07-25 05:34:14', '[{\"itemID\":1,\"itemName\":\"Beer\",\"quantity\":13,\"itemPrice\":5,\"totalPrice\":65},{\"itemID\":2,\"itemName\":\"Moscow Mule\",\"quantity\":12,\"itemPrice\":11,\"totalPrice\":132},{\"itemID\":3,\"itemName\":\"Twisted Tea\",\"quantity\":11,\"itemPrice\":6,\"totalPrice\":66}]'),
-(8, 1, 1, NULL, '2020-07-25 05:34:14', '[{\"itemID\":1,\"itemName\":\"Beer\",\"quantity\":13,\"itemPrice\":5,\"totalPrice\":65},{\"itemID\":2,\"itemName\":\"Moscow Mule\",\"quantity\":12,\"itemPrice\":11,\"totalPrice\":132},{\"itemID\":3,\"itemName\":\"Twisted Tea\",\"quantity\":11,\"itemPrice\":6,\"totalPrice\":66}]'),
-(9, 1, 1, NULL, '2020-07-25 05:34:15', '[{\"itemID\":1,\"itemName\":\"Beer\",\"quantity\":13,\"itemPrice\":5,\"totalPrice\":65},{\"itemID\":2,\"itemName\":\"Moscow Mule\",\"quantity\":12,\"itemPrice\":11,\"totalPrice\":132},{\"itemID\":3,\"itemName\":\"Twisted Tea\",\"quantity\":11,\"itemPrice\":6,\"totalPrice\":66}]'),
-(10, 1, 1, NULL, '2020-07-26 00:55:19', '[{\"itemID\":1,\"itemName\":\"Beer\",\"quantity\":4,\"itemPrice\":5,\"totalPrice\":20},{\"itemID\":2,\"itemName\":\"Moscow Mule\",\"quantity\":4,\"itemPrice\":11,\"totalPrice\":44},{\"itemID\":3,\"itemName\":\"Twisted Tea\",\"quantity\":2,\"itemPrice\":6,\"totalPrice\":12},{\"itemID\":5,\"itemName\":\"Blue Moon\",\"quantity\":1,\"itemPrice\":7,\"totalPrice\":7},{\"itemID\":4,\"itemName\":\"Martini\",\"quantity\":1,\"itemPrice\":8,\"totalPrice\":8},{\"itemID\":7,\"itemName\":\"Vodka Soda\",\"quantity\":1,\"itemPrice\":9,\"totalPrice\":9},{\"itemID\":6,\"itemName\":\"Appletini\",\"quantity\":1,\"itemPrice\":9,\"totalPrice\":9}]'),
-(11, 1, 1, NULL, '2020-07-26 00:55:37', '[{\"itemID\":2,\"itemName\":\"Moscow Mule\",\"quantity\":2,\"itemPrice\":11,\"totalPrice\":22},{\"itemID\":3,\"itemName\":\"Twisted Tea\",\"quantity\":1,\"itemPrice\":6,\"totalPrice\":6},{\"itemID\":4,\"itemName\":\"Martini\",\"quantity\":2,\"itemPrice\":8,\"totalPrice\":16},{\"itemID\":6,\"itemName\":\"Appletini\",\"quantity\":2,\"itemPrice\":9,\"totalPrice\":18},{\"itemID\":7,\"itemName\":\"Vodka Soda\",\"quantity\":1,\"itemPrice\":9,\"totalPrice\":9},{\"itemID\":5,\"itemName\":\"Blue Moon\",\"quantity\":1,\"itemPrice\":7,\"totalPrice\":7}]'),
-(12, 1, 1, NULL, '2020-07-26 01:28:50', '[{\"itemID\":1,\"itemName\":\"Beer\",\"quantity\":2,\"itemPrice\":5,\"totalPrice\":10},{\"itemID\":2,\"itemName\":\"Moscow Mule\",\"quantity\":2,\"itemPrice\":11,\"totalPrice\":22},{\"itemID\":3,\"itemName\":\"Twisted Tea\",\"quantity\":2,\"itemPrice\":6,\"totalPrice\":12}]'),
-(13, 1, 1, NULL, '2020-07-26 01:52:14', '[{\"itemID\":1,\"itemName\":\"Beer\",\"quantity\":3,\"itemPrice\":5,\"totalPrice\":15},{\"itemID\":2,\"itemName\":\"Moscow Mule\",\"quantity\":2,\"itemPrice\":11,\"totalPrice\":22},{\"itemID\":3,\"itemName\":\"Twisted Tea\",\"quantity\":1,\"itemPrice\":6,\"totalPrice\":6},{\"itemID\":4,\"itemName\":\"Martini\",\"quantity\":1,\"itemPrice\":8,\"totalPrice\":8},{\"itemID\":5,\"itemName\":\"Blue Moon\",\"quantity\":1,\"itemPrice\":7,\"totalPrice\":7}]');
+INSERT INTO `orders` (`orderID`, `restID`, `customerID`, `orderNotes`, `orderDateTime`, `orderStatus`, `orderItems`) VALUES
+(12, 1, 1, NULL, '2020-07-28 17:03:56', 'pending', '[{\"itemID\":8,\"itemName\":\"Coors\",\"quantity\":3,\"itemPrice\":5.5,\"totalPrice\":16.5}]'),
+(13, 1, 1, NULL, '2020-07-28 17:27:17', 'pending', '[{\"itemID\":8,\"itemName\":\"Coors\",\"quantity\":5,\"itemPrice\":5.5,\"totalPrice\":27.5},{\"itemID\":9,\"itemName\":\"Budlight\",\"quantity\":3,\"itemPrice\":5,\"totalPrice\":15},{\"itemID\":10,\"itemName\":\"Appletini\",\"quantity\":3,\"itemPrice\":9,\"totalPrice\":27}]'),
+(14, 1, 1, NULL, '2020-07-28 17:28:35', 'pending', '[{\"itemID\":11,\"itemName\":\"Vodka Soda\",\"quantity\":1,\"itemPrice\":10,\"totalPrice\":10},{\"itemID\":10,\"itemName\":\"Appletini\",\"quantity\":1,\"itemPrice\":9,\"totalPrice\":9},{\"itemID\":9,\"itemName\":\"Budlight\",\"quantity\":1,\"itemPrice\":5,\"totalPrice\":5},{\"itemID\":8,\"itemName\":\"Coors\",\"quantity\":1,\"itemPrice\":5.5,\"totalPrice\":5.5}]');
 
 -- --------------------------------------------------------
 
@@ -130,8 +128,9 @@ CREATE TABLE `restaurants` (
   `phone` varchar(14) NOT NULL,
   `email` varchar(50) NOT NULL,
   `address` varchar(100) NOT NULL,
+  `city` varchar(40) NOT NULL,
   `state` varchar(2) NOT NULL,
-  `zipcode` int(5) NOT NULL,
+  `zipcode` varchar(5) NOT NULL,
   `description` varchar(200) DEFAULT NULL,
   `openTime` time NOT NULL,
   `closeTime` time NOT NULL,
@@ -142,9 +141,10 @@ CREATE TABLE `restaurants` (
 -- Dumping data for table `restaurants`
 --
 
-INSERT INTO `restaurants` (`restID`, `restName`, `firstName`, `lastName`, `phone`, `email`, `address`, `state`, `zipcode`, `description`, `openTime`, `closeTime`, `restPassword`) VALUES
-(1, 'Flanns', 'Cameron', 'Liddell', '6034403643', 'cam@gmail.com', '90 Scott Drive', 'MA', 3054, 'Best drinks in town', '01:00:00', '01:10:00', 'test'),
-(2, 'Jimmy Two\'s', 'Chuckie', 'Boi', '8974435821', 'camLittle@gmail.com', '93 Winger Drive', 'MA', 3057, 'Worst Drinks in town', '00:00:00', '00:10:00', 'test');
+INSERT INTO `restaurants` (`restID`, `restName`, `firstName`, `lastName`, `phone`, `email`, `address`, `city`, `state`, `zipcode`, `description`, `openTime`, `closeTime`, `restPassword`) VALUES
+(1, 'Flanns', 'Cam', 'Liddell', '6034403643', 'cameron@gmail.com', '28 Winger Street', 'Boston', 'MA', '12120', 'Best drinks in town!', '01:00:00', '01:10:00', 'test'),
+(2, 'Charlies Big Bar', 'Charlie', 'Plukfangpanya', '6032345643', 'bigChuck@gmail.com', '555 Huntington Avenue', 'Boston', 'MA', '02120', 'Come in for big drinks', '10:00:00', '12:00:00', 'test'),
+(3, 'Camel Stop', 'Chuck', 'Paulson', '6034405443', 'chuckTest@gmail.com', '56 Catskiil Road', 'Boston', 'MA', '02120', 'Okayest drinks in town!', '01:00:00', '01:10:00', 'test');
 
 --
 -- Indexes for dumped tables
@@ -195,19 +195,19 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `itemID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `itemID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `orderID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `orderID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `restaurants`
 --
 ALTER TABLE `restaurants`
-  MODIFY `restID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `restID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables

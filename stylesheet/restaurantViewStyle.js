@@ -10,6 +10,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
 
+  restaurantViewItem: {
+    marginBottom: 30,
+  },
+
   restaurantImage: {
     marginTop: 40,
     marginLeft: 30,
@@ -33,13 +37,14 @@ const styles = StyleSheet.create({
   restaurantAddress: {
     fontSize: 16,
     marginLeft: 152,
+    marginBottom: 0,
+    paddingBottom: 0,
   },
 
   restaurantDescription: {
     fontSize: 16,
-    marginTop: 30,
+
     marginLeft: 30,
-    padding: 1,
   },
 
   connectButton: {
@@ -85,6 +90,52 @@ const styles = StyleSheet.create({
     height: 80,
     width: 80,
     borderRadius: 10,
+  },
+
+  //MODAL
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    width: "75%",
+    height: "55%",
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 10,
+    padding: 35,
+    alignItems: "stretch",
+    elevation: 50,
+  },
+  modalButton: {
+    backgroundColor: "#FF9466",
+    borderRadius: 20,
+    padding: 10,
+    margin: 5,
+    elevation: 2,
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+    fontSize: 18,
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
+    fontSize: 18,
+  },
+  modalItemName: {
+    fontSize: 28,
+    marginBottom: 10,
+    textAlign: "center",
+  },
+  modalQuantityText: {
+    marginBottom: 10,
+    textAlign: "center",
+    fontSize: 15,
   },
 });
 

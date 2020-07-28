@@ -20,7 +20,7 @@ export default function DrawerContent(props) {
   return (
     <View style={styles.drawer}>
       <SafeAreaView style={styles.nameSection}>
-        <Text style={styles.greeting}>Hi, {this.state.email}!</Text>
+        <Text style={styles.greeting}>Hi, {this.state.email}</Text>
       </SafeAreaView>
       <DrawerContentScrollView contentContainerStyle={styles.drawerContent}>
         <View>
@@ -63,6 +63,9 @@ export default function DrawerContent(props) {
                 Settings
               </Text>
             )}
+            onPress={() => {
+              props.navigation.navigate("Settings");
+            }}
           />
         </View>
       </DrawerContentScrollView>

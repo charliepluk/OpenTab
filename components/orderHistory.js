@@ -23,16 +23,13 @@ function OrderHistoryItem({
   orderDateTime,
   restName,
   address,
+  city,
   orderItems,
 }) {
   return (
     <TouchableOpacity
       onPress={() =>
         props.navigation.navigate("OrderHistoryView", {
-          orderID: { orderID },
-          orderDateTime: { orderDateTime },
-          restName: { restName },
-          address: { address },
           orderItems: { orderItems },
         })
       }
@@ -40,7 +37,9 @@ function OrderHistoryItem({
     >
       <View style={styles.restaurantInfo}>
         <Text style={styles.restaurantTitle}>{restName}</Text>
-        <Text style={styles.infoText}>{address}</Text>
+        <Text style={styles.infoText}>
+          {address}, {city}
+        </Text>
         <Text style={styles.infoText}>{orderDateTime}</Text>
       </View>
     </TouchableOpacity>
@@ -52,7 +51,7 @@ export default class OrderHistory extends Component {
 
   componentDidMount() {
     axios
-      .post("http://10.0.1.62:3000/requestRoutes/getCustomerOrderHistory", {
+      .post("http://10.0.0.27:3000/requestRoutes/getCustomerOrderHistory", {
         userID: SyncStorage.get("userID"),
       })
       .then((res) => {
@@ -91,6 +90,7 @@ export default class OrderHistory extends Component {
               orderDateTime={item.orderDateTime}
               restName={item.restName}
               address={item.address}
+              city={item.city}
               orderItems={item.orderItems}
             />
           )}

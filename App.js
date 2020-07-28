@@ -14,6 +14,7 @@ import RestaurantView from "./components/restaurantView";
 import Order from "./components/order";
 import OrderHistory from "./components/orderHistory";
 import OrderHistoryView from "./components/orderHistoryView";
+import Settings from "./components/settings";
 
 import RootStackScreen from "./components/rootStackScreen";
 
@@ -47,6 +48,9 @@ const HomeStackScreen = ({ navigation }) => (
     </HomeStack.Screen>
     <HomeStack.Screen name="OrderHistoryView" options={{ headerShown: false }}>
       {(props) => <OrderHistoryView {...props} />}
+    </HomeStack.Screen>
+    <HomeStack.Screen name="Settings" options={{ headerShown: false }}>
+      {(props) => <Settings {...props} />}
     </HomeStack.Screen>
     <HomeStack.Screen name="Order" options={{ headerShown: false }}>
       {(props) => <Order {...props} />}

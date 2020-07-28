@@ -15,35 +15,48 @@ router.post("/createAccount", function (req, res, next) {
   mysql.query(
     `INSERT INTO customers(customerEmail,customerPassword) VALUES("${email}","${password}")`,
     function (err, result, field) {
+      //if error
       if (err) {
         if (err.code === "ER_DUP_ENTRY") {
           res.send("dupEmail");
         } else {
           res.send("err");
         }
-      } else {
+      }
+
+      //if the account creation was successful then get the userID of the newly created account and return it
+      else {
         console.log("createSuccess");
+        //select the newly created account and return its information
+        mysql.query(
+          `SELECT * FROM \`customers\` WHERE customerEmail = "${email}"`,
+          function (err, result, field) {
+            if (err) {
+              res.send("err");
+            } else {
+              console.log("selectSuccess");
+              delete result[0].customerPassword;
+              res.send(result);
+            }
+          }
+        );
       }
     }
   );
 
-  //select the newly created account and return its information
-  mysql.query(
-    `SELECT * FROM \`customers\` WHERE customerEmail = "${email}"`,
-    function (err, result, field) {
-      if (err) {
-        if (err.code === "ER_DUP_ENTRY") {
-          res.send("dupEmail");
-        } else {
-          res.send("err");
-        }
-      } else {
-        console.log("selectSuccess");
-        delete result[0].customerPassword;
-        res.send(result);
-      }
-    }
-  );
+  // //select the newly created account and return its information
+  // mysql.query(
+  //   `SELECT * FROM \`customers\` WHERE customerEmail = "${email}"`,
+  //   function (err, result, field) {
+  //     if (err) {
+  //       res.send("err");
+  //     } else {
+  //       console.log("selectSuccess");
+  //       delete result[0].customerPassword;
+  //       res.send(result);
+  //     }
+  //   }
+  // );
 });
 
 //****************
@@ -134,7 +147,7 @@ router.post("/getCustomerOrderHistory", function (req, res, next) {
   var userID = req.body.userID;
 
   mysql.query(
-    `SELECT orders.orderID, orders.orderDateTime, orders.orderItems, restaurants.restName, restaurants.address FROM orders
+    `SELECT orders.orderID, orders.orderDateTime, orders.orderItems, restaurants.restName, restaurants.address, restaurants.city FROM orders
     INNER JOIN restaurants ON orders.restID=restaurants.restID
     WHERE customerID="${userID}"
     ORDER BY orderDateTime DESC`,
@@ -170,31 +183,6 @@ router.post("/getCustomerOrderHistory", function (req, res, next) {
   );
 });
 
-//****************************************
-//* Get order items for specific orderID *
-//****************************************
-// router.post("/getOrderItems", function (req, res, next) {
-//   var orderID = req.body.orderID;
-
-//   //gets all orderItems for a given orderID. Returns the itemQuantity, totalPriceOfItems, itemName and itemID
-//   mysql.query(
-//     `SELECT order_items.itemQuantity, order_items.totalPriceOfItems, items.itemName, items.itemID FROM order_items
-//   INNER JOIN items ON order_items.itemID=items.itemID
-//   WHERE orderID="${orderID}"`,
-//     function (err, result, field) {
-//       //if: DB error
-//       if (err) {
-//         console.log(err);
-//         res.send("DB error");
-//       } else {
-//         console.log(result[0]);
-//         console.log("gotOrderItems");
-//         res.send(result);
-//       }
-//     }
-//   );
-// });
-
 //**************************
 //* submit customers order *
 //**************************
@@ -204,7 +192,7 @@ router.post("/submitOrder", function (req, res, next) {
   var orderItems = JSON.stringify(req.body.orderItems);
 
   mysql.query(
-    `INSERT INTO orders(restID,customerID,orderItems) VALUES ("${restID}","${userID}",'${orderItems}')`,
+    `INSERT INTO orders(restID,customerID,orderItems,orderStatus) VALUES ("${restID}","${userID}",'${orderItems}',\"pending\")`,
     function (err, result, field) {
       //if: DB error
       if (err) {
