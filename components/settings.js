@@ -1,11 +1,5 @@
 import React, { Component } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  SafeAreaView,
-  FlatList,
-} from "react-native";
+import { View, Text, TouchableOpacity, SafeAreaView } from "react-native";
 
 // Import Styles
 import { navStyles } from "../stylesheet/navbarStyle";
@@ -20,6 +14,7 @@ import ArrowBack from "../assets/svg/arrow-back.svg";
 export default class settings extends Component {
   state = {
     email: SyncStorage.get("userEmail"),
+    firstname: SyncStorage.get("userFirstname"),
   };
   render() {
     return (
@@ -35,7 +30,7 @@ export default class settings extends Component {
         <View>
           <Text style={styles.basicInfoText}>Basic information</Text>
           <Text style={styles.nameHeader}>Name</Text>
-          <Text style={styles.nameText}>Yarlze</Text>
+          <Text style={styles.nameText}>{this.state.firstname}</Text>
           <Text style={styles.emailHeader}>Email</Text>
           <Text style={styles.emailText}>{this.state.email}</Text>
         </View>
