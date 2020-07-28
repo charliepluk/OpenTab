@@ -5,12 +5,10 @@ import {
   TouchableOpacity,
   SafeAreaView,
   FlatList,
+  StyleSheet,
 } from "react-native";
-import { Button } from "react-native-paper";
-import axios from "axios";
 
 // Import Styles
-import { styles } from "../stylesheet/restaurantViewStyle";
 import { navStyles } from "../stylesheet/navbarStyle";
 
 // Import SVGs
@@ -24,15 +22,11 @@ export default class orderHistoryView extends Component {
     const { orderItems } = this.props.route.params;
     const customerOrder = JSON.parse(orderItems.orderItems);
     this.setState({
-      DATA: customerOrder,
+      orderData: customerOrder,
     });
   }
 
   render() {
-    const { orderDateTime } = this.props.route.params;
-    const { restName } = this.props.route.params;
-    const { restLocation } = this.props.route.params;
-
     return (
       <View style={styles.container}>
         <SafeAreaView style={navStyles.navBar}>
@@ -45,15 +39,69 @@ export default class orderHistoryView extends Component {
         </SafeAreaView>
 
         <FlatList
-          data={this.state.DATA}
+          data={this.state.orderData}
           keyExtractor={(item) => item.itemID.toString()}
           renderItem={({ item }) => (
-            <Text>
-              x{item.quantity} - {item.itemName} = ${item.totalPrice}
-            </Text>
+            <View style={styles.drinksList}>
+              <View style={styles.itemImage}></View>
+              <View style={styles.itemInfo}>
+                <Text style={styles.itemName}>{item.itemName}</Text>
+                <Text style={styles.priceText}>${item.itemPrice}</Text>
+                <Text style={styles.quantityText}>x{item.quantity}</Text>
+              </View>
+              <View style={styles.itemInfo}>
+                <Text style={styles.totalPriceText}>${item.totalPrice}</Text>
+              </View>
+            </View>
           )}
         />
       </View>
     );
   }
 }
+
+//StyleSheet
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#F6F6F6",
+    alignItems: "center",
+  },
+
+  itemImage: {
+    height: 60,
+    width: 60,
+    backgroundColor: "#C4C4C4",
+  },
+
+  itemInfo: {
+    marginLeft: 10,
+  },
+
+  itemName: {
+    fontSize: 25,
+  },
+
+  quantityText: {
+    fontSize: 12,
+  },
+
+  totalPriceText: {
+    fontSize: 12,
+  },
+
+  priceText: {
+    fontSize: 12,
+  },
+
+  drinksList: {
+    backgroundColor: "#ECECEC",
+    marginTop: 10,
+    padding: 10,
+    height: 85,
+    width: 375,
+    display: "flex",
+    flexDirection: "row",
+    borderRadius: 10,
+  },
+});
