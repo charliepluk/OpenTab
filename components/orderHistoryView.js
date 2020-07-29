@@ -27,6 +27,10 @@ export default class orderHistoryView extends Component {
   }
 
   render() {
+    const { restName } = this.props.route.params;
+    const { orderDateTime } = this.props.route.params;
+    const { totalOrderPrice } = this.props.route.params;
+
     return (
       <View style={styles.container}>
         <SafeAreaView style={navStyles.navBar}>
@@ -40,6 +44,12 @@ export default class orderHistoryView extends Component {
           <Text style={styles.title}>Order Info</Text>
           <View style={navStyles.navTab} />
         </SafeAreaView>
+
+        <View style={styles.restTitleView}>
+          <Text style={styles.restTitle}>
+            {restName.restName} - {orderDateTime.orderDateTime}
+          </Text>
+        </View>
 
         <FlatList
           data={this.state.orderData}
@@ -62,6 +72,11 @@ export default class orderHistoryView extends Component {
             </View>
           )}
         />
+        <View style={styles.orderTotalView}>
+          <Text style={styles.orderTotalText}>
+            Order Total = ${totalOrderPrice.totalOrderPrice.toFixed(2)}
+          </Text>
+        </View>
       </View>
     );
   }
