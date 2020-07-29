@@ -148,7 +148,7 @@ router.post("/getCustomerOrderHistory", function (req, res, next) {
   var userID = req.body.userID;
 
   mysql.query(
-    `SELECT orders.orderID, orders.orderDateTime, orders.orderItems, restaurants.restName, restaurants.address, restaurants.city FROM orders
+    `SELECT orders.orderID, orders.orderDateTime, orders.orderItems, orders.totalOrderPrice, restaurants.restName, restaurants.address, restaurants.city FROM orders
     INNER JOIN restaurants ON orders.restID=restaurants.restID
     WHERE customerID="${userID}"
     ORDER BY orderDateTime DESC`,

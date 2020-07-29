@@ -52,5 +52,30 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     height: 40,
   },
+  restTitle: {
+    alignSelf: "center",
+    color: "black",
+    fontSize: 16,
+    fontWeight: "bold",
+    height: 57,
+    paddingTop: 20,
+  },
+
+  restTitleView: {
+    width: "100%",
+  },
+
+  orderTotalText: {
+    alignSelf: "center",
+    color: "black",
+    fontSize: 25,
+    fontWeight: "bold",
+    height: 57,
+    paddingTop: 10,
+  },
+
+  orderTotalView: {
+    width: "100%",
+  },
 });
 export { styles };
