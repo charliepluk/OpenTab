@@ -72,13 +72,13 @@ export default class OrderHistory extends Component {
         <SafeAreaView style={navStyles.navBar}>
           <TouchableOpacity
             style={navStyles.navTab}
-            onPress={() => {
-              this.props.navigation.goBack();
-              this.props.navigation.toggleDrawer();
-            }}
+            onPress={() => this.props.navigation.goBack()}
           >
             <ArrowBack width={35} height={35} />
           </TouchableOpacity>
+
+          <Text style={styles.title}>Order History</Text>
+          <View style={navStyles.navTab} />
         </SafeAreaView>
 
         <FlatList

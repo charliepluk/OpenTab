@@ -78,6 +78,7 @@ export default class restaurantView extends Component {
             //update connectedRestID variable, clear customer order and update connectText
             SyncStorage.set("connectedRestID", restID.toString());
             SyncStorage.set("currentCustomerOrder", "");
+            SyncStorage.set("connectedRestName", restName.toString());
             this.setState({
               connectText: "DISCONNECT",
             });
@@ -300,6 +301,8 @@ export default class restaurantView extends Component {
             <ArrowBack width={35} height={35} />
           </TouchableOpacity>
 
+          <Text style={styles.title}>Restaurant Info</Text>
+
           <TouchableOpacity
             style={navStyles.orderTab}
             onPress={() => this.props.navigation.navigate("Order")}
@@ -356,8 +359,8 @@ export default class restaurantView extends Component {
               }
             >
               <View style={styles.drinksIcon}></View>
-              <Text>{item.itemName}</Text>
-              <Text>{item.itemPrice}</Text>
+              <Text>{item.itemName} - </Text>
+              <Text>${item.itemPrice.toFixed(2)}</Text>
             </TouchableOpacity>
           )}
         />

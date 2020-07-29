@@ -27,10 +27,11 @@ export default class Order extends Component {
     itemQuantity: 1,
     itemID: "",
     itemName: "",
-    itemPrice: "",
+    itemPrice: 0,
     arrIndex: "",
-    totalPrice: "",
+    totalPrice: 0,
     orderData: "",
+    totalOrderPrice: 0,
   };
 
   componentDidMount() {
@@ -43,13 +44,17 @@ export default class Order extends Component {
     //takes the reduced array to create a json string and stores it back in sync storage
     var reducedArrLength = reducedArray.length;
     var reducedCustomerOrderString = "";
+    var totalOrderPrice = 0;
     for (var i = 0; i < reducedArrLength; i++) {
       reducedCustomerOrderString += JSON.stringify(reducedArray[i]) + ",\n";
+      totalOrderPrice += reducedArray[i].totalPrice;
     }
+
     SyncStorage.set("currentCustomerOrder", reducedCustomerOrderString);
 
     this.setState({
       orderData: reducedArray,
+      totalOrderPrice: totalOrderPrice,
     });
   }
 
@@ -60,12 +65,12 @@ export default class Order extends Component {
     //if the order is empty
     if (connectedRestID == undefined || connectedRestID == "noRestConnected") {
       Alert.alert(
-        "No restaurant Connection",
+        "No Restaurant Connection",
         "You are not connected to a restaurant, please connect to a restaurant to submit an order."
       );
     } else if (this.state.orderData == "") {
       Alert.alert(
-        "Empty order",
+        "Empty Order",
         "There are no items in your order, please add items to submit an order."
       );
     } else {
@@ -74,9 +79,10 @@ export default class Order extends Component {
           restID: connectedRestID,
           userID: userID,
           orderItems: this.state.orderData,
+          totalOrderPrice: this.state.totalOrderPrice,
         })
         .then((res) => {
-          console.log("submit success");
+          Alert.alert("Order Submitted Successfully!");
           SyncStorage.set("currentCustomerOrder", "");
           this.props.navigation.goBack();
         })
@@ -117,8 +123,12 @@ export default class Order extends Component {
 
   //removes item from the order array. Called when "remove item" is clicked on modal or user sets quantity to 0 and confirms on modal
   removeOrderItem = (customerOrderArray) => {
+    var removeFromTotal = customerOrderArray[this.state.arrIndex].totalPrice;
     customerOrderArray.splice(this.state.arrIndex, 1);
     this.updateArrayAndSyncString(customerOrderArray);
+    this.setState({
+      totalOrderPrice: this.state.totalOrderPrice - removeFromTotal,
+    });
   };
 
   //this is called if the user edits the quantity otherwise the modal will just close
@@ -132,13 +142,21 @@ export default class Order extends Component {
 
     //else edit the quantity
     else {
+      var newCost =
+        (this.state.itemQuantity -
+          customerOrderArray[this.state.arrIndex].quantity) *
+        this.state.itemPrice;
+      //edit item quantity
       customerOrderArray[
         this.state.arrIndex
       ].quantity = this.state.itemQuantity;
+      //edit total price of items
       customerOrderArray[this.state.arrIndex].totalPrice =
         this.state.itemQuantity * this.state.itemPrice;
+
       this.setState({
         modalVisible: false,
+        totalOrderPrice: this.state.totalOrderPrice + newCost,
       });
     }
   };
@@ -244,7 +262,7 @@ export default class Order extends Component {
         {/* end modal */}
 
         {/* flatlist that generates customers order from this.state.orderData */}
-        <View style={styles.restView}>
+        <View style={styles.restTitleView}>
           <Text style={styles.restTitle}>
             {SyncStorage.get("connectedRestName")}
           </Text>
@@ -261,6 +279,7 @@ export default class Order extends Component {
                   item.itemID,
                   item.itemName,
                   item.quantity,
+                  // parseFloat(item.itemPrice).toFixed(2),
                   item.itemPrice,
                   item.totalPrice,
                   index
@@ -270,16 +289,26 @@ export default class Order extends Component {
               <View style={styles.itemImage}></View>
               <View style={styles.itemInfo}>
                 <Text style={styles.itemName}>{item.itemName}</Text>
-                <Text style={styles.priceText}>${item.itemPrice}</Text>
+                <Text style={styles.priceText}>
+                  ${item.itemPrice.toFixed(2)}
+                </Text>
                 <Text style={styles.quantityText}>x{item.quantity}</Text>
               </View>
               <View style={styles.itemInfo}>
-                <Text style={styles.totalPriceText}>${item.totalPrice}</Text>
+                <Text style={styles.totalPriceText}>
+                  ${item.totalPrice.toFixed(2)}
+                </Text>
               </View>
             </TouchableOpacity>
           )}
         />
         {/* end flatlist */}
+
+        <View style={styles.orderTotalView}>
+          <Text style={styles.orderTotalText}>
+            Order Total = ${this.state.totalOrderPrice.toFixed(2)}
+          </Text>
+        </View>
 
         {/* order button */}
         <View style={styles.buttonContainer}>
