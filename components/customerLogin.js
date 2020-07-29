@@ -9,8 +9,8 @@ import SyncStorage from "sync-storage";
 
 export default class CustomerLogin extends Component {
   state = {
-    email: "cam@gmail.com",
-    password: "test",
+    email: "",
+    password: "",
   };
 
   verifyLogin = () => {
@@ -21,7 +21,7 @@ export default class CustomerLogin extends Component {
       );
     } else {
       axios
-        .post("http://10.0.0.27:3000/requestRoutes/verifyLogin", {
+        .post("http://192.168.1.158:3000/requestRoutes/verifyLogin", {
           email: this.state.email,
           password: this.state.password,
         })

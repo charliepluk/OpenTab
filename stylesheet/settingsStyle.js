@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 
 const styles = StyleSheet.create({
   listContainer: {
@@ -9,7 +9,8 @@ const styles = StyleSheet.create({
   basicInfoText: {
     marginTop: 50,
     marginLeft: 20,
-    fontSize: 16,
+    fontSize: 20,
+    fontWeight: "bold",
   },
 
   nameHeader: {
@@ -19,8 +20,8 @@ const styles = StyleSheet.create({
   },
 
   nameText: {
-    marginTop: -18,
-    marginLeft: 280,
+    marginTop: 10,
+    marginLeft: 20,
     fontSize: 18,
   },
 
@@ -31,9 +32,10 @@ const styles = StyleSheet.create({
   },
 
   emailText: {
-    marginTop: -18,
-    marginLeft: 280,
+    marginTop: 10,
+    marginLeft: 20,
     fontSize: 18,
+    width: Dimensions.get("window").width,
   },
 });
 

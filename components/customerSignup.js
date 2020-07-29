@@ -23,7 +23,7 @@ export default class customerSignup extends Component {
       EmailValidator.validate(this.state.email)
     ) {
       axios
-        .post("http://10.0.0.27:3000/requestRoutes/createAccount", {
+        .post("http://192.168.1.158:3000/requestRoutes/createAccount", {
           firstname: this.state.firstName,
           email: this.state.email,
           password: this.state.password,
