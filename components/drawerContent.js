@@ -7,7 +7,6 @@ import { Drawer } from "react-native-paper";
 import LogOut from "../assets/svg/logout.svg";
 import HomeIcon from "../assets/svg/home.svg";
 import HistoryIcon from "../assets/svg/orderHistory.svg";
-import PaymentIcon from "../assets/svg/payment.svg";
 import AccountIcon from "../assets/svg/account.svg";
 
 //Import async-storage functions
@@ -47,15 +46,6 @@ export default function DrawerContent(props) {
             }}
           />
           <DrawerItem
-            icon={() => <PaymentIcon width={20} height={20} />}
-            style={styles.drawerItem}
-            label={() => (
-              <Text style={{ color: "#FF9466", fontWeight: "bold" }}>
-                Payment Info
-              </Text>
-            )}
-          />
-          <DrawerItem
             icon={() => <AccountIcon width={20} height={20} />}
             style={styles.drawerItem}
             label={() => (
@@ -82,6 +72,7 @@ export default function DrawerContent(props) {
             SyncStorage.set("connectedRestID", "noRestConnected");
             SyncStorage.set("currentCustomerOrder", "");
             SyncStorage.set("userFirstname", "");
+            SyncStorage.set("connectedRestName", "No restaurant connection");
             props.navigation.navigate("LandingPage");
           }}
         />

@@ -191,9 +191,10 @@ router.post("/submitOrder", function (req, res, next) {
   var restID = req.body.restID;
   var userID = req.body.userID;
   var orderItems = JSON.stringify(req.body.orderItems);
+  var totalOrderPrice = req.body.totalOrderPrice;
 
   mysql.query(
-    `INSERT INTO orders(restID,customerID,orderItems,orderStatus) VALUES ("${restID}","${userID}",'${orderItems}',\"pending\")`,
+    `INSERT INTO orders(restID,customerID,orderStatus,orderItems,totalOrderPrice) VALUES ("${restID}","${userID}",\"pending\",'${orderItems}','${totalOrderPrice}')`,
     function (err, result, field) {
       //if: DB error
       if (err) {

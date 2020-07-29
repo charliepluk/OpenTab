@@ -3,7 +3,6 @@ import {
   View,
   Text,
   SafeAreaView,
-  StyleSheet,
   FlatList,
   Alert,
   Modal,
@@ -11,7 +10,11 @@ import {
 } from "react-native";
 import { Button } from "react-native-paper";
 import { TouchableOpacity } from "react-native-gesture-handler";
+
+//Import styles
 import { navStyles } from "../stylesheet/navbarStyle";
+import { styles } from "../stylesheet/orderStyle";
+
 import CloseIcon from "../assets/svg/close.svg";
 import SyncStorage from "sync-storage";
 import axios from "axios";
@@ -19,14 +22,16 @@ import { syncStringToArray, arrayToSyncString } from "../jsonStringFunctions";
 
 export default class Order extends Component {
   state = {
+    restName: "",
     modalVisible: false,
     itemQuantity: 1,
     itemID: "",
     itemName: "",
-    itemPrice: "",
+    itemPrice: 0,
     arrIndex: "",
-    totalPrice: "",
+    totalPrice: 0,
     orderData: "",
+    totalOrderPrice: 0,
   };
 
   componentDidMount() {
@@ -39,13 +44,17 @@ export default class Order extends Component {
     //takes the reduced array to create a json string and stores it back in sync storage
     var reducedArrLength = reducedArray.length;
     var reducedCustomerOrderString = "";
+    var totalOrderPrice = 0;
     for (var i = 0; i < reducedArrLength; i++) {
       reducedCustomerOrderString += JSON.stringify(reducedArray[i]) + ",\n";
+      totalOrderPrice += reducedArray[i].totalPrice;
     }
+
     SyncStorage.set("currentCustomerOrder", reducedCustomerOrderString);
 
     this.setState({
       orderData: reducedArray,
+      totalOrderPrice: totalOrderPrice,
     });
   }
 
@@ -53,10 +62,15 @@ export default class Order extends Component {
   submitOrder = () => {
     var userID = SyncStorage.get("userID");
     var connectedRestID = SyncStorage.get("connectedRestID");
-    //if user is not connected to a restaurant - this should really never happen
-    if (this.state.orderData == "") {
+    //if the order is empty
+    if (connectedRestID == undefined || connectedRestID == "noRestConnected") {
       Alert.alert(
-        "Empty order",
+        "No Restaurant Connection",
+        "You are not connected to a restaurant, please connect to a restaurant to submit an order."
+      );
+    } else if (this.state.orderData == "") {
+      Alert.alert(
+        "Empty Order",
         "There are no items in your order, please add items to submit an order."
       );
     } else {
@@ -65,9 +79,10 @@ export default class Order extends Component {
           restID: connectedRestID,
           userID: userID,
           orderItems: this.state.orderData,
+          totalOrderPrice: this.state.totalOrderPrice,
         })
         .then((res) => {
-          console.log("submit success");
+          Alert.alert("Order Submitted Successfully!");
           SyncStorage.set("currentCustomerOrder", "");
           this.props.navigation.goBack();
         })
@@ -108,8 +123,12 @@ export default class Order extends Component {
 
   //removes item from the order array. Called when "remove item" is clicked on modal or user sets quantity to 0 and confirms on modal
   removeOrderItem = (customerOrderArray) => {
+    var removeFromTotal = customerOrderArray[this.state.arrIndex].totalPrice;
     customerOrderArray.splice(this.state.arrIndex, 1);
     this.updateArrayAndSyncString(customerOrderArray);
+    this.setState({
+      totalOrderPrice: this.state.totalOrderPrice - removeFromTotal,
+    });
   };
 
   //this is called if the user edits the quantity otherwise the modal will just close
@@ -123,13 +142,21 @@ export default class Order extends Component {
 
     //else edit the quantity
     else {
+      var newCost =
+        (this.state.itemQuantity -
+          customerOrderArray[this.state.arrIndex].quantity) *
+        this.state.itemPrice;
+      //edit item quantity
       customerOrderArray[
         this.state.arrIndex
       ].quantity = this.state.itemQuantity;
+      //edit total price of items
       customerOrderArray[this.state.arrIndex].totalPrice =
         this.state.itemQuantity * this.state.itemPrice;
+
       this.setState({
         modalVisible: false,
+        totalOrderPrice: this.state.totalOrderPrice + newCost,
       });
     }
   };
@@ -158,7 +185,6 @@ export default class Order extends Component {
             <CloseIcon width={35} height={35} />
           </TouchableOpacity>
         </SafeAreaView>
-
         {/* modal that pops up when pressing on an order item */}
         <Modal
           animationType="fade"
@@ -236,6 +262,11 @@ export default class Order extends Component {
         {/* end modal */}
 
         {/* flatlist that generates customers order from this.state.orderData */}
+        <View style={styles.restTitleView}>
+          <Text style={styles.restTitle}>
+            {SyncStorage.get("connectedRestName")}
+          </Text>
+        </View>
         <FlatList
           contentContainerStyle={{ paddingBottom: 15 }}
           data={this.state.orderData}
@@ -248,6 +279,7 @@ export default class Order extends Component {
                   item.itemID,
                   item.itemName,
                   item.quantity,
+                  // parseFloat(item.itemPrice).toFixed(2),
                   item.itemPrice,
                   item.totalPrice,
                   index
@@ -257,16 +289,26 @@ export default class Order extends Component {
               <View style={styles.itemImage}></View>
               <View style={styles.itemInfo}>
                 <Text style={styles.itemName}>{item.itemName}</Text>
-                <Text style={styles.priceText}>${item.itemPrice}</Text>
+                <Text style={styles.priceText}>
+                  ${item.itemPrice.toFixed(2)}
+                </Text>
                 <Text style={styles.quantityText}>x{item.quantity}</Text>
               </View>
               <View style={styles.itemInfo}>
-                <Text style={styles.totalPriceText}>${item.totalPrice}</Text>
+                <Text style={styles.totalPriceText}>
+                  ${item.totalPrice.toFixed(2)}
+                </Text>
               </View>
             </TouchableOpacity>
           )}
         />
         {/* end flatlist */}
+
+        <View style={styles.orderTotalView}>
+          <Text style={styles.orderTotalText}>
+            Order Total = ${this.state.totalOrderPrice.toFixed(2)}
+          </Text>
+        </View>
 
         {/* order button */}
         <View style={styles.buttonContainer}>
@@ -278,150 +320,3 @@ export default class Order extends Component {
     );
   }
 }
-
-//StyleSheet
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F6F6F6",
-    alignItems: "center",
-  },
-
-  title: {
-    alignSelf: "center",
-    color: "#FEFEFE",
-    fontSize: 20,
-    fontWeight: "bold",
-    height: 57,
-  },
-
-  close: {
-    alignSelf: "flex-end",
-    marginRight: 20,
-    marginBottom: 10,
-  },
-
-  orderList: {
-    backgroundColor: "#F6F6F6",
-    width: "100%",
-  },
-
-  item: {
-    backgroundColor: "#e0e0e0",
-    marginTop: 15,
-    marginLeft: 15,
-    marginRight: 15,
-    padding: 10,
-    height: 80,
-    display: "flex",
-    flexDirection: "row",
-  },
-
-  itemImage: {
-    height: 60,
-    width: 60,
-    backgroundColor: "#C4C4C4",
-  },
-
-  itemInfo: {
-    marginLeft: 10,
-  },
-
-  itemName: {
-    fontSize: 25,
-  },
-
-  quantityText: {
-    fontSize: 12,
-  },
-
-  totalPriceText: {
-    fontSize: 12,
-  },
-
-  priceText: {
-    fontSize: 12,
-  },
-
-  buttonContainer: {
-    backgroundColor: "#FF9466",
-    width: "100%",
-    height: 100,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  button: {
-    backgroundColor: "#F6F6F6",
-    color: "#FF9466",
-    width: 276,
-    height: 46,
-    justifyContent: "center",
-    borderRadius: 0,
-    alignSelf: "center",
-  },
-
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22,
-  },
-  modalView: {
-    width: "75%",
-    height: "64%",
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 10,
-    padding: 35,
-    alignItems: "stretch",
-    elevation: 50,
-  },
-  modalButton: {
-    backgroundColor: "#FF9466",
-    borderRadius: 20,
-    padding: 10,
-    margin: 5,
-    elevation: 2,
-  },
-  textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-    fontSize: 18,
-  },
-  modalText: {
-    marginBottom: 10,
-    textAlign: "center",
-    fontSize: 18,
-  },
-
-  modalItemName: {
-    fontSize: 28,
-    marginBottom: 10,
-    textAlign: "center",
-  },
-  modalQuantityText: {
-    marginBottom: 10,
-    textAlign: "center",
-    fontSize: 15,
-  },
-
-  drinksList: {
-    backgroundColor: "#ECECEC",
-    marginTop: 20,
-    padding: 10,
-    height: 85,
-    width: 375,
-    display: "flex",
-    flexDirection: "row",
-    borderRadius: 10,
-  },
-  drinksIcon: {
-    backgroundColor: "#C4C4C4",
-    marginBottom: 10,
-    height: 80,
-    width: 80,
-    borderRadius: 10,
-  },
-});

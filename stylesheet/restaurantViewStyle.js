@@ -92,6 +92,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 
+  title: {
+    alignSelf: "center",
+    color: "#FEFEFE",
+    fontSize: 20,
+    fontWeight: "bold",
+    height: 40,
+  },
+
   //MODAL
   centeredView: {
     flex: 1,

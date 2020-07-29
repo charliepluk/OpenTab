@@ -76,6 +76,9 @@ export default class OrderHistory extends Component {
           >
             <ArrowBack width={35} height={35} />
           </TouchableOpacity>
+
+          <Text style={styles.title}>Order History</Text>
+          <View style={navStyles.navTab} />
         </SafeAreaView>
 
         <FlatList

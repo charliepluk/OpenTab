@@ -11,7 +11,8 @@ const navStyles = StyleSheet.create({
   },
 
   navBar: {
-    height: 110,
+    height: 90,
+    //original 110
     backgroundColor: "#FF9466",
     display: "flex",
     flexDirection: "row",

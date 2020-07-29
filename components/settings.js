@@ -22,7 +22,10 @@ export default class settings extends Component {
         <SafeAreaView style={navStyles.navBar}>
           <TouchableOpacity
             style={navStyles.navTab}
-            onPress={() => this.props.navigation.goBack()}
+            onPress={() => {
+              this.props.navigation.goBack();
+              this.props.navigation.toggleDrawer();
+            }}
           >
             <ArrowBack width={35} height={35} />
           </TouchableOpacity>
