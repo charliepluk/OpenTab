@@ -86,24 +86,27 @@ const styles = StyleSheet.create({
 
   drinksIcon: {
     backgroundColor: "#C4C4C4",
-    marginBottom: 10,
-    height: 80,
-    width: 80,
+    height: "100%",
+    width: "24.5%",
     borderRadius: 10,
   },
 
   drinksName: {
     fontSize: 20,
-    marginTop: 10,
-    marginLeft: 20,
     fontWeight: "bold",
+  },
+  totalItemPriceView: {
+    flex: 1,
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+    height: "100%",
+    width: "27.5%",
+    backgroundColor: "#ECECEC",
+    marginLeft: 8,
   },
 
   drinksPrice: {
     fontSize: 20,
-    marginTop: 45,
-    marginLeft: "auto",
-    marginRight: "50%",
   },
 
   title: {
