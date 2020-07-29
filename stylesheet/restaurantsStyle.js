@@ -35,6 +35,16 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
 
+  connectedRestaurantTitle: {
+    fontSize: 25,
+    color: "#FFFFFF",
+  },
+
+  connectedInfoText: {
+    fontSize: 12,
+    color: "#FFFFFF",
+  },
+
   title: {
     alignSelf: "center",
     color: "#FEFEFE",

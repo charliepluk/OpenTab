@@ -3,7 +3,6 @@ import {
   View,
   Text,
   SafeAreaView,
-  StyleSheet,
   FlatList,
   Alert,
   Modal,
@@ -11,7 +10,11 @@ import {
 } from "react-native";
 import { Button } from "react-native-paper";
 import { TouchableOpacity } from "react-native-gesture-handler";
+
+//Import styles
 import { navStyles } from "../stylesheet/navbarStyle";
+import { styles } from "../stylesheet/orderStyle";
+
 import CloseIcon from "../assets/svg/close.svg";
 import SyncStorage from "sync-storage";
 import axios from "axios";
@@ -19,6 +22,7 @@ import { syncStringToArray, arrayToSyncString } from "../jsonStringFunctions";
 
 export default class Order extends Component {
   state = {
+    restName: "",
     modalVisible: false,
     itemQuantity: 1,
     itemID: "",
@@ -53,8 +57,13 @@ export default class Order extends Component {
   submitOrder = () => {
     var userID = SyncStorage.get("userID");
     var connectedRestID = SyncStorage.get("connectedRestID");
-    //if user is not connected to a restaurant - this should really never happen
-    if (this.state.orderData == "") {
+    //if the order is empty
+    if (connectedRestID == undefined || connectedRestID == "noRestConnected") {
+      Alert.alert(
+        "No restaurant Connection",
+        "You are not connected to a restaurant, please connect to a restaurant to submit an order."
+      );
+    } else if (this.state.orderData == "") {
       Alert.alert(
         "Empty order",
         "There are no items in your order, please add items to submit an order."
@@ -158,7 +167,6 @@ export default class Order extends Component {
             <CloseIcon width={35} height={35} />
           </TouchableOpacity>
         </SafeAreaView>
-
         {/* modal that pops up when pressing on an order item */}
         <Modal
           animationType="fade"
@@ -236,6 +244,11 @@ export default class Order extends Component {
         {/* end modal */}
 
         {/* flatlist that generates customers order from this.state.orderData */}
+        <View style={styles.restView}>
+          <Text style={styles.restTitle}>
+            {SyncStorage.get("connectedRestName")}
+          </Text>
+        </View>
         <FlatList
           contentContainerStyle={{ paddingBottom: 15 }}
           data={this.state.orderData}
@@ -278,150 +291,3 @@ export default class Order extends Component {
     );
   }
 }
-
-//StyleSheet
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F6F6F6",
-    alignItems: "center",
-  },
-
-  title: {
-    alignSelf: "center",
-    color: "#FEFEFE",
-    fontSize: 20,
-    fontWeight: "bold",
-    height: 57,
-  },
-
-  close: {
-    alignSelf: "flex-end",
-    marginRight: 20,
-    marginBottom: 10,
-  },
-
-  orderList: {
-    backgroundColor: "#F6F6F6",
-    width: "100%",
-  },
-
-  item: {
-    backgroundColor: "#e0e0e0",
-    marginTop: 15,
-    marginLeft: 15,
-    marginRight: 15,
-    padding: 10,
-    height: 80,
-    display: "flex",
-    flexDirection: "row",
-  },
-
-  itemImage: {
-    height: 60,
-    width: 60,
-    backgroundColor: "#C4C4C4",
-  },
-
-  itemInfo: {
-    marginLeft: 10,
-  },
-
-  itemName: {
-    fontSize: 25,
-  },
-
-  quantityText: {
-    fontSize: 12,
-  },
-
-  totalPriceText: {
-    fontSize: 12,
-  },
-
-  priceText: {
-    fontSize: 12,
-  },
-
-  buttonContainer: {
-    backgroundColor: "#FF9466",
-    width: "100%",
-    height: 100,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  button: {
-    backgroundColor: "#F6F6F6",
-    color: "#FF9466",
-    width: 276,
-    height: 46,
-    justifyContent: "center",
-    borderRadius: 0,
-    alignSelf: "center",
-  },
-
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22,
-  },
-  modalView: {
-    width: "75%",
-    height: "64%",
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 10,
-    padding: 35,
-    alignItems: "stretch",
-    elevation: 50,
-  },
-  modalButton: {
-    backgroundColor: "#FF9466",
-    borderRadius: 20,
-    padding: 10,
-    margin: 5,
-    elevation: 2,
-  },
-  textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-    fontSize: 18,
-  },
-  modalText: {
-    marginBottom: 10,
-    textAlign: "center",
-    fontSize: 18,
-  },
-
-  modalItemName: {
-    fontSize: 28,
-    marginBottom: 10,
-    textAlign: "center",
-  },
-  modalQuantityText: {
-    marginBottom: 10,
-    textAlign: "center",
-    fontSize: 15,
-  },
-
-  drinksList: {
-    backgroundColor: "#ECECEC",
-    marginTop: 20,
-    padding: 10,
-    height: 85,
-    width: 375,
-    display: "flex",
-    flexDirection: "row",
-    borderRadius: 10,
-  },
-  drinksIcon: {
-    backgroundColor: "#C4C4C4",
-    marginBottom: 10,
-    height: 80,
-    width: 80,
-    borderRadius: 10,
-  },
-});
