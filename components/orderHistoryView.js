@@ -27,6 +27,10 @@ export default class orderHistoryView extends Component {
   }
 
   render() {
+    const { restName } = this.props.route.params;
+    const { orderDateTime } = this.props.route.params;
+    const { totalOrderPrice } = this.props.route.params;
+
     return (
       <View style={styles.container}>
         <SafeAreaView style={navStyles.navBar}>
@@ -41,6 +45,12 @@ export default class orderHistoryView extends Component {
           <View style={navStyles.navTab} />
         </SafeAreaView>
 
+        <View style={styles.restTitleView}>
+          <Text style={styles.restTitle}>
+            {restName.restName} - {orderDateTime.orderDateTime}
+          </Text>
+        </View>
+
         <FlatList
           data={this.state.orderData}
           keyExtractor={(item) => item.itemID.toString()}
@@ -52,9 +62,9 @@ export default class orderHistoryView extends Component {
                 <Text style={styles.priceText}>
                   ${item.itemPrice.toFixed(2)}
                 </Text>
-                <Text style={styles.quantityText}>x{item.quantity}</Text>
+                <Text style={styles.quantityText}>Qty: {item.quantity}</Text>
               </View>
-              <View style={styles.itemInfo}>
+              <View style={styles.totalItemPriceView}>
                 <Text style={styles.totalPriceText}>
                   ${item.totalPrice.toFixed(2)}
                 </Text>
@@ -62,6 +72,11 @@ export default class orderHistoryView extends Component {
             </View>
           )}
         />
+        <View style={styles.orderTotalView}>
+          <Text style={styles.orderTotalText}>
+            Order Total = ${totalOrderPrice.totalOrderPrice.toFixed(2)}
+          </Text>
+        </View>
       </View>
     );
   }
