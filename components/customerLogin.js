@@ -16,7 +16,7 @@ export default class CustomerLogin extends Component {
   verifyLogin = () => {
     if (!EmailValidator.validate(this.state.email)) {
       Alert.alert(
-        "Check email",
+        "Check Email",
         "The email you entered is not valid, please try again."
       );
     } else {
@@ -29,7 +29,7 @@ export default class CustomerLogin extends Component {
           //if: account doesn't exist
           if (res.data === "accountDoesntExist") {
             Alert.alert(
-              "Account doesn't exist",
+              "Account Doesn't Exist",
               "The email you input isn't registered with an OpenTab account."
             );
           }

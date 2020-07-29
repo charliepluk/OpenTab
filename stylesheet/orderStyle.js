@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     color: "#FEFEFE",
     fontSize: 20,
     fontWeight: "bold",
-    height: 57,
+    height: 38,
   },
 
   restTitle: {
@@ -24,7 +24,20 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
 
-  restView: {
+  restTitleView: {
+    width: "100%",
+  },
+
+  orderTotalText: {
+    alignSelf: "center",
+    color: "black",
+    fontSize: 25,
+    fontWeight: "bold",
+    height: 57,
+    paddingTop: 10,
+  },
+
+  orderTotalView: {
     width: "100%",
   },
 

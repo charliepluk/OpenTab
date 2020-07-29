@@ -32,7 +32,7 @@ export default class customerSignup extends Component {
           //if the email has already been registered in the DB
           if (res.data === "dupEmail") {
             Alert.alert(
-              "Account already exists",
+              "Account Already Exists",
               "The email you entered is already registered with an OpenTab account, please try another email."
             );
           }
@@ -66,13 +66,13 @@ export default class customerSignup extends Component {
       //check if email is valid
     } else if (!EmailValidator.validate(this.state.email)) {
       Alert.alert(
-        "Check email",
+        "Check Email",
         "The email you entered is not valid, please try again."
       );
       //check if passwords match
     } else if (!(this.state.password === this.state.confirmPassword)) {
       Alert.alert(
-        "Check passwords",
+        "Check Passwords",
         "The passwords you entered don't match, please try again."
       );
     }

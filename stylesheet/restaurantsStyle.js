@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     color: "#FEFEFE",
     fontSize: 20,
     fontWeight: "bold",
-    height: 57,
+    height: 40,
   },
 });
 
