@@ -64,13 +64,22 @@ const styles = StyleSheet.create({
   },
 
   itemImage: {
-    height: 60,
-    width: 60,
+    height: "100%",
+    width: "17.5%",
     backgroundColor: "#C4C4C4",
+  },
+
+  totalItemPriceView: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    height: "100%",
+    width: "27.5%",
   },
 
   itemInfo: {
     marginLeft: 10,
+    width: "55%",
   },
 
   itemName: {
@@ -82,7 +91,7 @@ const styles = StyleSheet.create({
   },
 
   totalPriceText: {
-    fontSize: 12,
+    fontSize: 17,
   },
 
   priceText: {
@@ -155,6 +164,7 @@ const styles = StyleSheet.create({
   },
 
   drinksList: {
+    flex: 1,
     backgroundColor: "#ECECEC",
     marginTop: 0,
     marginBottom: 10,
