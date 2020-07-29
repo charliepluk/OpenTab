@@ -35,6 +35,7 @@ export default class restaurantView extends Component {
 
   componentDidMount() {
     const { restID } = this.props.route.params;
+
     //change text if user is connected to this restaurant
     var connectedRestID = SyncStorage.get("connectedRestID");
     if (connectedRestID == restID.restID) {
@@ -132,7 +133,7 @@ export default class restaurantView extends Component {
   //connects to a restaurant by updating SyncStorage variable
   connectToRestaurant = (restID, restName) => {
     var connectedRestID = SyncStorage.get("connectedRestID");
-
+    SyncStorage.set("connectedRestName", restName.toString());
     //the user is connected to the restaurant they are currently viewing
     if (this.state.connectText == "DISCONNECT") {
       const title = "Notice";
@@ -148,6 +149,7 @@ export default class restaurantView extends Component {
             //update connectedRestID variable, clear customer order and update connectText
             SyncStorage.set("connectedRestID", "noRestConnected");
             SyncStorage.set("currentCustomerOrder", "");
+            SyncStorage.set("connectedRestName", "No restaurant connection");
             this.setState({
               connectText: "CONNECT",
             });

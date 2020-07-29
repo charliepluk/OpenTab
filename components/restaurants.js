@@ -40,9 +40,27 @@ function RestaurantItem({
           restID: { restID },
         })
       }
-      style={styles.item}
+      style={itemStyle(restID)}
     >
       <View style={styles.restaurantImage}></View>
+      {getRestaurantText(restID, title, hours, address, city)}
+    </TouchableOpacity>
+  );
+}
+
+function getRestaurantText(restID, title, hours, address, city) {
+  if (restID == SyncStorage.get("connectedRestID")) {
+    return (
+      <View style={styles.restaurantInfo}>
+        <Text style={styles.connectedRestaurantTitle}>{title}</Text>
+        <Text style={styles.connectedInfoText}>Hours: {hours}</Text>
+        <Text style={styles.connectedInfoText}>
+          {address}, {city}
+        </Text>
+      </View>
+    );
+  } else {
+    return (
       <View style={styles.restaurantInfo}>
         <Text style={styles.restaurantTitle}>{title}</Text>
         <Text style={styles.infoText}>Hours: {hours}</Text>
@@ -50,8 +68,35 @@ function RestaurantItem({
           {address}, {city}
         </Text>
       </View>
-    </TouchableOpacity>
-  );
+    );
+  }
+}
+
+function itemStyle(restID) {
+  if (restID == SyncStorage.get("connectedRestID")) {
+    return {
+      backgroundColor: "#FF9466",
+      marginTop: 15,
+      marginLeft: 15,
+      marginRight: 15,
+      padding: 10,
+      height: 100,
+      display: "flex",
+      flexDirection: "row",
+      color: "white",
+    };
+  } else {
+    return {
+      backgroundColor: "#ECECEC",
+      marginTop: 15,
+      marginLeft: 15,
+      marginRight: 15,
+      padding: 10,
+      height: 100,
+      display: "flex",
+      flexDirection: "row",
+    };
+  }
 }
 
 export default class Restaurants extends Component {

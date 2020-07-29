@@ -48,12 +48,14 @@ export default class customerSignup extends Component {
             console.log(res.data);
             //store the returned user information in Sync-storage
             SyncStorage.set("userID", res.data[0].customerID.toString());
+            SyncStorage.set("connectedRestID", "noRestConnected");
             SyncStorage.set("userEmail", res.data[0].customerEmail.toString());
             SyncStorage.set(
               "userFirstname",
               res.data[0].customerFirstname.toString()
             );
             SyncStorage.set("currentCustomerOrder", "");
+            SyncStorage.set("connectedRestName", "No restaurant connection");
             this.props.navigation.navigate("Home");
           }
         })
