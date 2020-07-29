@@ -112,6 +112,24 @@ router.get("/getRestaurants", function (req, res, next) {
       res.send("DB error");
     } else {
       console.log("gotRestaurants");
+      var resultSize = Object.keys(result).length;
+      var openClose = ["openTime", "closeTime"];
+      for (i = 0; i < resultSize; i++) {
+        for (j = 0; j < 2; j++) {
+          var militaryTime = result[i][openClose[j]].split(":");
+          if (militaryTime[0] > 12) {
+            result[i][openClose[j]] =
+              militaryTime[0] - 12 + ":" + militaryTime[1] + " PM";
+          } else if (militaryTime[0] == 12) {
+            result[i][openClose[j]] =
+              militaryTime[0] + ":" + militaryTime[1] + " PM";
+          } else {
+            result[i][openClose[j]] =
+              parseInt(militaryTime[0]) + ":" + militaryTime[1] + " AM";
+          }
+        }
+      }
+      console.log(result);
       res.send(JSON.stringify(result));
     }
   });
@@ -157,15 +175,27 @@ router.post("/getCustomerOrderHistory", function (req, res, next) {
         console.log(err);
         res.send("DB error");
       } else {
+        console.log(result[0][0]);
         var holdFormattedTime = "";
         var resultSize = Object.keys(result).length;
-
         //properly format all date times
         for (i = 0; i < resultSize; i++) {
           //split date time into individual strings for manipulation
           holdFormattedTime = result[i]["orderDateTime"]
             .toString()
             .split(" ", 5);
+
+          var militaryTime = holdFormattedTime[4].split(":");
+          if (militaryTime[0] > 12) {
+            holdFormattedTime[4] =
+              militaryTime[0] - 12 + ":" + militaryTime[1] + " PM";
+          } else if (militaryTime[0] == 12) {
+            holdFormattedTime[4] =
+              militaryTime[0] + ":" + militaryTime[1] + " PM";
+          } else {
+            holdFormattedTime[4] =
+              parseInt(militaryTime[0]) + ":" + militaryTime[1] + " AM";
+          }
 
           result[i]["orderDateTime"] =
             holdFormattedTime[1] +
@@ -176,7 +206,6 @@ router.post("/getCustomerOrderHistory", function (req, res, next) {
             " - " +
             holdFormattedTime[4];
         }
-        console.log(result);
         console.log("gotCustomerOrderHistory");
         res.send(result);
       }
