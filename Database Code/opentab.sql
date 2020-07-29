@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 29, 2020 at 01:09 AM
+-- Generation Time: Jul 29, 2020 at 05:15 AM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.8
 
@@ -84,7 +84,13 @@ INSERT INTO `items` (`itemID`, `restID`, `itemName`, `itemPrice`, `itemDescripti
 (16, 2, 'Cider', '7.50', NULL, 'Drink'),
 (17, 2, 'Scotch', '11.00', NULL, 'Drink'),
 (18, 2, 'Natty Light', '5.00', NULL, 'Drink'),
-(19, 2, 'Vodka', '10.00', NULL, 'Drink');
+(19, 2, 'Vodka', '10.00', NULL, 'Drink'),
+(20, 2, 'Magic Hat', '8.00', NULL, 'Drink'),
+(21, 2, 'Vodka Sour', '11.00', NULL, 'Drink'),
+(22, 2, 'Stella', '7.50', NULL, 'Drink'),
+(24, 4, 'Dirty Martini', '13.00', NULL, 'Drink'),
+(25, 4, 'Manhattan', '12.00', NULL, 'Drink'),
+(26, 4, 'Irish Coffee', '10.00', NULL, 'Drink');
 
 -- --------------------------------------------------------
 
@@ -99,17 +105,19 @@ CREATE TABLE `orders` (
   `orderNotes` varchar(150) DEFAULT NULL,
   `orderDateTime` datetime DEFAULT current_timestamp(),
   `orderStatus` varchar(9) NOT NULL,
-  `orderItems` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`orderItems`))
+  `orderItems` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`orderItems`)),
+  `totalOrderPrice` decimal(9,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`orderID`, `restID`, `customerID`, `orderNotes`, `orderDateTime`, `orderStatus`, `orderItems`) VALUES
-(12, 1, 1, NULL, '2020-07-28 17:03:56', 'pending', '[{\"itemID\":8,\"itemName\":\"Coors\",\"quantity\":3,\"itemPrice\":5.5,\"totalPrice\":16.5}]'),
-(13, 1, 1, NULL, '2020-07-28 17:27:17', 'pending', '[{\"itemID\":8,\"itemName\":\"Coors\",\"quantity\":5,\"itemPrice\":5.5,\"totalPrice\":27.5},{\"itemID\":9,\"itemName\":\"Budlight\",\"quantity\":3,\"itemPrice\":5,\"totalPrice\":15},{\"itemID\":10,\"itemName\":\"Appletini\",\"quantity\":3,\"itemPrice\":9,\"totalPrice\":27}]'),
-(14, 1, 1, NULL, '2020-07-28 17:28:35', 'pending', '[{\"itemID\":11,\"itemName\":\"Vodka Soda\",\"quantity\":1,\"itemPrice\":10,\"totalPrice\":10},{\"itemID\":10,\"itemName\":\"Appletini\",\"quantity\":1,\"itemPrice\":9,\"totalPrice\":9},{\"itemID\":9,\"itemName\":\"Budlight\",\"quantity\":1,\"itemPrice\":5,\"totalPrice\":5},{\"itemID\":8,\"itemName\":\"Coors\",\"quantity\":1,\"itemPrice\":5.5,\"totalPrice\":5.5}]');
+INSERT INTO `orders` (`orderID`, `restID`, `customerID`, `orderNotes`, `orderDateTime`, `orderStatus`, `orderItems`, `totalOrderPrice`) VALUES
+(22, 1, 1, NULL, '2020-07-28 22:58:30', 'pending', '[{\"itemID\":8,\"itemName\":\"Coors\",\"quantity\":3,\"itemPrice\":5.5,\"totalPrice\":16.5},{\"itemID\":9,\"itemName\":\"Budlight\",\"quantity\":1,\"itemPrice\":5,\"totalPrice\":5},{\"itemID\":10,\"itemName\":\"Appletini\",\"quantity\":3,\"itemPrice\":9,\"totalPrice\":27}]', '48.50'),
+(23, 2, 1, NULL, '2020-07-28 23:02:20', 'pending', '[{\"itemID\":16,\"itemName\":\"Cider\",\"quantity\":3,\"itemPrice\":7.5,\"totalPrice\":22.5},{\"itemID\":17,\"itemName\":\"Scotch\",\"quantity\":1,\"itemPrice\":11,\"totalPrice\":11},{\"itemID\":18,\"itemName\":\"Natty Light\",\"quantity\":3,\"itemPrice\":5,\"totalPrice\":15},{\"itemID\":20,\"itemName\":\"Magic Hat\",\"quantity\":2,\"itemPrice\":8,\"totalPrice\":16}]', '64.50'),
+(24, 3, 1, NULL, '2020-07-28 23:02:33', 'pending', '[{\"itemID\":13,\"itemName\":\"Twisted Tea\",\"quantity\":3,\"itemPrice\":6,\"totalPrice\":18},{\"itemID\":14,\"itemName\":\"White Claw\",\"quantity\":1,\"itemPrice\":6.5,\"totalPrice\":6.5},{\"itemID\":15,\"itemName\":\"Bud Lime\",\"quantity\":3,\"itemPrice\":6,\"totalPrice\":18}]', '42.50'),
+(25, 4, 1, NULL, '2020-07-28 23:11:00', 'pending', '[{\"itemID\":24,\"itemName\":\"Dirty Martini\",\"quantity\":3,\"itemPrice\":13,\"totalPrice\":39},{\"itemID\":25,\"itemName\":\"Manhattan\",\"quantity\":1,\"itemPrice\":12,\"totalPrice\":12},{\"itemID\":26,\"itemName\":\"Irish Coffee\",\"quantity\":3,\"itemPrice\":10,\"totalPrice\":30}]', '81.00');
 
 -- --------------------------------------------------------
 
@@ -193,13 +201,13 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `itemID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `itemID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `orderID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `orderID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `restaurants`
