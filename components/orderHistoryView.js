@@ -62,9 +62,9 @@ export default class orderHistoryView extends Component {
                 <Text style={styles.priceText}>
                   ${item.itemPrice.toFixed(2)}
                 </Text>
-                <Text style={styles.quantityText}>x{item.quantity}</Text>
+                <Text style={styles.quantityText}>Qty: {item.quantity}</Text>
               </View>
-              <View style={styles.itemInfo}>
+              <View style={styles.totalItemPriceView}>
                 <Text style={styles.totalPriceText}>
                   ${item.totalPrice.toFixed(2)}
                 </Text>
