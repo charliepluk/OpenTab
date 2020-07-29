@@ -9,6 +9,7 @@ import SyncStorage from "sync-storage";
 
 export default class customerSignup extends Component {
   state = {
+    firstName: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -23,6 +24,7 @@ export default class customerSignup extends Component {
     ) {
       axios
         .post("http://10.0.0.27:3000/requestRoutes/createAccount", {
+          firstname: this.state.firstName,
           email: this.state.email,
           password: this.state.password,
         })
@@ -43,9 +45,14 @@ export default class customerSignup extends Component {
           }
           //else the account was successfully created
           else {
+            console.log(res.data);
             //store the returned user information in Sync-storage
             SyncStorage.set("userID", res.data[0].customerID.toString());
             SyncStorage.set("userEmail", res.data[0].customerEmail.toString());
+            SyncStorage.set(
+              "userFirstname",
+              res.data[0].customerFirstname.toString()
+            );
             SyncStorage.set("currentCustomerOrder", "");
             this.props.navigation.navigate("Home");
           }
@@ -75,6 +82,15 @@ export default class customerSignup extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.header}>Start up your tab</Text>
+
+        <Text style={styles.firstnameHeader}>FIRST NAME</Text>
+        <TextInput
+          style={styles.firstnameInput}
+          value={this.state.firstName}
+          onChangeText={(firstName) => this.setState({ firstName })}
+          selectionColor="#FF9466"
+          underlineColor="#F1F1F1"
+        />
 
         <Text style={styles.emailHeader}>EMAIL ADDRESS</Text>
 

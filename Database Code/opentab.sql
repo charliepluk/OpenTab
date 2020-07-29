@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 28, 2020 at 11:47 PM
+-- Generation Time: Jul 29, 2020 at 01:09 AM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.8
 
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `customers` (
   `customerID` int(10) NOT NULL,
+  `customerFirstname` varchar(40) NOT NULL,
   `customerEmail` varchar(50) NOT NULL,
   `customerPassword` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -37,25 +38,21 @@ CREATE TABLE `customers` (
 -- Dumping data for table `customers`
 --
 
-INSERT INTO `customers` (`customerID`, `customerEmail`, `customerPassword`) VALUES
-(1, 'cam@gmail.com', 'test'),
-(2, 'thebiggestmanthatseverlived@gmail.com', 'test'),
-(3, 'test@gmail.com', 'test'),
-(4, 'test2@gmail.com', 'test'),
-(5, 'test3@gmail.com', 'test'),
-(6, 'test4@gmail.com', 'test'),
-(7, 'test5@gmail.com', 'test'),
-(8, 'cam@gmal.com', 'test'),
-(9, 'qwer@gmail.com', 'test'),
-(10, 'testset@gmail.com', 'test'),
-(11, 'testseft@gmail.com', 'test'),
-(12, 'testsefsdt@gmail.com', 'test'),
-(13, 'wertwert@gmail.com', 'test'),
-(14, 'wertsdfwert@gmail.com', 'test'),
-(15, 'adfasdfas@gmail.com', 'test'),
-(16, 'afdvbaht@gmail.com', 'test'),
-(17, 'asdfasdf@gmail.com', 'test'),
-(18, 'chrisHasASmallPenis@gmail.com', 'smalldick');
+INSERT INTO `customers` (`customerID`, `customerFirstname`, `customerEmail`, `customerPassword`) VALUES
+(1, 'Cameron', 'cam@gmail.com', 'test'),
+(2, 'Charlie', 'thebiggestmanthatseverlived@gmail.com', 'test'),
+(3, 'Akshay', 'test@gmail.com', 'test'),
+(4, 'John', 'test2@gmail.com', 'test'),
+(5, 'Sally', 'test3@gmail.com', 'test'),
+(6, 'Emily', 'test4@gmail.com', 'test'),
+(7, 'Aaron', 'test5@gmail.com', 'test'),
+(8, 'Jimmy', 'cam@gmal.com', 'test'),
+(9, 'Billy', 'qwer@gmail.com', 'test'),
+(10, 'Matt', 'testset@gmail.com', 'test'),
+(11, 'Maddy', 'testseft@gmail.com', 'test'),
+(12, 'Ian', 'testsefsdt@gmail.com', 'test'),
+(19, 'Cameron', 'cam1@gmail.com', 'test'),
+(20, 'TesMe', 'hihihi@gmail.com', 'test');
 
 -- --------------------------------------------------------
 
@@ -144,7 +141,8 @@ CREATE TABLE `restaurants` (
 INSERT INTO `restaurants` (`restID`, `restName`, `firstName`, `lastName`, `phone`, `email`, `address`, `city`, `state`, `zipcode`, `description`, `openTime`, `closeTime`, `restPassword`) VALUES
 (1, 'Flanns', 'Cam', 'Liddell', '6034403643', 'cameron@gmail.com', '28 Winger Street', 'Boston', 'MA', '12120', 'Best drinks in town!', '01:00:00', '01:10:00', 'test'),
 (2, 'Charlies Big Bar', 'Charlie', 'Plukfangpanya', '6032345643', 'bigChuck@gmail.com', '555 Huntington Avenue', 'Boston', 'MA', '02120', 'Come in for big drinks', '10:00:00', '12:00:00', 'test'),
-(3, 'Camel Stop', 'Chuck', 'Paulson', '6034405443', 'chuckTest@gmail.com', '56 Catskiil Road', 'Boston', 'MA', '02120', 'Okayest drinks in town!', '01:00:00', '01:10:00', 'test');
+(3, 'Camel Stop', 'Chuck', 'Paulson', '6034405443', 'chuckTest@gmail.com', '56 Catskill Road', 'Boston', 'MA', '02120', 'Okayest drinks in town!', '01:00:00', '01:10:00', 'test'),
+(4, 'Akshays Small Bar', 'Akshay', 'Patel', '603246098', 'smallShay@gmail.com', '525 River Avenue', 'Boston', 'MA', '02120', 'Come in for small drinks', '10:00:00', '12:00:00', 'test');
 
 --
 -- Indexes for dumped tables
@@ -189,7 +187,7 @@ ALTER TABLE `restaurants`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `customerID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `customerID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `items`
@@ -207,7 +205,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `restaurants`
 --
 ALTER TABLE `restaurants`
-  MODIFY `restID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `restID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
