@@ -92,6 +92,20 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 
+  drinksName: {
+    fontSize: 20,
+    marginTop: 10,
+    marginLeft: 20,
+    fontWeight: "bold",
+  },
+
+  drinksPrice: {
+    fontSize: 20,
+    marginTop: 45,
+    marginLeft: "auto",
+    marginRight: "50%",
+  },
+
   title: {
     alignSelf: "center",
     color: "#FEFEFE",
