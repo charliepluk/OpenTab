@@ -32,10 +32,12 @@ export default class settings extends Component {
         </SafeAreaView>
         <View>
           <Text style={styles.basicInfoText}>Basic information</Text>
-          <Text style={styles.nameHeader}>Name</Text>
+          <Text style={styles.nameHeader}>Name:</Text>
           <Text style={styles.nameText}>{this.state.firstname}</Text>
-          <Text style={styles.emailHeader}>Email</Text>
-          <Text style={styles.emailText}>{this.state.email}</Text>
+          <Text style={styles.emailHeader}>Email: </Text>
+          <Text style={styles.emailText} adjustsFontSizeToFit>
+            {this.state.email}
+          </Text>
         </View>
       </View>
     );
