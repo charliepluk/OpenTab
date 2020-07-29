@@ -120,6 +120,8 @@ router.get("/getRestaurants", function (req, res, next) {
           if (militaryTime[0] > 12) {
             result[i][openClose[j]] =
               militaryTime[0] - 12 + ":" + militaryTime[1] + " PM";
+          } else if (militaryTime[0] == 0) {
+            result[i][openClose[j]] = 12 + ":" + militaryTime[1] + " AM";
           } else if (militaryTime[0] == 12) {
             result[i][openClose[j]] =
               militaryTime[0] + ":" + militaryTime[1] + " PM";
@@ -178,6 +180,7 @@ router.post("/getCustomerOrderHistory", function (req, res, next) {
         console.log(result[0][0]);
         var holdFormattedTime = "";
         var resultSize = Object.keys(result).length;
+        console.log(result[0]["orderDateTime"].toString());
         //properly format all date times
         for (i = 0; i < resultSize; i++) {
           //split date time into individual strings for manipulation
@@ -189,6 +192,8 @@ router.post("/getCustomerOrderHistory", function (req, res, next) {
           if (militaryTime[0] > 12) {
             holdFormattedTime[4] =
               militaryTime[0] - 12 + ":" + militaryTime[1] + " PM";
+          } else if (militaryTime[0] == 0) {
+            result[i][openClose[j]] = 12 + ":" + militaryTime[1] + " AM";
           } else if (militaryTime[0] == 12) {
             holdFormattedTime[4] =
               militaryTime[0] + ":" + militaryTime[1] + " PM";
