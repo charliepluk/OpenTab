@@ -51,7 +51,7 @@ export default class OrderHistory extends Component {
 
   componentDidMount() {
     axios
-      .post("http://10.0.0.27:3000/requestRoutes/getCustomerOrderHistory", {
+      .post("http://192.168.1.158:3000/requestRoutes/getCustomerOrderHistory", {
         userID: SyncStorage.get("userID"),
       })
       .then((res) => {

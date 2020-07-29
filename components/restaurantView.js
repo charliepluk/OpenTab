@@ -46,7 +46,7 @@ export default class restaurantView extends Component {
 
     //get restaurant menu
     axios
-      .post("http://10.0.0.27:3000/requestRoutes/getRestaurantMenu", {
+      .post("http://192.168.1.158:3000/requestRoutes/getRestaurantMenu", {
         restID: restID.restID,
       })
       .then((res) => {
@@ -359,8 +359,10 @@ export default class restaurantView extends Component {
               }
             >
               <View style={styles.drinksIcon}></View>
-              <Text>{item.itemName} - </Text>
-              <Text>${item.itemPrice.toFixed(2)}</Text>
+              <Text style={styles.drinksName}>{item.itemName}</Text>
+              <Text style={styles.drinksPrice}>
+                ${item.itemPrice.toFixed(2)}
+              </Text>
             </TouchableOpacity>
           )}
         />
