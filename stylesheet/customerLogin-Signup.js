@@ -5,21 +5,22 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#E5E5E5",
     alignContent: "space-between",
+    justifyContent: "center",
   },
 
   header: {
     fontWeight: "bold",
     fontSize: 24,
-    marginTop: 50,
-    paddingTop: 100,
-    paddingLeft: 50,
+    textAlign: "left",
+    padding: 30,
+    paddingLeft: 49,
   },
 
   firstnameHeader: {
     fontWeight: "bold",
     paddingLeft: 50,
-    marginTop: 70,
     fontSize: 12,
+    paddingTop: 25,
   },
 
   firstnameInput: {
