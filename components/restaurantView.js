@@ -340,7 +340,7 @@ export default class restaurantView extends Component {
 
               <View style={styles.thinRectangle}></View>
 
-              <Text style={styles.drinksHeader}>Drinks</Text>
+              <Text style={styles.drinksHeader}>Menu</Text>
             </>
           }
           data={this.state.DATA}
@@ -359,10 +359,12 @@ export default class restaurantView extends Component {
               }
             >
               <View style={styles.drinksIcon}></View>
-              <Text style={styles.drinksName}>{item.itemName}</Text>
-              <Text style={styles.drinksPrice}>
-                ${item.itemPrice.toFixed(2)}
-              </Text>
+              <View style={styles.totalItemPriceView}>
+                <Text style={styles.drinksName}>{item.itemName}</Text>
+                <Text style={styles.drinksPrice}>
+                  ${item.itemPrice.toFixed(2)}
+                </Text>
+              </View>
             </TouchableOpacity>
           )}
         />
