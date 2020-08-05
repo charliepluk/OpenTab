@@ -18,6 +18,12 @@ OpenTab is a point of sale service that allows for customers to order beverages 
 ## Getting Started
 ### Installation and Setup
 1. Install [Node.js](https://nodejs.org/) and [MySQL](https://www.mysql.com/downloads/) if you haven't already.
+2. Copy and paste the MySQL code into your local Xamp setup to create a new database. 
+
+		> cd Database Code
+		> Copy the contents of the file
+		> Paste the contents of the file in your local database code
+
 2. Clone this repository and install its dependencies.
 		
 		> git clone https://github.com/charliepluk/OpenTab.git OpenTab
@@ -27,19 +33,13 @@ OpenTab is a point of sale service that allows for customers to order beverages 
 1. In a separate shell start expo.
 
 		> npm start
+		
+2. In another separate shell start the server.
 
+		> cd Server
+		> node server.js
 ## Demo video
 
-Upload your demo video to youtube and put a link here. Basically, the video content is very much like the quick live demo of your product with the followings:
-1. Introduction
-2. How to run the app
-3. Quick walkthrough of all the features of your app one by one
-
-Please make it short and interesting!
-
-Sample: https://www.youtube.com/watch?v=Pr-JMqTkdEM
-
-How to record your screen: https://www.techradar.com/how-to/record-your-screen
 
 ## Contributors
 
