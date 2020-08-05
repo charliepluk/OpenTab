@@ -17,13 +17,12 @@ OpenTab is a point of sale service that allows for customers to order beverages 
 
 ## Getting Started
 ### Installation and Setup
-1. Install [Node.js](https://nodejs.org/) if you haven't already.
+1. Install [Node.js](https://nodejs.org/) and [MySQL](https://www.mysql.com/downloads/) if you haven't already.
 2. Clone this repository and install its dependencies.
 		
 		> git clone https://github.com/charliepluk/OpenTab.git OpenTab
 		> cd OpenTab
 		> npm install
-    
 ### Run
 1. In a separate shell start expo.
 
