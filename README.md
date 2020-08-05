@@ -50,6 +50,7 @@ How to record your screen: https://www.techradar.com/how-to/record-your-screen
 
 ## Contributors
 
-* John Doe, Team Lead
-* Alan Smith, Bug Fixer
+* Cameron Liddell, Programmer
+* Charlie Plukfangpanya, Programmer
+* Akshay Patel, Programmer
 
