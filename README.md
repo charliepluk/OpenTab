@@ -42,7 +42,7 @@ The GitHub repository link for the web application for the restaurant is: https:
 		> cd Server
 		> node server.js
 ## Demo video
-
+Check out the demo here https://youtu.be/2mpGRJlM1mM !
 
 ## Contributors
 
