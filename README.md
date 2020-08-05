@@ -44,7 +44,7 @@ How to record your screen: https://www.techradar.com/how-to/record-your-screen
 
 ## Contributors
 
-* Cameron Liddell, Programmer
-* Charlie Plukfangpanya, Programmer
-* Akshay Patel, Programmer
+* Cameron Liddell, Developer
+* Charlie Plukfangpanya, Developer
+* Akshay Patel, Developer
 
