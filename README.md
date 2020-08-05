@@ -6,7 +6,7 @@
 
 OpenTab is a point of sale service that allows for customers to order beverages and food at their favorite restaurants. It is comprised of two parts, the mobile application for customers and a web application for restaurant employees. This repository is the code that makes up the mobile application. The mobile application side, lets customers create their accounts, be able to connect to local restaurants nearby, and order drinks to their desire, which then can be picked up from the bar. The OpenTab platform was built using React Native, React, NodeJS, SQL, Axios and ExpresJS. 
 
-The restaurant GitHub repository link is: https://github.com/charliepluk/OpenTabRestaurant
+The GitHub repository link for the web application for the restaurant is: https://github.com/charliepluk/OpenTabRestaurant
 
 ## Features
 1. Account Registration
