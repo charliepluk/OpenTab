@@ -20,17 +20,18 @@ The GitHub repository link for the web application for the restaurant is: https:
 ## Getting Started
 ### Installation and Setup
 1. Install [Node.js](https://nodejs.org/) and [MySQL](https://www.mysql.com/downloads/) if you haven't already.
-2. Copy and paste the MySQL code into your local Xamp setup to create a new database. 
-
-		> cd Database Code
-		> Copy the contents of the file
-		> Paste the contents of the file in your local database code
 
 2. Clone this repository and install its dependencies.
 		
 		> git clone https://github.com/charliepluk/OpenTab.git OpenTab
 		> cd OpenTab
 		> npm install
+		
+3. Copy and paste the MySQL code into your local Xamp setup to create a new database. 
+
+		> cd Database Code
+		> Copy the contents of the file
+		> Paste the contents of the file in your local database code
 ### Run
 1. In a separate shell start expo.
 
