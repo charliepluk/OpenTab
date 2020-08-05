@@ -9,13 +9,13 @@ OpenTab is a point of sale service that allows for customers to order beverages 
 The GitHub repository link for the web application for the restaurant is: https://github.com/charliepluk/OpenTabRestaurant
 
 ## Features
-1. Account Registration
-2. Account Login/Logout
-3. Connect/Select Restaurant
-4. Browse Restaurant Menu
-5. View/Edit Order
-6. Checkout
-7. View Order History
+* Account Registration
+* Account Login/Logout
+* Connect/Select Restaurant
+* Browse Restaurant Menu
+* View/Edit Order
+* Checkout
+* View Order History
 
 ## Getting Started
 ### Installation and Setup
